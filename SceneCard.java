@@ -2,8 +2,14 @@ public class SceneCard{
     private String name;
     private int budget;
     private boolean flipped;
-    
-
+   
+    public SceneCard(String name, int budget, boolean flipped){
+        this.name = name;
+        this.budget = budget;
+        this.flipped = flipped;
+    }
+ 
+ 
     public String getName(){
         return this.name;
     }
@@ -22,9 +28,13 @@ public class SceneCard{
     public void setFlipped(boolean flipped){
         this.flipped = flipped;
     }
-
+ 
+ 
     public void wrapScene(){
-
+ 
+ 
     }
-
-}
+ 
+ 
+ }
+ 
