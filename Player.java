@@ -1,3 +1,5 @@
+
+
 public class Player {
     private String name;
     private int rank;
@@ -5,16 +7,17 @@ public class Player {
     private int dollars;
     private int practiceChips;
     private boolean working;
- 
+    private String location;
  
     //constructor
-    public Player(String name, int rank, int credits, int dollars, int practiceChips, boolean working){
+    public Player(String name, int rank, int credits, int dollars, int practiceChips, boolean working, String location){
         this.name = name;
         this.rank = rank;
         this.credits = credits;
         this.dollars = dollars;
         this.practiceChips = practiceChips;
         this.working = working;
+        this.location = location;
     }
     //getters & setters
     public String getName(){
@@ -53,10 +56,19 @@ public class Player {
     public void setWorking(boolean working){
         this.working = working;
     }
- 
+    public String getLocation(){
+        return this.location;
+    }
+    public void setLocation(String location){
+        this.location = location;
+    }
  
     //actions
-    public void move(String location){}
+    public void move(String location){
+        if(!LocationManager.validateMove(this.name)){
+            setLocation(location);
+        }
+    }
     public void rehearse(){}
     public void takeRole(){}
     public void upgrade(int rank){}
