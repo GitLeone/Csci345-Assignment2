@@ -1,5 +1,4 @@
 
-
 public class Player {
     private String name;
     private int rank;
@@ -126,6 +125,15 @@ public class Player {
     public void takeRole(){
         
     }
-    public void upgrade(int rank){}
+    //Change act to work like this.
+    //GameController will call if(!Player.upgrade(rank, currency)){loseTurn(Player)}
+    public boolean upgrade(int rank, int currency){
+        if(!bank.validateUpgrade(rank, currency)){
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
  }
  
