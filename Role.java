@@ -1,4 +1,5 @@
 public class Role {
+    private String name;
     private int rankRequired;
     private boolean isStarring;
     private Player occupiedBy;
@@ -19,6 +20,10 @@ public class Role {
 
     public int getRankRequired() {
         return rankRequired;
+    }
+
+    public String getName() {
+        return name;
     }
 
 }
