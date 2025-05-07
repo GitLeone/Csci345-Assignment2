@@ -122,17 +122,23 @@ public class Player {
             }
         }
     }
-    public void takeRole(){
+    public void takeRole(){  
         
     }
-    //Change act to work like this.
-    //GameController will call if(!Player.upgrade(rank, currency)){loseTurn(Player)}
-    public boolean upgrade(int rank, int currency){
-        if(!bank.validateUpgrade(rank, currency)){
-            return false;
+
+    public void upgrade(int rank, int currency, String currencyType){
+        if(!bank.validateUpgrade(rank, currency, currencyType) || !locationManager.validateUpgrade(location)){
+            return;
+            //end turn
         }
         else{
-            return true;
+            if(currencyType == "Dollars"){
+                setDollars(currency - bank.getRankDollarCost(rank));
+            }
+            else{
+                setCredits(currency - bank.getRankCreditCost(rank));
+            }  
+            setRank(rank);
         }
     }
  }

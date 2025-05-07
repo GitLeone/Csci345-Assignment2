@@ -21,4 +21,8 @@ public class LocationManager{
     //if the location the player wants to move to is not a neighbor of their current location, return false, else return true
     return false;
    }
+   public boolean validateUpgrade(String location){
+    //if the location the player is in does not match "Casting Office", return false, else return true
+    return false;
+   }
 }
