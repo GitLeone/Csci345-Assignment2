@@ -5,19 +5,19 @@ import java.util.Map;
 
 public class LocationManager{
    private List<String> locationList;
-   private Map<String, String[]> playersInLocation; //Tracks what players are in a specific locaton
+   private Map<Player, String> playerLocations; //Tracks where players are
    private Map<String, String[]> neighbors; //Tracks what neighbors a specific location has
    
-   public LocationManager(List<String> locationList){
+   public LocationManager(List<String> locationList, Map<Player, String> playerLocations, Map<String, String[]> neighbors){
        this.locationList = locationList;
-       this.playersInLocation = new HashMap<>();
+       this.playerLocations = new HashMap<>();
        this.neighbors = new HashMap<>();
    }
 
-   public void updateLocationMap(String player, String location){
+   public void updateLocationMap(Player player, String location){
 
    }
-   public boolean validateMove(String player, String location){
+   public boolean validateMove(String playerLocation, String location){
     //if the location the player wants to move to is not a neighbor of their current location, return false, else return true
     return false;
    }

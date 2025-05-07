@@ -28,13 +28,8 @@ public class SceneCard{
     public void setFlipped(boolean flipped){
         this.flipped = flipped;
     }
- 
- 
     public void wrapScene(){
- 
- 
+
     }
- 
- 
  }
  
