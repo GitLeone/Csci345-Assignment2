@@ -1,4 +1,5 @@
 public class Role {
+    private String name;
     private int rankRequired;
     private boolean isStarring;
     private Player occupiedBy;
@@ -9,10 +10,11 @@ public class Role {
         this.occupiedBy = null;
     }
 
-    public boolean getStarring(){
+    public boolean getStarring() {
         return this.isStarring;
     }
-    public void setStarring(boolean isStarring){
+
+    public void setStarring(boolean isStarring) {
         this.isStarring = isStarring;
     }
 
