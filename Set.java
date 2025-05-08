@@ -1,53 +1,76 @@
+import java.util.ArrayList;
 import java.util.List;
 
-public class Set{
+public class Set {
     private String name;
-    private List<String> roleList;
-    private int shotCounter;
-    private int totalShots;
-    private boolean wrapped;
+    private SceneCard sceneCard;
+    private List<Role> extraRoles;
+    private int maxShots;
+    private int shotsRemaining;
+    private List<Set> adjacentSets;
+    private List<Player> players; //Players currently in this location
 
-    public Set(String name, List<String> roleList, int shotCounter, int totalShots, boolean wrapped){
+    public Set(String name, int maxShots) {
         this.name = name;
-        this.roleList = roleList;
-        this.shotCounter = shotCounter;
-        this.totalShots = totalShots;
-        this.wrapped = wrapped;
+        this.maxShots = maxShots;
+        this.shotsRemaining = maxShots;
+        this.extraRoles = new ArrayList<>();
+        this.adjacentSets = new ArrayList<>();
+        this.players = new ArrayList<>();
     }
-    //getters and setters
-    public String getName(){
-        return this.name;
+
+    //How we manage the scenes
+    public void setSceneCard(SceneCard sceneCard) {
+        this.sceneCard = sceneCard;
     }
-    public void setName(String name){
-        this.name = name;
+
+    public SceneCard getSceneCard() {
+        return sceneCard;
     }
-    public List<String> getRoleList(){
-        return this.roleList;
+
+    public boolean hasScene() {
+        return sceneCard != null;
     }
-    public void setRoleList(List<String> roleList){
-        this.roleList = roleList;
+
+    //Controls the shots taken and removes when player utilizies shot
+    public void removeShot() {
+        if (shotsRemaining > 0) {
+            shotsRemaining--;
+            System.out.println("Shot removed! Shots remaining: " + shotsRemaining);
+        }
     }
-    public int getShotCounter(){
-        return this.shotCounter;
+
+    public boolean isSceneWrapped() {
+        return shotsRemaining == 0;
     }
-    public void setShotCounter(int shotCounter){
-        this.shotCounter = shotCounter;
+
+    // Player movement
+    public void addPlayer(Player player) {
+        players.add(player);
     }
-    public int getTotalShots(){
-        return this.totalShots;
+
+    public void removePlayer(Player player) {
+        players.remove(player);
     }
-    public void setTotalShots(int totalShots){
-        this.totalShots = totalShots;
+
+    public List<Player> getPlayers() {
+        return players;
     }
-    public boolean getWrapped(){
-        return this.wrapped;
+
+    // Adjacency
+    public void addAdjacentSet(Set set) {
+        adjacentSets.add(set);
     }
-    public void setWrapped(boolean wrapped){
-        this.wrapped = wrapped;
+
+    public List<Set> getAdjacentSets() {
+        return adjacentSets;
     }
-    
-    //methods
-    public void decrementCounter(){
-        setShotCounter(getShotCounter() - 1);
+
+    public int getShotsRemaining() {
+        return shotsRemaining;
+    }
+
+    public String getName() {
+        return name;
     }
 }
