@@ -14,7 +14,7 @@ public class TextView implements View{
             role.getLine()
         );
     }
-    
+ 
     public void displayLocation(Set set) {
 
     }
