@@ -2,6 +2,7 @@ public class TextView implements View{
         //Later implementation for player inputs
     //private Scanner scanner = new Scanner(System.in);
 
+    @Override
     public void displayActivePlayerWorking(Player player, Role role) {
         System.out.printf(
             "The active player is %s. They have $%d, %d credits and %d rehearsal chips. " +
@@ -14,12 +15,14 @@ public class TextView implements View{
             role.getLine()
         );
     }
- 
+    
+    @Override
     public void displayLocation(Set set) {
 
     }
     
     //Informs player of acting result
+    @Override
     public void displayActResult(boolean success, int reward, String rewardType) {
         if (success) {
             System.out.printf("success! You got %d %s%n", reward, rewardType);
@@ -28,6 +31,7 @@ public class TextView implements View{
         }
     }
 
+    @Override
     //Displays the player information formatted with dollars and credits
     public void displayPlayerInfo(Player player) {
         System.out.printf(
