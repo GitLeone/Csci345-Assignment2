@@ -1,3 +1,3 @@
-public class TextView implements View{
+public class TextView implements view{
     
 }
