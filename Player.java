@@ -77,7 +77,7 @@ public class Player {
         }
         else{
             setLocation(location);
-            //if the players new location is a set, then check if the scenecard in the set has been flipped, if not, flip it
+            //if the players new location is a set, check if the scenecard in the set has been flipped, if not, flip it
             //Location Managers location maps must also be updated
         }
     }
