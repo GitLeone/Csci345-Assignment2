@@ -36,7 +36,7 @@ public class Set {
     public void removeShot() {
         if (this.shotsRemaining > 0) {
             this.shotsRemaining--;
-            System.out.println("Shot removed! Shots remaining: " + shotsRemaining);
+            System.out.println("Shot removed! Shots remaining: " + this.shotsRemaining);
         }
     }
 
