@@ -25,23 +25,23 @@ public class Set {
     }
 
     public SceneCard getSceneCard() {
-        return sceneCard;
+        return this.sceneCard;
     }
 
     public boolean hasScene() {
-        return sceneCard != null;
+        return this.sceneCard != null;
     }
 
     //Controls the shots taken and removes when player utilizies shot
     public void removeShot() {
-        if (shotsRemaining > 0) {
-            shotsRemaining--;
+        if (this.shotsRemaining > 0) {
+            this.shotsRemaining--;
             System.out.println("Shot removed! Shots remaining: " + shotsRemaining);
         }
     }
 
     public boolean isSceneWrapped() {
-        return shotsRemaining == 0;
+        return this.shotsRemaining == 0;
     }
 
     // Player movement
@@ -54,7 +54,7 @@ public class Set {
     }
 
     public List<Player> getPlayers() {
-        return players;
+        return this.players;
     }
 
     // Adjacency
@@ -63,14 +63,14 @@ public class Set {
     }
 
     public List<Set> getAdjacentSets() {
-        return adjacentSets;
+        return this.adjacentSets;
     }
 
     public int getShotsRemaining() {
-        return shotsRemaining;
+        return this.shotsRemaining;
     }
 
     public String getName() {
-        return name;
+        return this.name;
     }
 }
