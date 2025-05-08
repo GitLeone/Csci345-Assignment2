@@ -9,7 +9,6 @@ public class SceneCard{
         this.flipped = flipped;
     }
  
- 
     public String getName(){
         return this.name;
     }
