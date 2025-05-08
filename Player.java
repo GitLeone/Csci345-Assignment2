@@ -103,7 +103,7 @@ public class Player {
             int roll = dice.roll();
             if(roll >= scene.getBudget()){ //succeed
                 //Either have player set shotCounter or have the method return true and have the GameController do it
-                set.decrementCounter();
+                set.removeShot();
                 if(getRole().getStarring()){
                     //gets 2 credits
                     setCredits(getCredits() + 2);
