@@ -1,4 +1,3 @@
-
 public class Player {
     private String name;
     private int rank;
@@ -75,19 +74,21 @@ public class Player {
     public void move(String location, LocationManager locationManager){
         if(!locationManager.validateMove(getLocation(), location)){
             //player loses turn
-            //GameController.endTurn() Something like this
         }
         else{
             setLocation(location);
+            //if the players new location is a set, then check if the scenecard in the set has been flipped, if not, flip it
+            //Location Managers location maps must also be updated
         }
     }
-    public void rehearse(Dice dice, Set set, SceneCard scene){
+    public void rehearse(){
         if(!getWorking()){
             //player loses turn
         }
-        else if(getPracticeChips() == role.getRankRequired()){
-            act(dice, set, scene);
-        }
+        /*In the GameController case:
+            If player.getPracticeChips() == player.getRole().getRankRequired(){
+                player.act(dice, set, scene)
+            }*/
         else{
             setPracticeChips(getPracticeChips() + 1);
         }
@@ -95,44 +96,57 @@ public class Player {
     public void act(Dice dice, Set set, SceneCard scene){
         //For these parameters, set, scene are probably not needed as the role should know what set and scene its apart of
         //Might only need to
-        int roll;
-        Role role = getRole();
         if(!getWorking()){
             //player loses turn
         }
         else{
-            roll = dice.roll();
+            int roll = dice.roll();
             if(roll >= scene.getBudget()){ //succeed
                 //Either have player set shotCounter or have the method return true and have the GameController do it
                 set.decrementCounter();
-                if(role.isStarring()){
+                if(getRole().getStarring()){
                     //gets 2 credits
+                    setCredits(getCredits() + 2);
                 }
                 else{
                     //gets 1 credit and 1 dollar
+                    setCredits(getCredits() + 1);
+                    setDollars(getDollars() + 1);
                 }
             }
             else{ //fail
-                if(role.isStarring()){
+                if(getRole().getStarring()){
                     //player loses turn
                 }
                 else{
                     //player gets 1 dollar
+                    setDollars(getDollars() + 1);
                 }
             }
         }
     }
-    public void takeRole(){  
-        
+    public void takeRole(Role role){  
+        if(!role.isAvailable()){
+            //player loses turn
+        }
+        else{
+            if(getRank() < role.getRankRequired()){
+                //player loses turn
+            }
+            else{
+                setRole(role);
+                setWorking(true);
+                role.assignPlayer(this);
+            }
+        }
     }
 
-    public void upgrade(int rank, int currency, String currencyType){
-        if(!bank.validateUpgrade(rank, currency, currencyType) || !locationManager.validateUpgrade(location)){
-            return;
+    public void upgrade(int rank, int currency, String currencyType, Bank bank, LocationManager lm){
+        if(!bank.validateUpgrade(rank, currency, currencyType) || !lm.validateUpgrade(getLocation())){
             //end turn
         }
         else{
-            if(currencyType == "Dollars"){
+            if(currencyType.equals("Dollars")){
                 setDollars(currency - bank.getRankDollarCost(rank));
             }
             else{

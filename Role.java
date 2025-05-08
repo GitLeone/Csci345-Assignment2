@@ -10,6 +10,13 @@ public class Role {
         this.occupiedBy = null;
     }
 
+    public boolean getStarring(){
+        return this.isStarring;
+    }
+    public void setStarring(boolean isStarring){
+        this.isStarring = isStarring;
+    }
+
     public boolean isAvailable() {
         return occupiedBy == null;
     }
@@ -19,11 +26,6 @@ public class Role {
     }
 
     public int getRankRequired() {
-        return rankRequired;
+        return this.rankRequired;
     }
-
-    public String getName() {
-        return name;
-    }
-
 }
