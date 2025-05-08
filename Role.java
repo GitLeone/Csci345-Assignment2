@@ -28,7 +28,7 @@ public class Role {
     }
 
     public boolean isAvailable() {
-        return occupiedBy == null;
+        return this.occupiedBy == null;
     }
 
     public void assignPlayer(Player player) {
