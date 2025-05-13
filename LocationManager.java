@@ -12,6 +12,7 @@ public class LocationManager{
        this.playerLocations = new HashMap<>();
        this.neighbors = new HashMap<>();
    }
+
    public void initializeNeighbors(){
         List<String> mainStreetNeighbors = Arrays.asList("trailers", "saloon", "jail");
         List<String> trailersNeighbors = Arrays.asList("main street", "saloon", "hotel");
@@ -38,10 +39,12 @@ public class LocationManager{
         neighbors.put("general store", generalStoreNeighbors);
         neighbors.put("hotel", hotelNeighbors);
    }
+
    public void updatePlayerLocation(Player player, String location){
         playerLocations.remove(player);
         playerLocations.put(player, location);
    }
+
    public boolean validateMove(String playerLocation, String location){
     //if the location the player wants to move to is not a neighbor of their current location, return false, else return true
     if(!neighbors.get(playerLocation).contains(location)){
@@ -51,6 +54,7 @@ public class LocationManager{
         return true;
     }
    }
+
    public boolean validateUpgrade(String location){
     if(!locationList.contains(location)){
         return false;
@@ -59,4 +63,8 @@ public class LocationManager{
         return true;
     }
    }
+
+    public String getPlayerLocation(Player player) {
+        return playerLocations.getOrDefault(player, "trailers"); // Default to trailers
+    }
 }

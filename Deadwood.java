@@ -1,4 +1,5 @@
 public class Deadwood{
+    //Main class that runs the game and has minor dialogue
     public static void main(String[] args){
         Dice die = new Dice();
 
