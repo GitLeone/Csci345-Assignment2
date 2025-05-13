@@ -7,7 +7,6 @@ public class Player {
     private boolean working;
     private String location;
     private Role role;
-    //Moderator creates the location Manager and uses it to make calls like player move?
  
     //constructor
     public Player(String name, int rank, int credits, int dollars, int practiceChips, boolean working, String location, Role role){
@@ -20,6 +19,7 @@ public class Player {
         this.location = location;
         this.role = role;
     }
+
     //getters & setters
     public String getName(){
         return this.name;
@@ -85,7 +85,7 @@ public class Player {
         if(!getWorking()){
             //player loses turn
         }
-        /*In the GameController case:
+        /*In the GameController case: player rehearse
             If player.getPracticeChips() == player.getRole().getRankRequired(){
                 player.act(dice, set, scene)
             }*/
@@ -101,9 +101,10 @@ public class Player {
         }
         else{
             int roll = dice.roll();
-            if(roll >= scene.getBudget()){ //succeed
+            if(roll + getPracticeChips() >= scene.getBudget()){ //succeed
                 //Either have player set shotCounter or have the method return true and have the GameController do it
                 set.removeShot();
+                setPracticeChips(0);
                 if(getRole().getStarring()){
                     //gets 2 credits
                     setCredits(getCredits() + 2);
@@ -154,6 +155,9 @@ public class Player {
             }  
             setRank(rank);
         }
+    }
+    public void endTurn(){
+        //current player will be set to the next in line
     }
  }
  
