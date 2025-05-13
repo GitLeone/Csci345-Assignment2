@@ -8,7 +8,8 @@ public class SceneCard{
         this.budget = budget;
         this.flipped = flipped;
     }
- 
+    
+    //Gets the name of scene
     public String getName(){
         return this.name;
     }
