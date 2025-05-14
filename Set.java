@@ -4,17 +4,17 @@ import java.util.List;
 public class Set {
     private String name;
     private SceneCard sceneCard;
-    private List<Role> extraRoles;
+    private List<Role> offRoles;
     private int maxShots;
     private int shotsRemaining;
-    private List<Set> adjacentSets;
+    private List<String> adjacentSets;
     private List<Player> players; //Players currently in this location
 
     public Set(String name, int maxShots) {
         this.name = name;
         this.maxShots = maxShots;
         this.shotsRemaining = maxShots;
-        this.extraRoles = new ArrayList<>();
+        this.offRoles = new ArrayList<>();
         this.adjacentSets = new ArrayList<>();
         this.players = new ArrayList<>();
     }
@@ -58,8 +58,8 @@ public class Set {
     }
 
     // Adjacency
-    public void addAdjacentSet(Set set) {
-        adjacentSets.add(set);
+    public void addAdjacentSet(String setName) {
+        adjacentSets.add(setName);
     }
 
     public List<Set> getAdjacentSets() {
@@ -70,7 +70,15 @@ public class Set {
         return this.shotsRemaining;
     }
 
+    public void setShotsRemaining(int shots) {
+        this.shotsRemaining = shots;
+    }
+
     public String getName() {
         return this.name;
+    }
+
+    public void addOffRole(Role offRole){
+        offRoles.add(offRole);
     }
 }

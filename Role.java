@@ -5,10 +5,10 @@ public class Role {
     private boolean isStarring;
     private Player occupiedBy;
 
-    public Role(int rankRequired, boolean isStarring) {
-        this.rankRequired = rankRequired;
+    public Role(String name, boolean isStarring, int rankRequired) {
+        this.name = name;
         this.isStarring = isStarring;
-        this.occupiedBy = null;
+        this.rankRequired = rankRequired;
     }
 
     public String getName(){
@@ -17,6 +17,10 @@ public class Role {
 
     public String getLine(){
         return this.line;
+    }
+
+    public void setLine(String line){
+        this.line = line;
     }
     
     public boolean getStarring() {

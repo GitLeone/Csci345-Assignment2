@@ -1,3 +1,5 @@
+import java.util.List;
+
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -7,6 +9,9 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 public class ParseXML{
+    //setList will hold all the newly created sets
+    //private List<Set> setList;
+    private Map<String, Set> setList;
     // returns a Document object
     public Document getDocFromFile(String filename)
     throws ParserConfigurationException
@@ -71,7 +76,10 @@ public class ParseXML{
         for (int i=0; i < sets.getLength(); i++){
             Node set = sets.item(i);
             String setName = set.getAttributes().getNamedItem("name").getNodeValue();
-            System.out.println("Set name = " + setName);
+            //Create new set here
+            Set newSet = new Set(setName, 0);
+            this.setList.add(setName, newSet);
+            //key = setName
             //Nodes Children
             NodeList children = set.getChildNodes();
             for (int j = 0; j < children.getLength(); j++){
@@ -83,19 +91,26 @@ public class ParseXML{
                         Node neighborsSub = neighborsChildren.item(k);
                         if("neighbor".equals(neighborsSub.getNodeName())){
                             String neighborName = neighborsSub.getAttributes().getNamedItem("name").getNodeValue();
-                            System.out.println("Neighbor name = " + neighborName);                          
+                            //Add to the value list of neighbor for the associated set
+                            newSet.addAdjacentSet(neighborName);
                         }
                     }
                 }
                 else if("takes".equals(sub.getNodeName())){
                     NodeList takesChildren = sub.getChildNodes();
+                    int maxTakes = 0;
                     for (int k = 0; k < takesChildren.getLength(); k++){
                         Node takesSub = takesChildren.item(k);
                         if("take".equals(takesSub.getNodeName())){
-                            int numTakes = Integer.parseInt(takesSub.getAttributes().getNamedItem("number").getNodeValue());
-                            System.out.println("Number of takes = " + numTakes);    
+                           int numTakes = Integer.parseInt(takesSub.getAttributes().getNamedItem("number").getNodeValue());
+                            if (numTakes > maxTakes){
+                                maxTakes = numTakes;
+                            }
                         }
                     }
+                    //sets Set objects shots remaining
+                    //Using a max method so I can more easily make chanegs when we need the positions of multiple shots in Assignment 3
+                    newSet.setShotsRemaining(maxTakes);
                 }
                 else if("parts".equals(sub.getNodeName())){
                     NodeList partsChildren = sub.getChildNodes();
@@ -104,19 +119,22 @@ public class ParseXML{
                         if("part".equals(partsSub.getNodeName())){
                             String partName = partsSub.getAttributes().getNamedItem("name").getNodeValue();
                             int partLevel = Integer.parseInt(partsSub.getAttributes().getNamedItem("level").getNodeValue());
-                            System.out.println("Part name = " + partName);
-                            System.out.println("Part level = " + partLevel);
+                            //creates the off card roles
+                            Role newRole = new Role(partName, false, partLevel);
+                            //adds the off card role to the associated set
+                            newSet.addOffRole(newRole);
                             NodeList partChildren = partsSub.getChildNodes();
                             for (int l = 0; l < partChildren.getLength(); l++){
                                 Node partSub = partChildren.item(l);
                                 if("line".equals(partSub.getNodeName())){
+                                    //Probably going to change partsSub to partSub here. Need testing
                                     String partLine = partsSub.getTextContent().trim();
-                                    System.out.println("Line = " + partLine);
+                                    //Sets the line of all off card roles for the set
+                                    newRole.setLine(partLine);
                                 }
                             }
                         }
                     }
-                    
                 }
             }
         }
