@@ -1,5 +1,5 @@
-import java.util.List;
-
+import java.util.HashMap;
+import java.util.Map;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -11,7 +11,7 @@ import org.w3c.dom.NodeList;
 public class ParseXML{
     //setList will hold all the newly created sets
     //private List<Set> setList;
-    private Map<String, Set> setList;
+    private Map<String, Set> setList = new HashMap<>();
     // returns a Document object
     public Document getDocFromFile(String filename)
     throws ParserConfigurationException
@@ -78,7 +78,7 @@ public class ParseXML{
             String setName = set.getAttributes().getNamedItem("name").getNodeValue();
             //Create new set here
             Set newSet = new Set(setName, 0);
-            this.setList.add(setName, newSet);
+            this.setList.put(setName, newSet);
             //key = setName
             //Nodes Children
             NodeList children = set.getChildNodes();
@@ -127,8 +127,8 @@ public class ParseXML{
                             for (int l = 0; l < partChildren.getLength(); l++){
                                 Node partSub = partChildren.item(l);
                                 if("line".equals(partSub.getNodeName())){
-                                    //Probably going to change partsSub to partSub here. Need testing
-                                    String partLine = partsSub.getTextContent().trim();
+                                    String partLine = partSub.getTextContent().trim();
+                                    System.out.println("part line = " + partLine);
                                     //Sets the line of all off card roles for the set
                                     newRole.setLine(partLine);
                                 }

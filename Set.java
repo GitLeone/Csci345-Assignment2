@@ -62,7 +62,7 @@ public class Set {
         adjacentSets.add(setName);
     }
 
-    public List<Set> getAdjacentSets() {
+    public List<String> getAdjacentSets() {
         return this.adjacentSets;
     }
 
