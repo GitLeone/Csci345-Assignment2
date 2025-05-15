@@ -4,6 +4,7 @@ public class Deadwood {
         View view = new TextView(moderator);
 
         view.promptPlayerCount();
-        view.displayMessage("Game starting..."); // Test message
-    }
+        view.startGameMessage();
+        //view.displayMessage("Game starting..."); // Test message
+    } 
 }
