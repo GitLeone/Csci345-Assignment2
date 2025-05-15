@@ -4,67 +4,44 @@ import java.util.List;
 import java.util.Map;
 
 public class LocationManager{
-   private List<String> locationList = Arrays.asList("main street", "trailers", "saloon", "casting office", "ranch", "secret hideout", "bank", "church", "hotel", "jail", "train station", "general store");
-   private Map<Player, String> playerLocations; //Tracks where players are
-   private Map<String, List<String>> neighbors; //Tracks what neighbors a specific location has
+   private Map<Player, Set> playerLocations; //Tracks where players are
+   private Map<String, Set> setList; //Contains list of sets and associated set object
    
-   public LocationManager(Map<Player, String> playerLocations, Map<String, String[]> neighbors){
-       this.playerLocations = new HashMap<>();
-       this.neighbors = new HashMap<>();
+   public LocationManager(Map<Player, Set> playerLocations, Map<String, Set> setList){
+        this.playerLocations = new HashMap<>(playerLocations);
+        this.setList = new HashMap<>(setList);
    }
 
-   public void initializeNeighbors(){
-        List<String> mainStreetNeighbors = Arrays.asList("trailers", "saloon", "jail");
-        List<String> trailersNeighbors = Arrays.asList("main street", "saloon", "hotel");
-        List<String> saloonNeighbors = Arrays.asList("main street", "trailers", "bank", "general store");
-        List<String> bankNeighbors = Arrays.asList("hotel", "church", "saloon", "ranch");        
-        List<String> castingOfficeNeighbors = Arrays.asList("train station", "ranch", "secret hideout");
-        List<String> ranchNeighbors = Arrays.asList("general store", "casting office", "secret hideout");
-        List<String> secretHideoutNeighbors = Arrays.asList("casting office", "ranch", "church");
-        List<String> churchNeighbors = Arrays.asList("secret hideout", "bank", "hotel");
-        List<String> trainStationNeighbors = Arrays.asList("casting office", "general store", "jail");
-        List<String> jailNeighbors = Arrays.asList("train station", "general store", "main street");
-        List<String> generalStoreNeighbors = Arrays.asList("jail", "train station", "ranch");
-        List<String> hotelNeighbors = Arrays.asList("bank", "church", "trailers");
-        neighbors.put("main street", mainStreetNeighbors);
-        neighbors.put("trailers", trailersNeighbors);
-        neighbors.put("saloon", saloonNeighbors);
-        neighbors.put("bank", bankNeighbors);
-        neighbors.put("casting office", castingOfficeNeighbors);
-        neighbors.put("ranch", ranchNeighbors);
-        neighbors.put("secret hideout", secretHideoutNeighbors);
-        neighbors.put("church", churchNeighbors);
-        neighbors.put("train station", trainStationNeighbors);
-        neighbors.put("jail", jailNeighbors);
-        neighbors.put("general store", generalStoreNeighbors);
-        neighbors.put("hotel", hotelNeighbors);
-   }
-
-   public void updatePlayerLocation(Player player, String location){
+   public void updatePlayerLocation(Player player, Set location){
         playerLocations.remove(player);
         playerLocations.put(player, location);
    }
 
-   public boolean validateMove(String playerLocation, String location){
+   public boolean validateMove(Player player, Set location){
     //if the location the player wants to move to is not a neighbor of their current location, return false, else return true
-    if(!neighbors.get(playerLocation).contains(location)){
-        return false;
+    if(getPlayerLocation(player).getAdjacentSets().contains(location)){
+        updatePlayerLocation(player, location);
+        return true;
     }
     else{
-        return true;
+        return false;
     }
    }
 
-   public boolean validateUpgrade(String location){
-    if(!locationList.contains(location)){
-        return false;
+   public boolean validateUpgrade(Player player){
+    if(getPlayerLocation(player).getName().equals("office")){
+        return true;
     }
     else{
-        return true;
+        return false;
     }
    }
 
-    public String getPlayerLocation(Player player) {
-        return playerLocations.getOrDefault(player, "trailers"); // Default to trailers
+    public Set getPlayerLocation(Player player) {
+        return playerLocations.getOrDefault(player, setList.get("trailer")); // Default to trailers
+    }
+
+    public Map<String, Set> getSetList(){
+        return this.setList;
     }
 }

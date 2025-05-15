@@ -1,17 +1,23 @@
-import java.util.HashMap;
-import java.util.Map;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.List;
+
 public class ParseXML{
     //setList will hold all the newly created sets
     //private List<Set> setList;
+    private Map<Integer, Integer> rankDollarCosts = new HashMap<>();
+    private Map<Integer, Integer> rankCreditCosts = new HashMap<>();
     private Map<String, Set> setList = new HashMap<>();
+    private Map<String, SceneCard> sceneDeck = new HashMap<>();
     // returns a Document object
     public Document getDocFromFile(String filename)
     throws ParserConfigurationException
@@ -36,24 +42,24 @@ public class ParseXML{
         for (int i=0; i < cards.getLength(); i++){
             Node card = cards.item(i);
             String cardName = card.getAttributes().getNamedItem("name").getNodeValue();
-            System.out.println("Name = " + cardName);
-            String cardBudget = card.getAttributes().getNamedItem("budget").getNodeValue();
-            System.out.println("Budget = " + cardBudget);
+            int cardBudget = Integer.parseInt(card.getAttributes().getNamedItem("budget").getNodeValue());
+            SceneCard newSceneCard = new SceneCard(cardName, cardBudget, false);
+            sceneDeck.put(cardName, newSceneCard);
             //Nodes Children
             NodeList children = card.getChildNodes();
             for (int j = 0; j < children.getLength(); j++){
                 Node sub = children.item(j);
                 if ("scene".equals(sub.getNodeName())){
                     int sceneNumber = Integer.parseInt(sub.getAttributes().getNamedItem("number").getNodeValue());
-                    System.out.println("Scene number = " + sceneNumber);
+                    newSceneCard.setSceneNumber(sceneNumber);
                     String scene = sub.getTextContent().trim();
-                    System.out.println("Scene = " + scene);
+                    newSceneCard.setScene(scene);
                 }
                 else if ("part".equals(sub.getNodeName())){
                     String partName = sub.getAttributes().getNamedItem("name").getNodeValue();
                     int partLevel = Integer.parseInt(sub.getAttributes().getNamedItem("level").getNodeValue());
-                    System.out.println("Part name = " + partName);
-                    System.out.println("Part level = " + partLevel);
+                    Role newPart = new Role(partName, true, partLevel);
+                    newSceneCard.addPart(newPart);
 
                     //This gets the children of the part child
                     NodeList partChildren = sub.getChildNodes();
@@ -61,7 +67,7 @@ public class ParseXML{
                         Node partSub = partChildren.item(k);
                         if("line".equals(partSub.getNodeName())){
                             String partLine = partSub.getTextContent().trim();
-                            System.out.println("Line = " + partLine);                            
+                            newPart.setLine(partLine);                           
                         }
                     }
                 }
@@ -128,7 +134,6 @@ public class ParseXML{
                                 Node partSub = partChildren.item(l);
                                 if("line".equals(partSub.getNodeName())){
                                     String partLine = partSub.getTextContent().trim();
-                                    System.out.println("part line = " + partLine);
                                     //Sets the line of all off card roles for the set
                                     newRole.setLine(partLine);
                                 }
@@ -139,7 +144,8 @@ public class ParseXML{
             }
         }
         Node trailer = root.getElementsByTagName("trailer").item(0);
-        System.out.println("Set name = Trailer");
+        Set trailerSet = new Set("trailer", 0);
+        this.setList.put("trailer", trailerSet);
         //Nodes Children
         NodeList trailerChildren = trailer.getChildNodes();
         for (int i=0; i < trailerChildren.getLength(); i++){
@@ -151,13 +157,14 @@ public class ParseXML{
                     Node neighborsSub = neighborsChildren.item(j);
                     if("neighbor".equals(neighborsSub.getNodeName())){
                         String neighborName = neighborsSub.getAttributes().getNamedItem("name").getNodeValue();
-                        System.out.println("Neighbor name = " + neighborName);
+                        trailerSet.addAdjacentSet(neighborName);
                     }
                 }
             }
         }
         Node office = root.getElementsByTagName("office").item(0);
-        System.out.println("Set name = Office");
+        Set officeSet = new Set("office", 0);
+        this.setList.put("office", officeSet);
         //Nodes Children
         NodeList officeChildren = office.getChildNodes();
         for (int i=0; i < officeChildren.getLength(); i++){
@@ -169,7 +176,7 @@ public class ParseXML{
                     Node neighborsSub = neighborsChildren.item(j);
                     if("neighbor".equals(neighborsSub.getNodeName())){
                         String neighborName = neighborsSub.getAttributes().getNamedItem("name").getNodeValue();
-                        System.out.println("Neighbor name = " + neighborName);
+                        officeSet.addAdjacentSet(neighborName);
                     }
                 }
             }
@@ -179,26 +186,43 @@ public class ParseXML{
                     Node upgradesSub = upgradesChildren.item(j);
                     if("upgrade".equals(upgradesSub.getNodeName())){
                         int upgradeLevel = Integer.parseInt(upgradesSub.getAttributes().getNamedItem("level").getNodeValue());
-                        System.out.println("Upgrade level = " + upgradeLevel);
                         String upgradeCurrency = upgradesSub.getAttributes().getNamedItem("currency").getNodeValue();
-                        System.out.println("Currency = " + upgradeCurrency);
                         int upgradeCost = Integer.parseInt(upgradesSub.getAttributes().getNamedItem("amt").getNodeValue());
-                        System.out.println("Upgrade cost = " + upgradeCost);
+                        if(upgradeCurrency.equals("dollar")){
+                            rankDollarCosts.put(upgradeLevel, upgradeCost);
+                        }
+                        else if(upgradeCurrency.equals("credit")){
+                            rankCreditCosts.put(upgradeLevel, upgradeCost);
+                        }
                     }
                 }
             }
         }
     }
+
+    public Map<Integer, Integer> getDollarMap(){
+        return rankDollarCosts;
+    }
+    public Map<Integer, Integer> getCreditMap(){
+        return rankCreditCosts;
+    }
+    //The following main is only for testing purposes. These objects will not be initialized here
     public static void main(String[] args) {
         ParseXML parse = new ParseXML();
         try {
-            Document doc = parse.getDocFromFile(args[0]);
-            //parse.readCardData(doc);
-            parse.readBoardData(doc);
+            Document cardData = parse.getDocFromFile(args[0]);
+            Document boardData = parse.getDocFromFile(args[1]);
+            parse.readCardData(cardData);
+            parse.readBoardData(boardData);
         }
         catch(ParserConfigurationException e){
             System.err.println("Error");
         }
+        catch(ArrayIndexOutOfBoundsException e){
+            System.err.println("Error: Wrong number of arguments\n Proper usage: java cards.xml board.xml");
+        }
+        catch(NullPointerException e){
+            System.err.println("Error: Wrong use of arguments\n Proper usage: java cards.xml board.xml");
+        }
     }
 }
-

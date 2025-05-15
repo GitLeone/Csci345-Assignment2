@@ -5,11 +5,11 @@ public class Player {
     private int dollars;
     private int practiceChips;
     private boolean working;
-    private String location;
+    private Set location;
     private Role role;
  
     //constructor
-    public Player(String name, int rank, int credits, int dollars, int practiceChips, boolean working, String location, Role role){
+    public Player(String name, int rank, int credits, int dollars, int practiceChips, boolean working, String location){
         this.name = name;
         this.rank = rank;
         this.credits = credits;
@@ -17,7 +17,6 @@ public class Player {
         this.practiceChips = practiceChips;
         this.working = working;
         this.location = location;
-        this.role = role;
     }
 
     //getters & setters
@@ -57,10 +56,10 @@ public class Player {
     public void setWorking(boolean working){
         this.working = working;
     }
-    public String getLocation(){
+    public Set getLocation(){
         return this.location;
     }
-    public void setLocation(String location){
+    public void setLocation(Set location){
         this.location = location;
     }
     public Role getRole(){
@@ -72,13 +71,13 @@ public class Player {
  
     //actions
     public void move(String location, LocationManager locationManager){
-        if(!locationManager.validateMove(getLocation(), location)){
-            //player loses turn
-        }
-        else{
+        if(locationManager.validateMove(this, location)){
             setLocation(location);
             //if the players new location is a set, check if the scenecard in the set has been flipped, if not, flip it
             //Location Managers location maps must also be updated
+        }
+        else{
+            //player loses turn
         }
     }
     public void rehearse(){
@@ -143,10 +142,7 @@ public class Player {
     }
 
     public void upgrade(int rank, int currency, String currencyType, Bank bank, LocationManager lm){
-        if(!bank.validateUpgrade(rank, currency, currencyType) || !lm.validateUpgrade(getLocation())){
-            //end turn
-        }
-        else{
+        if(bank.validateUpgrade(rank, currency, currencyType) & lm.validateUpgrade(getLocation())){
             if(currencyType.equals("Dollars")){
                 setDollars(currency - bank.getRankDollarCost(rank));
             }
@@ -154,6 +150,9 @@ public class Player {
                 setCredits(currency - bank.getRankCreditCost(rank));
             }  
             setRank(rank);
+        }
+        else{
+            //end turn
         }
     }
     public void endTurn(){

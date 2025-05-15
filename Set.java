@@ -7,7 +7,7 @@ public class Set {
     private List<Role> offRoles;
     private int maxShots;
     private int shotsRemaining;
-    private List<String> adjacentSets;
+    private List<Set> adjacentSets;
     private List<Player> players; //Players currently in this location
 
     public Set(String name, int maxShots) {
@@ -58,11 +58,11 @@ public class Set {
     }
 
     // Adjacency
-    public void addAdjacentSet(String setName) {
-        adjacentSets.add(setName);
+    public void addAdjacentSet(Set set) {
+        adjacentSets.add(set);
     }
 
-    public List<String> getAdjacentSets() {
+    public List<Set> getAdjacentSets() {
         return this.adjacentSets;
     }
 
