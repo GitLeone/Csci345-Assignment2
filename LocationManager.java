@@ -7,8 +7,8 @@ public class LocationManager{
    private Map<Player, Set> playerLocations; //Tracks where players are
    private Map<String, Set> setList; //Contains list of sets and associated set object
    
-   public LocationManager(Map<Player, Set> playerLocations, Map<String, Set> setList){
-        this.playerLocations = new HashMap<>(playerLocations);
+   public LocationManager(Map<String, Set> setList){
+        this.playerLocations = new HashMap<>();
         this.setList = new HashMap<>(setList);
    }
 
@@ -41,7 +41,14 @@ public class LocationManager{
         return playerLocations.getOrDefault(player, setList.get("trailer")); // Default to trailers
     }
 
+    public Map<Player, Set> getAllPlayerLocations(){
+        return this.playerLocations;
+    }
+
     public Map<String, Set> getSetList(){
         return this.setList;
+    }
+    public Set getSet(String location){
+        return setList.get(location);
     }
 }

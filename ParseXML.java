@@ -201,10 +201,16 @@ public class ParseXML{
     }
 
     public Map<Integer, Integer> getDollarMap(){
-        return rankDollarCosts;
+        return this.rankDollarCosts;
     }
     public Map<Integer, Integer> getCreditMap(){
-        return rankCreditCosts;
+        return this.rankCreditCosts;
+    }
+    public Map<String, Set> getSetList(){
+        return this.setList;
+    }
+    public Map<String, SceneCard> getSceneDeck(){
+        return this.sceneDeck;
     }
     //The following main is only for testing purposes. These objects will not be initialized here
     public static void main(String[] args) {

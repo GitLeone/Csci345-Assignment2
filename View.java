@@ -3,4 +3,5 @@ public interface View {
     void displayPlayerStatus(Player player);
     void displayLocation(Set set);
     void displayActResult(boolean success, int reward, String rewardType);
+    int promptPlayerCount();
 }

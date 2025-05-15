@@ -81,4 +81,7 @@ public class Set {
     public void addOffRole(Role offRole){
         offRoles.add(offRole);
     }
+    public int getMaxShots(){
+        return this.maxShots;
+    }
 }

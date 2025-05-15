@@ -1,6 +1,13 @@
+import java.util.Scanner;
+
 public class TextView implements View{
-        //Later implementation for player inputs
-    //private Scanner scanner = new Scanner(System.in);
+    private Scanner scanner;
+    private GameController moderator;
+
+    public TextView(GameController moderator){
+        this.moderator = moderator;
+        this.scanner = new Scanner(System.in);
+    }
 
     @Override
     public void displayActivePlayerWorking(Player player, Role role) {
@@ -15,10 +22,24 @@ public class TextView implements View{
             role.getLine()
         );
     }
+
+    @Override
+    public void promptAction(){
+        System.out.println("> ");
+        String action = scanner.nextLine();
+        moderator.processAction(action);
+    }
+
+    @Override
+    public void promptPlayerCount(){
+        System.out.println("How many players? > ");
+        int playerCount = scanner.nextInt();
+        moderator.initializePlayers(playerCount);
+    }
     
     @Override
     public void displayLocation(Set set) {
-
+        
     }
     
     //Informs player of acting result

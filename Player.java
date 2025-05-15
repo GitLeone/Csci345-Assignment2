@@ -9,7 +9,7 @@ public class Player {
     private Role role;
  
     //constructor
-    public Player(String name, int rank, int credits, int dollars, int practiceChips, boolean working, String location){
+    public Player(String name, int rank, int credits, int dollars, int practiceChips, boolean working, Set location){
         this.name = name;
         this.rank = rank;
         this.credits = credits;
@@ -68,6 +68,12 @@ public class Player {
     public void setRole(Role role){
         this.role = role;
     }
+    // public void setActive(boolean active){
+    //     this.active = active;
+    // }
+    // public boolean getActive(){
+    //     return this.active;
+    // }
  
     //actions
     public void move(String location, LocationManager locationManager){
