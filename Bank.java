@@ -18,20 +18,25 @@ public class Bank{
         return rankCreditCosts.get(rank);
     }
 
-    public boolean validateUpgrade(int rank, int currency, String currencyType){
+    public boolean validateUpgrade(Player player, int rank, String currencyType){
         boolean result = true;
         //if rank cost is higher than currency, return false
-        if(currencyType.equals("Dollars")){
-            if((rankDollarCosts.get(rank) > currency) || (rankDollarCosts.get(rank) == null)){
+        if(player.getRank() < rank){
+            if(currencyType.equals("Dollars")){
+                if((rankDollarCosts.get(rank) > player.getDollars()) || (rankDollarCosts.get(rank) == null)){
+                    result = false;
+                }
+            }
+            else if(currencyType.equals("Credits")){
+                if((rankCreditCosts.get(rank) > player.getCredits()) || (rankCreditCosts.get(rank) == null)){
+                    result = false;
+                }            
+            }
+            else {
                 result = false;
             }
         }
-        else if(currencyType.equals("Credits")){
-            if((rankCreditCosts.get(rank) > currency) || (rankCreditCosts.get(rank) == null)){
-                result = false;
-            }            
-        }
-        else {
+        else{
             result = false;
         }
         return result;

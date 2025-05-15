@@ -3,6 +3,12 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import javax.xml.parsers.ParserConfigurationException;
+
 import javax.management.DescriptorKey;
 
 public class GameController {
@@ -89,7 +95,6 @@ public class GameController {
     }
 
     public void startGame() {
-    view.displayMessage("=== DEADWOOD ===");
     /* 
     while (!gameOver) {
         startDay();
@@ -125,12 +130,11 @@ public class GameController {
         return players.get(currentPlayerIndex);
     }
 
-    private void endGame() {
-    view.displayMessage("\n=== GAME OVER ===");
+    public void endGame() {
     // Calculate and display final scores
     for (Player player : players) {
         int score = player.getDollars() + player.getCredits() + (player.getRank() * 5);
-        view.displayMessage(player.getName() + ": " + score + " points");
+        //view.displayMessage(player.getName() + ": " + score + " points");
     }
 }
 

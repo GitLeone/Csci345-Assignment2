@@ -1,7 +1,10 @@
 public interface View {
-    void displayMessage(String message);
-    void displayPlayerStatus(Player player);
+    void displayPlayerInfo(Player player);
     void displayLocation(Set set);
     void displayActResult(boolean success, int reward, String rewardType);
-    int promptPlayerCount();
+    void promptPlayerCount();
+    void startGameMessage();
+    void endGameMessage();
+    void displayActivePlayerWorking(Player player, Role role);
+    void promptAction();
 }

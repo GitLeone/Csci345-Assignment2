@@ -1,3 +1,6 @@
+import java.util.HashMap;
+import java.util.Map;
+
 public class Deck{
     private Map<String, SceneCard> sceneDeck = new HashMap<>();
     private Map<String, SceneCard> currentDeck = new HashMap<>(); //acts as the deck that is drawn from to preserve a copy of the original
@@ -21,8 +24,8 @@ public class Deck{
 
     }
 
-    public SceneCard drawRandomSceneCard(){
-        //returns a random card from the deck
-        //will be used when dealing cards to sets
-    }
+    // public SceneCard drawRandomSceneCard(){
+    //     //returns a random card from the deck
+    //     //will be used when dealing cards to sets
+    // }
 }

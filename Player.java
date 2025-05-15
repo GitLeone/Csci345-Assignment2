@@ -76,7 +76,7 @@ public class Player {
     // }
  
     //actions
-    public void move(String location, LocationManager locationManager){
+    public void move(Set location, LocationManager locationManager){
         if(locationManager.validateMove(this, location)){
             setLocation(location);
             //if the players new location is a set, check if the scenecard in the set has been flipped, if not, flip it
@@ -147,13 +147,13 @@ public class Player {
         }
     }
 
-    public void upgrade(int rank, int currency, String currencyType, Bank bank, LocationManager lm){
-        if(bank.validateUpgrade(rank, currency, currencyType) & lm.validateUpgrade(getLocation())){
+    public void upgrade(int rank, String currencyType, Bank bank, LocationManager lm){
+        if(bank.validateUpgrade(this, rank, currencyType) & lm.validateUpgrade(this)){
             if(currencyType.equals("Dollars")){
-                setDollars(currency - bank.getRankDollarCost(rank));
+                setDollars(getDollars() - bank.getRankDollarCost(rank));
             }
             else{
-                setCredits(currency - bank.getRankCreditCost(rank));
+                setCredits(getCredits() - bank.getRankCreditCost(rank));
             }  
             setRank(rank);
         }

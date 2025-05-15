@@ -10,6 +10,18 @@ public class TextView implements View{
     }
 
     @Override
+    public void startGameMessage(){
+        System.out.println("=== DEADWOOD ===");
+        moderator.startGame();
+    }
+
+    @Override
+    public void endGameMessage(){
+        System.out.println("\n=== GAME OVER ===");
+        moderator.endGame();
+    }
+
+    @Override
     public void displayActivePlayerWorking(Player player, Role role) {
         System.out.printf(
             "The active player is %s. They have $%d, %d credits and %d rehearsal chips. " +
