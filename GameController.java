@@ -55,24 +55,12 @@ public class GameController {
         this.bank = new Bank(parse.getDollarMap(), parse.getCreditMap());
         this.locationManager = new LocationManager(parse.getSetList());
         this.deck = new Deck(parse.getSceneDeck());
-        // Initialize all sets - The parse fills all of this out -
-        // Set trailers = new Set("trailers", 0);
-        // Set castingOffice = new Set("casting office", 0);
-        // Set ranch = new Set("ranch", 3);
-        // Set saloon = new Set("saloon", 2);
-        // Set bankSet = new Set("bank", 1); 
-        // Set mainStreet = new Set("main street", 2);
-        // Set hotel = new Set("hotel", 3);
-        // Set church = new Set("church", 2);
-        // Set jail = new Set("jail", 1);
-        // Set generalStore = new Set("general store", 2);
-        // Set trainStation = new Set("train station", 2);
-        // Set secretHideout = new Set("secret hideout", 1);
 
-        // sets.addAll(Arrays.asList(
-        //     trailers, castingOffice, ranch, saloon, bankSet,
-        //     mainStreet, hotel, church, jail, generalStore,
-        //     trainStation, secretHideout));
+        //Draws and assigns a sceneCard from the deck to each set
+        for(Set value : locationManager.getSetList().values()){
+            SceneCard randCard = deck.drawRandomSceneCard();
+            value.setSceneCard(randCard);
+        }
     }
 
     public void initializePlayers(int numPlayers) {
@@ -95,19 +83,17 @@ public class GameController {
     }
 
     public void startGame() {
-    /* 
-    while (!gameOver) {
-        startDay();
-        while (!isDayOver()) {
-            Player currentPlayer = getActivePlayer();
-            handlePlayerTurn(currentPlayer);
-            currentPlayerIndex = (currentPlayerIndex + 1) % players.size();
+        while (!gameOver) {
+            startDay();
+            while (!isDayOver()) {
+                Player currentPlayer = getActivePlayer();
+                handlePlayerTurn(currentPlayer);
+                currentPlayerIndex = (currentPlayerIndex + 1) % players.size();
+            }
+            endDay();
         }
-        endDay();
+        endGame();
     }
-    endGame();
-    */
-}
     //This processAction will have switch statements for all player actions
     public void processAction(String input){
         String[] line = input.split(" ", 2);
