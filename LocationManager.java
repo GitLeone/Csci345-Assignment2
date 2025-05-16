@@ -17,10 +17,10 @@ public class LocationManager{
         playerLocations.put(player, location);
    }
 
-   public boolean validateMove(Player player, Set location){
+   public boolean validateMove(Player player, String location){
     //if the location the player wants to move to is not a neighbor of their current location, return false, else return true
     if(getPlayerLocation(player).getAdjacentSets().contains(location)){
-        updatePlayerLocation(player, location);
+        updatePlayerLocation(player, getSet(location));
         return true;
     }
     else{

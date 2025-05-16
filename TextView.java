@@ -37,14 +37,14 @@ public class TextView implements View{
 
     @Override
     public void promptAction(){
-        System.out.println("> ");
+        System.out.print("> ");
         String action = scanner.nextLine();
         moderator.processAction(action);
     }
 
     @Override
     public void promptPlayerCount(){
-        System.out.println("How many players? > ");
+        System.out.print("How many players? > ");
         int playerCount = scanner.nextInt();
         moderator.initializePlayers(playerCount);
     }
