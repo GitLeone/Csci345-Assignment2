@@ -16,6 +16,5 @@ public class Deadwood {
             moderator.endDay();
         }
         moderator.endGame();
-        //view.displayMessage("Game starting..."); // Test message
     } 
 }

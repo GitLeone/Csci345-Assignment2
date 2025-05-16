@@ -24,9 +24,15 @@ public class TextView implements View{
 
     @Override
     public void promptAction(){
-        System.out.print("> ");
-        String action = scanner.nextLine();
-        moderator.processAction(action);
+        Boolean valid = false;
+        while(!valid){
+            System.out.print("> ");
+            String action = scanner.nextLine();
+            valid = moderator.processAction(action);
+            if(!valid){
+                invalidAction();
+            }
+        }
     }
 
     @Override
@@ -91,8 +97,9 @@ public class TextView implements View{
             );
         }
     }
+    //When we make other invalid action statements, they can go here. We can add a String parameter for the type of invalid action taken to print the right statement
+    //Something like that
     public void invalidAction(){
         System.out.println("That action is not valid, try again");
-        promptAction();
     }
 }

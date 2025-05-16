@@ -58,6 +58,7 @@ public class GameController {
         this.bank = new Bank(parse.getDollarMap(), parse.getCreditMap());
         this.locationManager = new LocationManager(parse.getSetList());
         this.deck = new Deck(parse.getSceneDeck());
+        dealSceneCards();
     }
 
     //deals one sceneCard to each set
@@ -118,7 +119,7 @@ public class GameController {
     }
 
     //This processAction will have switch statements for all player actions
-    public void processAction(String input){
+    public boolean processAction(String input){
         //Right now input is case sensitive
         String[] line = input.split(" ", 2);
         String action = line[0];
@@ -126,12 +127,11 @@ public class GameController {
         switch (action) {
             case "move":
                 if(line.length < 2){
-                    view.invalidAction();
-                    break;
+                    return false;
                 }
                 String location = line[1];
                 if(!currentPlayer.move(location, locationManager)){
-                    view.invalidAction();
+                    return false;
                 }
                 break;
 
@@ -146,6 +146,7 @@ public class GameController {
             default:
                 break;
         }
+        return true;
     }
 
     public Player getActivePlayer(){
