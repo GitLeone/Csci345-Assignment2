@@ -88,9 +88,9 @@ public class Player {
         }
 
     }
-    public void rehearse(){
+    public boolean rehearse(){
         if(!getWorking()){
-            //player loses turn
+            return false;
         }
         /*In the GameController case: player rehearse
             If player.getPracticeChips() == player.getRole().getRankRequired(){
@@ -98,6 +98,7 @@ public class Player {
             }*/
         else{
             setPracticeChips(getPracticeChips() + 1);
+            return true;
         }
     }
     public void act(Dice dice, Set set, SceneCard scene){
@@ -133,19 +134,21 @@ public class Player {
             }
         }
     }
-    public void takeRole(Role role){  
-        if(!role.isAvailable()){
-            //player loses turn
-        }
-        else{
+    //Maybe instead of returning boolean, it returns an int that represents the fail case
+    public boolean takeRole(Role role){  
+        if(role.isAvailable()){
             if(getRank() < role.getRankRequired()){
-                //player loses turn
+                return false;
             }
             else{
                 setRole(role);
                 setWorking(true);
                 role.assignPlayer(this);
+                return true;
             }
+        }
+        else{
+            return false;
         }
     }
 

@@ -7,4 +7,5 @@ public interface View {
     void endGameMessage();
     void promptAction();
     void invalidAction();
+    Role chooseFromAvailableRoles(Player player);
 }

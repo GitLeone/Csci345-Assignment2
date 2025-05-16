@@ -121,15 +121,23 @@ public class GameController {
     //This processAction will have switch statements for all player actions
     public boolean processAction(String input){
         //Right now input is case sensitive
-        String[] line = input.split(" ", 2);
-        String action = line[0];
         Player currentPlayer = getActivePlayer();
+        Set currentPlayerLocation = locationManager.getSet(currentPlayer.getLocation());
+        String action;
+        String[] lineSplit = input.split(" ", 2);;
+
+        if(input.equals("take role")){
+            action = input;
+        }
+        else{
+            action = lineSplit[0];
+        }
         switch (action) {
             case "move":
-                if(line.length < 2){
+                if(lineSplit.length < 2){
                     return false;
                 }
-                String location = line[1];
+                String location = lineSplit[1];
                 if(!currentPlayer.move(location, locationManager)){
                     return false;
                 }
@@ -141,6 +149,11 @@ public class GameController {
 
             case "who":
                 view.displayPlayerInfo(currentPlayer);
+                break;
+            
+            case "take role":
+                Role chosenRole = view.chooseFromAvailableRoles(currentPlayer);
+                currentPlayer.takeRole(chosenRole);
                 break;
 
             default:

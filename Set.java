@@ -1,11 +1,13 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
 
 public class Set {
     private String name;
     private boolean isSet;
     private SceneCard sceneCard;
-    private List<Role> offRoles;
+    private Map<String, Role> offRoles;
     private int maxShots;
     private int shotsRemaining;
     private List<String> adjacentSets; //This instance of sets are strings because when creating them through the parse, the Set objects of adjacent sets may not be created yet
@@ -15,7 +17,7 @@ public class Set {
         this.name = name;
         this.maxShots = maxShots;
         this.shotsRemaining = maxShots;
-        this.offRoles = new ArrayList<>();
+        this.offRoles = new HashMap<>();
         this.adjacentSets = new ArrayList<>();
         this.players = new ArrayList<>();
         this.isSet = isSet;
@@ -81,8 +83,19 @@ public class Set {
     }
 
     public void addOffRole(Role offRole){
-        offRoles.add(offRole);
+        offRoles.put(offRole.getName(), offRole);
     }
+    public Map<String, Role> getOffRoles(){
+        return this.offRoles;
+    }
+    public List<String> getRoleNameList(){
+        List<String> roleNameList = new ArrayList<String>();
+        for (String key : getOffRoles().keySet()) {
+            roleNameList.add(key);
+        }
+        return roleNameList;
+    }
+
     public int getMaxShots(){
         return this.maxShots;
     }

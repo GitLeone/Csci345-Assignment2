@@ -1,5 +1,7 @@
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.HashMap;
 
 public class SceneCard{
     private String name;
@@ -7,13 +9,13 @@ public class SceneCard{
     private boolean flipped;
     private int sceneNumber;
     private String scene;
-    private List<Role> partList;
+    private Map<String, Role> roleList;
    
     public SceneCard(String name, int budget, boolean flipped){
         this.name = name;
         this.budget = budget;
         this.flipped = flipped;
-        this.partList = new ArrayList<>();
+        this.roleList = new HashMap<>();
     }
     //Gets the name of scene
     public String getName(){
@@ -49,7 +51,20 @@ public class SceneCard{
     public void setScene(String scene){
         this.scene = scene;
     }
-    public void addPart(Role part){
-        partList.add(part);
+    public void addPart(Role role){
+        roleList.put(role.getName(), role);
+    }
+    public Role getRole(String role){
+        return getRoleList().get(role);
+    }
+    public Map<String, Role> getRoleList(){
+        return this.roleList;
+    }
+    public List<String> getRoleNameList(){
+        List<String> roleNameList = new ArrayList<String>();
+        for (String key : getRoleList().keySet()) {
+            roleNameList.add(key);
+        }
+        return roleNameList;
     }
  }

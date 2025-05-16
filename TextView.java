@@ -1,4 +1,7 @@
+import java.util.List;
 import java.util.Scanner;
+import java.util.Map;
+import java.util.HashMap;
 
 public class TextView implements View{
     private Scanner scanner;
@@ -97,8 +100,33 @@ public class TextView implements View{
             );
         }
     }
+
+    @Override
+    public Role chooseFromAvailableRoles(Player player){
+        String playerLocationName = player.getLocation();
+        Set playerLocation = lm.getSet(playerLocationName);
+
+        System.out.println("Available off card roles: "); 
+        Map<String, Role> offCardRoles = playerLocation.getOffRoles();
+        for (String key : offCardRoles.keySet()) {
+            System.out.println("Role: " + key + " requires rank " + offCardRoles.get(key).getRankRequired());
+        }
+
+        System.out.println("Available on card roles: ");
+        Map<String, Role> onCardRoles = playerLocation.getSceneCard().getRoleList();
+        for (String key : onCardRoles.keySet()) {
+            System.out.println("Role: " + key + " requires rank " + onCardRoles.get(key).getRankRequired());
+        }
+
+        System.out.printf("Which role would you like: > ");
+        String chosenRole = scanner.nextLine();
+        Role role = playerLocation.getSceneCard().getRole(chosenRole);
+        return role;
+    }
+
     //When we make other invalid action statements, they can go here. We can add a String parameter for the type of invalid action taken to print the right statement
     //Something like that
+    @Override
     public void invalidAction(){
         System.out.println("That action is not valid, try again");
     }
