@@ -105,22 +105,32 @@ public class TextView implements View{
     public Role chooseFromAvailableRoles(Player player){
         String playerLocationName = player.getLocation();
         Set playerLocation = lm.getSet(playerLocationName);
+        Role role;
 
-        System.out.println("Available off card roles: "); 
+        System.out.println("\nAvailable off card roles:"); 
         Map<String, Role> offCardRoles = playerLocation.getOffRoles();
         for (String key : offCardRoles.keySet()) {
-            System.out.println("Role: " + key + " requires rank " + offCardRoles.get(key).getRankRequired());
+            if(offCardRoles.get(key).isAvailable()){
+                System.out.println("Role: " + key + " requires rank " + offCardRoles.get(key).getRankRequired());
+            }
         }
 
-        System.out.println("Available on card roles: ");
+        System.out.println("\nAvailable on card roles:");
         Map<String, Role> onCardRoles = playerLocation.getSceneCard().getRoleList();
         for (String key : onCardRoles.keySet()) {
-            System.out.println("Role: " + key + " requires rank " + onCardRoles.get(key).getRankRequired());
+            if(onCardRoles.get(key).isAvailable()){
+                System.out.println("Role: " + key + " requires rank " + onCardRoles.get(key).getRankRequired());
+            }
         }
 
         System.out.printf("Which role would you like: > ");
         String chosenRole = scanner.nextLine();
-        Role role = playerLocation.getSceneCard().getRole(chosenRole);
+        if(onCardRoles.containsKey(chosenRole)){
+            role = playerLocation.getSceneCard().getRole(chosenRole);
+        }
+        else{
+            role = playerLocation.getOffRole(chosenRole);
+        }
         return role;
     }
 

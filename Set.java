@@ -88,6 +88,9 @@ public class Set {
     public Map<String, Role> getOffRoles(){
         return this.offRoles;
     }
+    public Role getOffRole(String role){
+        return getOffRoles().get(role);
+    }
     public List<String> getRoleNameList(){
         List<String> roleNameList = new ArrayList<String>();
         for (String key : getOffRoles().keySet()) {
