@@ -16,21 +16,23 @@ public class GameController {
     private int maxDays;
     private Bank bank;
     private List<Player> players;
-    // private List<Set> sets; location manager has all of the sets
     private LocationManager locationManager;
-    //private View view; Doesnt need a view object, view makes a GameController object and calls its functions
+    private View view;
     private int currentPlayerIndex;
     private Dice dice;
     private Deck deck;
     private boolean gameOver;
+    private boolean dayOver;
 
     public GameController() {
         this.players = new ArrayList<>();
-        //this.sets = new ArrayList<>();
         this.dice = new Dice();
-        //this.view = new TextView();
         this.currentDay = 1;
         initializeGameBoard();
+    }
+
+    public LocationManager getLocationManager(){
+        return this.locationManager;
     }
 
     private void initializeGameBoard() {
@@ -52,11 +54,14 @@ public class GameController {
             System.err.println("Error: Wrong use of arguments\n Proper usage: java cards.xml board.xml");
         }
 
+        //Initializes bank, locationManager, deck
         this.bank = new Bank(parse.getDollarMap(), parse.getCreditMap());
         this.locationManager = new LocationManager(parse.getSetList());
         this.deck = new Deck(parse.getSceneDeck());
+    }
 
-        //Draws and assigns a sceneCard from the deck to each set
+    //deals one sceneCard to each set
+    public void dealSceneCards(){
         for(Set value : locationManager.getSetList().values()){
             SceneCard randCard = deck.drawRandomSceneCard();
             value.setSceneCard(randCard);
@@ -64,49 +69,80 @@ public class GameController {
     }
 
     public void initializePlayers(int numPlayers) {
-    int startingCredits = 0;
-    int startingDollars = (numPlayers <= 3) ? 2 : 0;
-    
-    for (int i = 0; i < numPlayers; i++) {
-        Player player = new Player(
-            "Player " + (i+1),
-            1,             // starting rank
-            startingCredits,
-            startingDollars,
-            0,            
-            false,         
-            locationManager.getSet("trailer")
-            );
-            players.add(player);
-            locationManager.updatePlayerLocation(player, locationManager.getSet("trailer"));
+        int startingCredits = 0;
+        int startingDollars = 0;
+        int startingRank = 0;
+        this.currentPlayerIndex = 0;
+
+        if(numPlayers == 5){
+            startingCredits = 2;
         }
+        else if(numPlayers == 6){
+            startingCredits = 4;
+        }
+        else if(numPlayers == 7 || numPlayers == 8){
+            startingRank = 2;
+        }
+        setMaxDays((numPlayers == 2 || numPlayers == 3) ? 3 : 4);
+        
+        for (int i = 0; i < numPlayers; i++) {
+            Player player = new Player(
+                "Player " + (i+1),
+                startingRank,             // starting rank
+                startingCredits,
+                startingDollars,
+                0,            
+                false,         
+                "trailer"
+                );
+                players.add(player);
+                locationManager.updatePlayerLocation(player, locationManager.getSet("trailer"));
+            }
     }
 
-    public void startGame() {
-        while (!gameOver) {
-            startDay();
-            while (!isDayOver()) {
-                Player currentPlayer = getActivePlayer();
-                handlePlayerTurn(currentPlayer);
-                currentPlayerIndex = (currentPlayerIndex + 1) % players.size();
-            }
-            endDay();
-        }
-        endGame();
+    public boolean isDayOver(){
+        return this.dayOver;
     }
+    public void setDayOver(boolean dayOver){
+        this.dayOver = dayOver;
+    }
+    public void endDay(){
+        setDayOver(true);
+        currentDay++;
+        if(currentDay > maxDays){
+            setGameOver(true);
+        }
+    }
+    public void setView(View view){
+        this.view = view;
+    }
+
     //This processAction will have switch statements for all player actions
     public void processAction(String input){
+        //Right now input is case sensitive
         String[] line = input.split(" ", 2);
         String action = line[0];
-        String arg = line[1];
-        action = action.toLowerCase();
+        Player currentPlayer = getActivePlayer();
         switch (action) {
             case "move":
-                Player currentPlayer = getActivePlayer();
-                Set location = locationManager.getSet(arg);
-                currentPlayer.move(location, locationManager);
+                if(line.length < 2){
+                    view.invalidAction();
+                    break;
+                }
+                String location = line[1];
+                if(!currentPlayer.move(location, locationManager)){
+                    view.invalidAction();
+                }
                 break;
-        
+
+            case "where":
+                view.displayPlayerLocation(currentPlayer);
+                break;
+
+            case "who":
+                view.displayPlayerInfo(currentPlayer);
+                break;
+
             default:
                 break;
         }
@@ -116,14 +152,24 @@ public class GameController {
         return players.get(currentPlayerIndex);
     }
 
-    public void endGame() {
-    // Calculate and display final scores
-    for (Player player : players) {
-        int score = player.getDollars() + player.getCredits() + (player.getRank() * 5);
-        //view.displayMessage(player.getName() + ": " + score + " points");
+    public void endTurn(){
+        currentPlayerIndex = (currentPlayerIndex + 1) % players.size();
     }
-}
 
-    
-    
+    public void endGame() {
+        // Calculate and display final scores
+        for (Player player : players) {
+            int score = player.getDollars() + player.getCredits() + (player.getRank() * 5);
+            //view.displayMessage(player.getName() + ": " + score + " points");
+        }
+    }
+    public boolean getGameOver(){
+        return this.gameOver;
+    }
+    public void setGameOver(boolean gameOver){
+        this.gameOver = gameOver;
+    }
+    public void setMaxDays(int maxDays){
+        this.maxDays = maxDays;
+    }
 }

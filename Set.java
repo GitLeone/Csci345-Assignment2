@@ -3,6 +3,7 @@ import java.util.List;
 
 public class Set {
     private String name;
+    private boolean isSet;
     private SceneCard sceneCard;
     private List<Role> offRoles;
     private int maxShots;
@@ -10,13 +11,14 @@ public class Set {
     private List<String> adjacentSets; //This instance of sets are strings because when creating them through the parse, the Set objects of adjacent sets may not be created yet
                                         //If the Set object from this list is needed, use locationManager.getSet()
     private List<Player> players; //Players currently in this location
-    public Set(String name, int maxShots) {
+    public Set(String name, int maxShots, boolean isSet) {
         this.name = name;
         this.maxShots = maxShots;
         this.shotsRemaining = maxShots;
         this.offRoles = new ArrayList<>();
         this.adjacentSets = new ArrayList<>();
         this.players = new ArrayList<>();
+        this.isSet = isSet;
     }
 
     //How we manage the scenes
@@ -27,9 +29,9 @@ public class Set {
     public SceneCard getSceneCard() {
         return this.sceneCard;
     }
-
-    public boolean hasScene() {
-        return this.sceneCard != null;
+    //For seperating office and trailer from sets
+    public boolean isSet(){
+        return this.isSet;
     }
 
     //Controls the shots taken and removes when player utilizies shot

@@ -83,7 +83,7 @@ public class ParseXML{
             Node set = sets.item(i);
             String setName = set.getAttributes().getNamedItem("name").getNodeValue();
             //Create new set here
-            Set newSet = new Set(setName, 0);
+            Set newSet = new Set(setName, 0, true);
             this.setList.put(setName, newSet);
             //key = setName
             //Nodes Children
@@ -144,7 +144,7 @@ public class ParseXML{
             }
         }
         Node trailer = root.getElementsByTagName("trailer").item(0);
-        Set trailerSet = new Set("trailer", 0);
+        Set trailerSet = new Set("trailer", 0, false);
         this.setList.put("trailer", trailerSet);
         //Nodes Children
         NodeList trailerChildren = trailer.getChildNodes();
@@ -163,7 +163,7 @@ public class ParseXML{
             }
         }
         Node office = root.getElementsByTagName("office").item(0);
-        Set officeSet = new Set("office", 0);
+        Set officeSet = new Set("office", 0, false);
         this.setList.put("office", officeSet);
         //Nodes Children
         NodeList officeChildren = office.getChildNodes();

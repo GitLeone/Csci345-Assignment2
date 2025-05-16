@@ -5,11 +5,11 @@ public class Player {
     private int dollars;
     private int practiceChips;
     private boolean working;
-    private Set location;
+    private String location;
     private Role role;
  
     //constructor
-    public Player(String name, int rank, int credits, int dollars, int practiceChips, boolean working, Set location){
+    public Player(String name, int rank, int credits, int dollars, int practiceChips, boolean working, String location){
         this.name = name;
         this.rank = rank;
         this.credits = credits;
@@ -56,10 +56,11 @@ public class Player {
     public void setWorking(boolean working){
         this.working = working;
     }
-    public Set getLocation(){
+    public String getLocation(){
         return this.location;
     }
-    public void setLocation(Set location){
+
+    public void setLocation(String location){
         this.location = location;
     }
     public Role getRole(){
@@ -68,23 +69,24 @@ public class Player {
     public void setRole(Role role){
         this.role = role;
     }
-    // public void setActive(boolean active){
-    //     this.active = active;
-    // }
-    // public boolean getActive(){
-    //     return this.active;
-    // }
  
     //actions
-    public void move(Set location, LocationManager locationManager){
+    public boolean move(String location, LocationManager locationManager){
         if(locationManager.validateMove(this, location)){
             setLocation(location);
+            Set locationValue = locationManager.getSet(location);
             //if the players new location is a set, check if the scenecard in the set has been flipped, if not, flip it
-            //Location Managers location maps must also be updated
+            if(locationValue.isSet()){
+                if(!locationValue.getSceneCard().getFlipped()){
+                    locationValue.getSceneCard().setFlipped(true);
+                }
+            }
+            return true;
         }
         else{
-            //player loses turn
+            return false;
         }
+
     }
     public void rehearse(){
         if(!getWorking()){
