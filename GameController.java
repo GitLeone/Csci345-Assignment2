@@ -117,7 +117,10 @@ public class GameController {
         Set currentPlayerLocation = locationManager.getSet(currentPlayer.getLocation());
         SceneCard currentScene = currentPlayerLocation.getSceneCard();
         String action;
-        String[] lineSplit = input.split(" ", 2);;
+        String[] lineSplit = input.split(" ", 2);
+
+        
+        System.out.println(currentPlayer.getName() + " please perform a valid action.");
 
         if(input.equals("take role")){
             action = input;
@@ -150,7 +153,7 @@ public class GameController {
                     return false;
                 }
                 boolean rehearsed = currentPlayer.rehearse(currentPlayerLocation, currentPlayerLocation.getSceneCard(), dice);
-                if (true) {
+                if (rehearsed) {
                     view.displayMessage("You rehearsed successfully.");
                 } else {
                     view.displayMessage("You cannot rehearse right now.");
@@ -194,7 +197,7 @@ public class GameController {
 
             case "help":
             view.displayHelp();
-            return false;
+            break;
 
             default:
                 break;

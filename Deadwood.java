@@ -5,8 +5,8 @@ public class Deadwood {
         View view = new TextView(moderator, locationManager);
         moderator.setView(view);
 
-        view.promptPlayerCount();
         view.startGameMessage();
+        view.promptPlayerCount();
         //Main game loop
         while(!moderator.getGameOver()){
             while(!moderator.isDayOver()){

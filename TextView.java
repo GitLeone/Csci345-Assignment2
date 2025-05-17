@@ -15,6 +15,7 @@ public class TextView implements View{
     @Override
     public void startGameMessage(){
         System.out.println("=== DEADWOOD ===");
+        System.out.println("Welcome to Deadwood! Please enter the number of players to start the game: ");
     }
 
     @Override
@@ -152,7 +153,7 @@ public class TextView implements View{
         System.out.println("end              - Finish your turn");
         System.out.println("help             - Show this message");
     }
-    
+
     @Override
     public void displayMessage(String message) {
         System.out.println(message);
