@@ -104,10 +104,6 @@ public class TextView implements View{
         Set playerLocation = lm.getSet(playerLocationName);
         Role role;
 
-        if(!playerLocation.isSet()){
-            return null;
-        }
-
         System.out.println("\nAvailable off card roles:"); 
         Map<String, Role> offCardRoles = playerLocation.getOffRoles();
         for (String key : offCardRoles.keySet()) {

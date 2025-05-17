@@ -187,6 +187,10 @@ public class GameController {
                 break;
 
             case "take role":
+                if(!currentPlayerLocation.isSet()){
+                    view.displayMessage("You are not in a set");
+                    return false;
+                }
                 Role chosenRole = view.chooseFromAvailableRoles(currentPlayer);
                 if(!currentPlayer.takeRole(chosenRole)){
                     view.displayMessage("You can not take that role");
