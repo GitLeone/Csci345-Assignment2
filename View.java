@@ -6,7 +6,6 @@ public interface View {
     void startGameMessage();
     void endGameMessage();
     void promptAction();
-    void invalidAction();
     void displayHelp();
     void displayMessage(String message);
     Role chooseFromAvailableRoles(Player player);
