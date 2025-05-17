@@ -31,9 +31,6 @@ public class TextView implements View{
             System.out.print("> ");
             String action = scanner.nextLine();
             valid = moderator.processAction(action);
-            if(!valid){
-                invalidAction();
-            }
         }
     }
 
@@ -106,6 +103,10 @@ public class TextView implements View{
         Set playerLocation = lm.getSet(playerLocationName);
         Role role;
 
+        if(!playerLocation.isSet()){
+            return null;
+        }
+
         System.out.println("\nAvailable off card roles:"); 
         Map<String, Role> offCardRoles = playerLocation.getOffRoles();
         for (String key : offCardRoles.keySet()) {
@@ -131,13 +132,6 @@ public class TextView implements View{
             role = playerLocation.getOffRole(chosenRole);
         }
         return role;
-    }
-
-    //When we make other invalid action statements, they can go here. We can add a String parameter for the type of invalid action taken to print the right statement
-    //Something like that
-    @Override
-    public void invalidAction(){
-        System.out.println("That action is not valid, try again");
     }
 
     @Override

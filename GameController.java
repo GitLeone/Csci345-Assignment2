@@ -138,6 +138,7 @@ public class GameController {
                 }
                 String location = lineSplit[1];
                 if(!currentPlayer.move(location, locationManager)){
+                    view.displayMessage("That move is invalid.");
                     return false;
                 }
                 break;
@@ -160,6 +161,7 @@ public class GameController {
                     view.displayMessage("You rehearsed successfully.");
                 } else {
                     view.displayMessage("You cannot rehearse right now.");
+                    return false;
                 }
                 break;
 
@@ -184,10 +186,12 @@ public class GameController {
                 }
                 break;
 
-            
             case "take role":
                 Role chosenRole = view.chooseFromAvailableRoles(currentPlayer);
-                currentPlayer.takeRole(chosenRole);
+                if(!currentPlayer.takeRole(chosenRole)){
+                    view.displayMessage("You can not take that role");
+                    return false;
+                }
                 break;
 
             case "act":

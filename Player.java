@@ -7,7 +7,7 @@ public class Player {
     private boolean working;
     private String location;
     private Role role;
- 
+
     //constructor
     public Player(String name, int rank, int credits, int dollars, int practiceChips, boolean working, String location){
         this.name = name;
@@ -92,7 +92,6 @@ public class Player {
         if (!getWorking()) {
             return false;
         }
-
         // If the number of practice chips equals the role's required rank, player acts automatically
         if (getPracticeChips() == getRole().getRankRequired()) {
             act(dice, set, scene);
@@ -167,8 +166,4 @@ public class Player {
             //end turn
         }
     }
-    public void endTurn(){
-        //current player will be set to the next in line
-    }
  }
- 
