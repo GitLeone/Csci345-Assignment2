@@ -101,11 +101,9 @@ public class Player {
             return true;
         }
     }       
-    public void act(Dice dice, Set set, SceneCard scene){
-        //For these parameters, set, scene are probably not needed as the role should know what set and scene its apart of
-        //Might only need to
+    public boolean act(Dice dice, Set set, SceneCard scene){
         if(!getWorking()){
-            //player loses turn
+            return false;
         }
         else{
             int roll = dice.roll();
@@ -125,7 +123,7 @@ public class Player {
             }
             else{ //fail
                 if(getRole().getStarring()){
-                    //player loses turn
+                    return false;
                 }
                 else{
                     //player gets 1 dollar
@@ -133,6 +131,7 @@ public class Player {
                 }
             }
         }
+        return true;
     }
     //Maybe instead of returning boolean, it returns an int that represents the fail case
     public boolean takeRole(Role role){  
@@ -152,7 +151,7 @@ public class Player {
         }
     }
 
-    public void upgrade(int rank, String currencyType, Bank bank, LocationManager lm){
+    public boolean upgrade(int rank, String currencyType, Bank bank, LocationManager lm){
         if(bank.validateUpgrade(this, rank, currencyType) & lm.validateUpgrade(this)){
             if(currencyType.equals("Dollars")){
                 setDollars(getDollars() - bank.getRankDollarCost(rank));
@@ -163,7 +162,8 @@ public class Player {
             setRank(rank);
         }
         else{
-            //end turn
+            return false;
         }
+        return true;
     }
  }
