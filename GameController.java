@@ -106,7 +106,7 @@ public class GameController {
         setDayOver(true);
         currentDay++;
         if(currentDay > maxDays){
-            setGameOver(true);
+            endGame();
         }
     }
     public void setView(View view){
@@ -199,6 +199,12 @@ public class GameController {
                     view.displayMessage("You can not take that role");
                     return false;
                 }
+                if(chosenRole.getStarring()){
+                    currentPlayerLocation.getSceneCard().addActingPlayer(currentPlayer);
+                }
+                else{
+                    currentPlayerLocation.addActingPlayer(currentPlayer);
+                }
                 break;
 
             case "act":
@@ -212,9 +218,11 @@ public class GameController {
                 }
                 break;
 
-            case "help":
-                view.displayHelp();
+            case "end":
+                endTurn();
                 break;
+
+            case "help":
                 view.displayHelp();
                 break;
 
@@ -229,6 +237,18 @@ public class GameController {
 
     public Player getActivePlayer(){
         return players.get(currentPlayerIndex);
+    }
+
+    public void wrapScene(Set set){
+       int budgetRolls = 0;
+       for(int i=0; i < set.getSceneCard().getBudget(); i++){
+            int roll = dice.roll();
+            budgetRolls += roll;
+       }
+       for(int i=0; i < set.getActingPlayers().size(); i++){
+            Player curPlayer = set.getActingPlayers().get(i);
+            
+       }
     }
 
     public void endTurn(){

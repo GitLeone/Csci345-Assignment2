@@ -13,6 +13,8 @@ public class Set {
     private List<String> adjacentSets; //This instance of sets are strings because when creating them through the parse, the Set objects of adjacent sets may not be created yet
                                         //If the Set object from this list is needed, use locationManager.getSet()
     private List<Player> players; //Players currently in this location
+    private List<Player> actingPlayers;
+
     public Set(String name, int maxShots, boolean isSet) {
         this.name = name;
         this.maxShots = maxShots;
@@ -21,6 +23,7 @@ public class Set {
         this.adjacentSets = new ArrayList<>();
         this.players = new ArrayList<>();
         this.isSet = isSet;
+        this.actingPlayers = new ArrayList<>();
     }
 
     //How we manage the scenes
@@ -35,7 +38,6 @@ public class Set {
     public boolean isSet(){
         return this.isSet;
     }
-
     //Controls the shots taken and removes when player utilizies shot
     public void removeShot() {
         if (this.shotsRemaining > 0) {
@@ -77,11 +79,19 @@ public class Set {
     public void setShotsRemaining(int shots) {
         this.shotsRemaining = shots;
     }
+    
+    public List<Player> getActingPlayers(){
+        return this.actingPlayers;
+    }
+
+    public void addActingPlayer(Player player){
+        actingPlayers.add(player);
+    }
 
     public String getName() {
         return this.name;
     }
-
+    
     public void addOffRole(Role offRole){
         offRoles.put(offRole.getName(), offRole);
     }

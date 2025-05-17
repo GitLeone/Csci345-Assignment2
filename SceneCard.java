@@ -10,12 +10,14 @@ public class SceneCard{
     private int sceneNumber;
     private String scene;
     private Map<String, Role> roleList;
+    private List<Player> actingPlayers;
    
     public SceneCard(String name, int budget, boolean flipped){
         this.name = name;
         this.budget = budget;
         this.flipped = flipped;
         this.roleList = new HashMap<>();
+        this.actingPlayers = new ArrayList<>();
     }
     //Gets the name of scene
     public String getName(){
@@ -36,9 +38,6 @@ public class SceneCard{
     public void setFlipped(boolean flipped){
         this.flipped = flipped;
     }
-    public void wrapScene(){
-
-    }
     public int getSceneNumber(){
         return this.sceneNumber;
     }
@@ -50,6 +49,12 @@ public class SceneCard{
     }
     public void setScene(String scene){
         this.scene = scene;
+    }
+    public List<Player> getActingPlayers(){
+        return this.actingPlayers;
+    }
+    public void addActingPlayer(Player player){
+        actingPlayers.add(player);
     }
     public void addPart(Role role){
         roleList.put(role.getName(), role);
