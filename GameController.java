@@ -178,7 +178,10 @@ public class GameController {
                 try {
                     int newRank = Integer.parseInt(upgradeArgs[0]);
                     String currency = upgradeArgs[1];
-                    currentPlayer.upgrade(newRank, currency, bank, locationManager);
+                    if(currentPlayer.upgrade(newRank, currency, bank, locationManager)){
+                        view.displayMessage("Upgrade failed");
+                        return false;
+                    }
                 } 
                 catch (NumberFormatException e) {
                     view.displayMessage("Rank must be a number.");
@@ -203,10 +206,15 @@ public class GameController {
                     System.out.println("You must take a role before acting.");
                     return false;
                 }   
-                currentPlayer.act(dice, currentPlayerLocation, currentScene);
+                if(!currentPlayer.act(dice, currentPlayerLocation, currentScene)){
+                    System.out.println("You can not act right now.");
+                    return false;
+                }
                 break;
 
             case "help":
+                view.displayHelp();
+                break;
                 view.displayHelp();
                 break;
 
