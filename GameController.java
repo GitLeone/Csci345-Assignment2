@@ -1,15 +1,7 @@
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 import javax.xml.parsers.ParserConfigurationException;
-
-import javax.management.DescriptorKey;
+import org.w3c.dom.Document;
 
 public class GameController {
     private int currentDay;
@@ -123,6 +115,7 @@ public class GameController {
         //Right now input is case sensitive
         Player currentPlayer = getActivePlayer();
         Set currentPlayerLocation = locationManager.getSet(currentPlayer.getLocation());
+        SceneCard currentScene = currentPlayerLocation.getSceneCard();
         String action;
         String[] lineSplit = input.split(" ", 2);;
 
@@ -150,11 +143,58 @@ public class GameController {
             case "who":
                 view.displayPlayerInfo(currentPlayer);
                 break;
+
+            case "rehearse":
+                if (currentPlayer.getRole() == null) {
+                    view.displayMessage("You must take a role before rehearsing.");
+                    return false;
+                }
+                boolean rehearsed = currentPlayer.rehearse(currentPlayerLocation, currentPlayerLocation.getSceneCard(), dice);
+                if (true) {
+                    view.displayMessage("You rehearsed successfully.");
+                } else {
+                    view.displayMessage("You cannot rehearse right now.");
+                }
+                break;
+
+            case "upgrade":
+                if (lineSplit.length < 2) {
+                    view.displayMessage("Usage: upgrade <rank> <currency>");
+                    return false;
+                }
+                String[] upgradeArgs = lineSplit[1].split(" ");
+                if (upgradeArgs.length < 2) {
+                    view.displayMessage("Usage: upgrade <rank> <currency>");
+                    return false;
+                }
+                try {
+                    int newRank = Integer.parseInt(upgradeArgs[0]);
+                    String currency = upgradeArgs[1];
+                    currentPlayer.upgrade(newRank, currency, bank, locationManager);
+                } 
+                catch (NumberFormatException e) {
+                    view.displayMessage("Rank must be a number.");
+                    return false;
+                }
+                break;
+
             
             case "take role":
                 Role chosenRole = view.chooseFromAvailableRoles(currentPlayer);
                 currentPlayer.takeRole(chosenRole);
                 break;
+
+            case "act":
+                if (currentPlayer.getRole() == null) {
+                    System.out.println("You must take a role before acting.");
+                    return false;
+                }   
+                currentPlayer.act(dice, currentPlayerLocation, currentScene);
+                break;
+
+            case "help":
+            view.displayHelp();
+            return false;
 
             default:
                 break;

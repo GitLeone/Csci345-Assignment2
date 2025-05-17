@@ -1,7 +1,5 @@
-import java.util.List;
-import java.util.Scanner;
 import java.util.Map;
-import java.util.HashMap;
+import java.util.Scanner;
 
 public class TextView implements View{
     private Scanner scanner;
@@ -139,5 +137,24 @@ public class TextView implements View{
     @Override
     public void invalidAction(){
         System.out.println("That action is not valid, try again");
+    }
+
+    @Override
+    public void displayHelp() {
+        System.out.println("\nAvailable Commands:");
+        System.out.println("move <location>  - Move to adjacent set");
+        System.out.println("act              - Attempt to act in current role");
+        System.out.println("rehearse         - Practice for your role");
+        System.out.println("take role        - Choose an available role");
+        System.out.println("upgrade <rank> <currency> - Increase your rank");
+        System.out.println("where            - Show current location");
+        System.out.println("who              - Show player status");
+        System.out.println("end              - Finish your turn");
+        System.out.println("help             - Show this message");
+    }
+    
+    @Override
+    public void displayMessage(String message) {
+        System.out.println(message);
     }
 }

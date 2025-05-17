@@ -88,19 +88,20 @@ public class Player {
         }
 
     }
-    public boolean rehearse(){
-        if(!getWorking()){
+    public boolean rehearse(Set set, SceneCard scene, Dice dice) {
+        if (!getWorking()) {
             return false;
         }
-        /*In the GameController case: player rehearse
-            If player.getPracticeChips() == player.getRole().getRankRequired(){
-                player.act(dice, set, scene)
-            }*/
-        else{
+
+        // If the number of practice chips equals the role's required rank, player acts automatically
+        if (getPracticeChips() == getRole().getRankRequired()) {
+            act(dice, set, scene);
+            return true;
+        } else {
             setPracticeChips(getPracticeChips() + 1);
             return true;
         }
-    }
+    }       
     public void act(Dice dice, Set set, SceneCard scene){
         //For these parameters, set, scene are probably not needed as the role should know what set and scene its apart of
         //Might only need to
