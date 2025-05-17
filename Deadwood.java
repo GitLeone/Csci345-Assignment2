@@ -6,11 +6,15 @@ public class Deadwood {
         moderator.setView(view);
 
         view.startGameMessage();
-        view.promptPlayerCount();
+        int numPlayers = view.promptPlayerCount();
+        System.out.println(numPlayers + " players");
         //Main game loop
         while(!moderator.getGameOver()){
+            moderator.dealSceneCards();  // Deal new scene cards
+            moderator.setDayOver(false);
             while(!moderator.isDayOver()){
                 Player player = moderator.getActivePlayer();
+                view.displayMessage(player.getName() + "'s turn!");
                 view.promptAction();
             }
             moderator.endDay();
