@@ -207,8 +207,11 @@ public class GameController {
                 break;
 
             case "help":
-            view.displayHelp();
-            break;
+                view.displayHelp();
+                break;
+
+            case "endgame":
+                endGame();
 
             default:
                 break;
@@ -225,12 +228,26 @@ public class GameController {
     }
 
     public void endGame() {
+        view.displayMessage("Game Over! Final Scores:");
+        int highestScore = -1;
+        Player winner = null;
         // Calculate and display final scores
         for (Player player : players) {
             int score = player.getDollars() + player.getCredits() + (player.getRank() * 5);
-            //view.displayMessage(player.getName() + ": " + score + " points");
+            view.displayMessage(player.getName() + " - $" + player.getDollars() + ", " + player.getCredits() + " credits, rank " + player.getRank() + " => Total Score: " + score);
+
+            if (score > highestScore) {
+            highestScore = score;
+            winner = player;
+            }
         }
+
+        if (winner != null) {
+        view.displayMessage("Winner: " + winner.getName() + " with " + highestScore + " points!");
+        }
+        setGameOver(true);
     }
+
     public boolean getGameOver(){
         return this.gameOver;
     }
