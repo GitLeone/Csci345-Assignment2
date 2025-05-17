@@ -6,7 +6,8 @@ public class Deadwood {
         moderator.setView(view);
 
         view.startGameMessage();
-        view.promptPlayerCount();
+        int numPlayers = view.promptPlayerCount();
+        System.out.println(numPlayers + " players");
         //Main game loop
         while(!moderator.getGameOver()){
             while(!moderator.isDayOver()){
