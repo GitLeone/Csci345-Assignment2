@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import javax.xml.parsers.ParserConfigurationException;
 import org.w3c.dom.Document;
@@ -122,7 +123,6 @@ public class GameController {
         String action;
         String[] lineSplit = input.split(" ", 2);
 
-        
         System.out.println(currentPlayer.getName() + " please perform a valid action.");
 
         if(input.equals("take role")){
@@ -212,7 +212,12 @@ public class GameController {
                     System.out.println("You must take a role before acting.");
                     return false;
                 }   
-                if(!currentPlayer.act(dice, currentPlayerLocation, currentScene)){
+                if(currentPlayer.act(dice, currentPlayerLocation, currentScene)){
+                    if(currentPlayerLocation.getShotsRemaining() == 0){
+                        wrapScene(currentPlayerLocation);
+                    }
+                }
+                else{
                     System.out.println("You can not act right now.");
                     return false;
                 }
@@ -240,15 +245,41 @@ public class GameController {
     }
 
     public void wrapScene(Set set){
-       int budgetRolls = 0;
-       for(int i=0; i < set.getSceneCard().getBudget(); i++){
-            int roll = dice.roll();
-            budgetRolls += roll;
+       int budgetRolls;
+       Player curPlayer;
+       SceneCard scene = set.getSceneCard();
+
+       scene.sortActingPlayers();
+
+       List<Player> onCardActors = scene.getActingPlayers();
+       List<Integer> diceRolls = new ArrayList<>();
+        
+       for(int i=0; i < scene.getBudget(); i++){
+            diceRolls.add(dice.roll());
        }
-       for(int i=0; i < set.getActingPlayers().size(); i++){
-            Player curPlayer = set.getActingPlayers().get(i);
-            
+       Collections.sort(diceRolls, Collections.reverseOrder());
+       if(!onCardActors.isEmpty()){
+            //Payout for onCard roles
+            for(int i=0; i < diceRolls.size(); i++){
+                curPlayer = onCardActors.get(i % onCardActors.size());
+                curPlayer.setDollars(curPlayer.getDollars() + diceRolls.get(i));
+                curPlayer.setWorking(false);
+                curPlayer.setRole(null);
+            }
        }
+
+       //Payout for offCard roles
+        for(int i=0; i < set.getActingPlayers().size(); i++){
+            curPlayer = set.getActingPlayers().get(i);
+            if(!onCardActors.isEmpty()){
+                Role playerRole = curPlayer.getRole();
+                curPlayer.setDollars(curPlayer.getDollars() + playerRole.getRankRequired());
+            }
+            curPlayer.setWorking(false);
+            curPlayer.setRole(null);
+        }  
+        set.setSceneCard(null);
+        scene.setWrapped(true);    
     }
 
     public void endTurn(){

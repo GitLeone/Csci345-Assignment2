@@ -11,6 +11,7 @@ public class SceneCard{
     private String scene;
     private Map<String, Role> roleList;
     private List<Player> actingPlayers;
+    private boolean isWrapped;
    
     public SceneCard(String name, int budget, boolean flipped){
         this.name = name;
@@ -18,6 +19,7 @@ public class SceneCard{
         this.flipped = flipped;
         this.roleList = new HashMap<>();
         this.actingPlayers = new ArrayList<>();
+        this.isWrapped = false;
     }
     //Gets the name of scene
     public String getName(){
@@ -50,11 +52,31 @@ public class SceneCard{
     public void setScene(String scene){
         this.scene = scene;
     }
+    public boolean isWrapped(){
+        return this.isWrapped;
+    }
+    public void setWrapped(boolean wrapped){
+        this.isWrapped = wrapped;
+    }
     public List<Player> getActingPlayers(){
         return this.actingPlayers;
     }
     public void addActingPlayer(Player player){
         actingPlayers.add(player);
+    }
+    public void sortActingPlayers(){
+        List<Player> players = getActingPlayers();
+        for (int i=0; i < players.size(); i++){
+            int minIndex = i;
+            for (int j=i+1; j < players.size(); j++){
+                if(players.get(j).getRank() < players.get(minIndex).getRank()){
+                    minIndex = j;
+                }
+            }
+            Player temp = players.get(i);
+            players.set(i, players.get(minIndex));         
+            players.set(minIndex, temp);
+        }
     }
     public void addPart(Role role){
         roleList.put(role.getName(), role);

@@ -46,10 +46,6 @@ public class Set {
         }
     }
 
-    public boolean isSceneWrapped() {
-        return this.shotsRemaining == 0;
-    }
-
     // Player movement
     public void addPlayer(Player player) {
         players.add(player);
