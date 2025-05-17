@@ -55,9 +55,12 @@ public class GameController {
 
     //deals one sceneCard to each set
     public void dealSceneCards(){
+        SceneCard randCard;
         for(Set value : locationManager.getSetList().values()){
-            SceneCard randCard = deck.drawRandomSceneCard();
-            value.setSceneCard(randCard);
+            if(value.isSet()){
+                randCard = deck.drawRandomSceneCard();
+                value.setSceneCard(randCard);
+            }
         }
     }
 
