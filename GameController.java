@@ -140,6 +140,7 @@ public class GameController {
                     view.displayMessage("That move is invalid.");
                     return false;
                 }
+                view.displayMessage("Successful move to " + currentPlayer.getLocation());
                 break;
 
             case "where":
