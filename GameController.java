@@ -215,7 +215,7 @@ public class GameController {
 
             case "act":
                 if (currentPlayer.getRole() == null) {
-                    System.out.println("You must take a role before acting.");
+                    view.displayMessage("You must take a role before acting.");
                     return false;
                 }   
                 if(currentPlayer.act(dice, currentPlayerLocation, currentScene)){
@@ -224,7 +224,7 @@ public class GameController {
                     }
                 }
                 else{
-                    System.out.println("You can not act right now.");
+                    view.displayMessage("You can not act right now.");
                     return false;
                 }
                 break;
