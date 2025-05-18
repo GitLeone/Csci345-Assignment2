@@ -161,6 +161,7 @@ public class TextView implements View{
         System.out.println("who              - Show player status");
         System.out.println("neighbors        - Show neighboring locations");
         System.out.println("end              - Finish your turn");
+        System.out.println("endgame          - End the game and proceed to scoring");
         System.out.println("help             - Show this message");
     }
 

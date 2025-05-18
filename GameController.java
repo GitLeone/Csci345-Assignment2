@@ -133,6 +133,7 @@ public class GameController {
         switch (action) {
             case "move":
                 if(lineSplit.length < 2){
+                    view.displayMessage("Usage: move <location>");
                     return false;
                 }
                 String location = lineSplit[1];
@@ -260,6 +261,7 @@ public class GameController {
                 endGame();
 
             default:
+                view.displayMessage("That is not a valid command, try again");
                 break;
         }
         return true;
