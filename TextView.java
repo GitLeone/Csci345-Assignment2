@@ -21,6 +21,15 @@ public class TextView implements View{
     }
 
     @Override
+    public void displayStartingStats(Player player){
+        System.out.printf("Every player will start at rank %d with %d dollars, and %d credits%n",
+        player.getRank(),
+        player.getDollars(),
+        player.getCredits()
+        );
+    }
+
+    @Override
     public void endGameMessage(){
         System.out.println("\n=== GAME OVER ===");
         moderator.endGame();
@@ -100,10 +109,12 @@ public class TextView implements View{
         }
     }
 
+    @Override
     public void displayNeighbors(Set set){
         System.out.println(set.getAdjacentSets());
     }
 
+    @Override
     public void displayCurrentPlayer(Player player){
         System.out.println("Player " + player.getName() + "'s turn!");
     }
@@ -135,7 +146,6 @@ public class TextView implements View{
         }
         System.out.print("Choose a role by number: ");
         String choice = scanner.nextLine();
-    
         return allRoles.get(choice);
     }
 

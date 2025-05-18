@@ -11,4 +11,5 @@ public interface View {
     Role chooseFromAvailableRoles(Player player);
     void displayCurrentPlayer(Player player);
     void displayNeighbors(Set set);
+    void displayStartingStats(Player player);
 }
