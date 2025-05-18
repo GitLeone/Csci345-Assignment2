@@ -10,4 +10,5 @@ public interface View {
     void displayMessage(String message);
     Role chooseFromAvailableRoles(Player player);
     void displayCurrentPlayer(Player player);
+    void displayNeighbors(Set set);
 }

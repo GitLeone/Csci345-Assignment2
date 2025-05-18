@@ -17,6 +17,7 @@ public class TextView implements View{
     public void startGameMessage(){
         System.out.println("=== DEADWOOD ===");
         System.out.println("Welcome to Deadwood! Please enter the number of players to start the game: ");
+        System.out.println("Type 'help' for a list of commands");
     }
 
     @Override
@@ -99,6 +100,10 @@ public class TextView implements View{
         }
     }
 
+    public void displayNeighbors(Set set){
+        System.out.println(set.getAdjacentSets());
+    }
+
     public void displayCurrentPlayer(Player player){
         System.out.println("Player " + player.getName() + "'s turn!");
     }
@@ -144,6 +149,7 @@ public class TextView implements View{
         System.out.println("upgrade <rank> <currency> - Increase your rank");
         System.out.println("where            - Show current location");
         System.out.println("who              - Show player status");
+        System.out.println("neighbors        - Show neighboring locations");
         System.out.println("end              - Finish your turn");
         System.out.println("help             - Show this message");
     }

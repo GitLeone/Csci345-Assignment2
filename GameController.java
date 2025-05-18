@@ -238,6 +238,10 @@ public class GameController {
                 view.displayHelp();
                 break;
 
+            case "neighbors":
+                view.displayNeighbors(currentPlayerLocation);
+                break;
+
             case "endgame":
                 endGame();
 
@@ -255,8 +259,9 @@ public class GameController {
        int budgetRolls;
        Player curPlayer;
        SceneCard scene = set.getSceneCard();
-
+       System.out.println("Before sort " + scene.getActingPlayers());
        scene.sortActingPlayers();
+       System.out.println("After sort "+ scene.getActingPlayers());
 
        List<Player> onCardActors = scene.getActingPlayers();
        List<Integer> diceRolls = new ArrayList<>();
