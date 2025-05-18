@@ -158,12 +158,21 @@ public class GameController {
                     view.displayMessage("You must take a role before rehearsing.");
                     return false;
                 }
-                boolean rehearsed = currentPlayer.rehearse(currentPlayerLocation, currentPlayerLocation.getSceneCard(), dice);
+    
+                boolean rehearsed = currentPlayer.rehearse( currentPlayerLocation, currentPlayerLocation.getSceneCard());
+    
                 if (rehearsed) {
-                    view.displayMessage("You rehearsed successfully.");
+                    view.displayMessage("Rehearsed! Practice chips: " + currentPlayer.getPracticeChips() + 
+                    "/" + (currentPlayerLocation.getSceneCard().getBudget() - 1));
                     endTurn();
                 } else {
-                    view.displayMessage("You cannot rehearse right now.");
+                    //Explains failure
+                    if (currentPlayer.getPracticeChips() >= 
+                        currentPlayerLocation.getSceneCard().getBudget() - 1) {
+                        view.displayMessage("Max rehearsals reached for this scene!");
+                    } else {
+                        view.displayMessage("Cannot rehearse right now.");
+                    }
                     return false;
                 }
                 break;

@@ -105,19 +105,21 @@ public class Player {
         return true;
     }
 
-    public boolean rehearse(Set set, SceneCard scene, Dice dice) {
-        if (!getWorking()) {
+    public boolean rehearse(Set set, SceneCard scene) {
+        // Can we rehearse?
+        if (!getWorking() || scene == null) {
             return false;
         }
-        // If the number of practice chips equals the role's required rank, player acts automatically
-        if (getPracticeChips() == getRole().getRankRequired()) {
-            act(dice, set, scene);
-            return true;
-        } else {
-            setPracticeChips(getPracticeChips() + 1);
-            return true;
+    
+        // Calculate maximum chips that we can use and checks
+        int maxUsefulChips = scene.getBudget() - 1;
+        if (getPracticeChips() >= maxUsefulChips) {
+            return false;
         }
-    }       
+        setPracticeChips(getPracticeChips() + 1);
+        return true;
+    
+    }
     public boolean act(Dice dice, Set set, SceneCard scene){
         if(!getWorking()){
             return false;
