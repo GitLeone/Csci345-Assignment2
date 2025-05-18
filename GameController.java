@@ -237,6 +237,7 @@ public class GameController {
                     if(currentPlayerLocation.getShotsRemaining() == 0){
                         wrapScene(currentPlayerLocation);
                     }
+                    view.displayMessage("Act successful.");
                     endTurn();
                 }
                 else{
