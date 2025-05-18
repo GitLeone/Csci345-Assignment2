@@ -68,7 +68,7 @@ public class GameController {
     public void initializePlayers(int numPlayers) {
         int startingCredits = 0;
         int startingDollars = 0;
-        int startingRank = 0;
+        int startingRank = 1;
         this.currentPlayerIndex = 0;
 
         if(numPlayers == 5){
@@ -189,20 +189,27 @@ public class GameController {
                 break;
 
             case "take role":
-                if(!currentPlayerLocation.isSet()){
-                    view.displayMessage("You are not in a set");
+                if (!currentPlayerLocation.isSet()) {
+                    view.displayMessage("You must be on a set to take a role");
                     return false;
                 }
                 Role chosenRole = view.chooseFromAvailableRoles(currentPlayer);
-                if(!currentPlayer.takeRole(chosenRole)){
-                    view.displayMessage("You can not take that role");
+                if (chosenRole == null) {
+                view.displayMessage("Invalid role selection (use numbers or exact names)");
+                return false;
+                }
+                if (!currentPlayer.takeRole(chosenRole)) {
+                    view.displayMessage("Cannot take role. Required rank: " + chosenRole.getRankRequired() + ", Your rank: " + currentPlayer.getRank());
                     return false;
                 }
-                if(chosenRole.getStarring()){
+
+                // Register player with role
+                if (chosenRole.getStarring()) {
                     currentPlayerLocation.getSceneCard().addActingPlayer(currentPlayer);
-                }
-                else{
+                    view.displayMessage("You're now starring as: " + chosenRole.getName());
+                } else {
                     currentPlayerLocation.addActingPlayer(currentPlayer);
+                    view.displayMessage("You're now an extra as: " + chosenRole.getName());
                 }
                 break;
 
