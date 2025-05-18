@@ -141,6 +141,7 @@ public class GameController {
                     return false;
                 }
                 view.displayMessage("Successful move to " + currentPlayer.getLocation());
+                endTurn();
                 break;
 
             case "where":
@@ -159,6 +160,7 @@ public class GameController {
                 boolean rehearsed = currentPlayer.rehearse(currentPlayerLocation, currentPlayerLocation.getSceneCard(), dice);
                 if (rehearsed) {
                     view.displayMessage("You rehearsed successfully.");
+                    endTurn();
                 } else {
                     view.displayMessage("You cannot rehearse right now.");
                     return false;
@@ -193,6 +195,7 @@ public class GameController {
                         return false;
                     }
                     view.displayMessage("★ Upgraded to rank " + newRank + "!");
+                    endTurn();
                 } 
                 catch (NumberFormatException e) {
                     view.displayMessage("Rank must be a number (2-6)");
@@ -207,21 +210,22 @@ public class GameController {
                 }
                 Role chosenRole = view.chooseFromAvailableRoles(currentPlayer);
                 if (chosenRole == null) {
-                view.displayMessage("Invalid role selection (use numbers or exact names)");
+                    view.displayMessage("Invalid role selection (use numbers or exact names)");
                 return false;
                 }
                 if (!currentPlayer.takeRole(chosenRole)) {
                     view.displayMessage("Cannot take role. Required rank: " + chosenRole.getRankRequired() + ", Your rank: " + currentPlayer.getRank());
                     return false;
                 }
-
                 // Register player with role
                 if (chosenRole.getStarring()) {
                     currentPlayerLocation.getSceneCard().addActingPlayer(currentPlayer);
                     view.displayMessage("You're now starring as: " + chosenRole.getName());
+                    endTurn();
                 } else {
                     currentPlayerLocation.addActingPlayer(currentPlayer);
                     view.displayMessage("You're now an extra as: " + chosenRole.getName());
+                    endTurn();
                 }
                 break;
 
@@ -234,6 +238,7 @@ public class GameController {
                     if(currentPlayerLocation.getShotsRemaining() == 0){
                         wrapScene(currentPlayerLocation);
                     }
+                    endTurn();
                 }
                 else{
                     view.displayMessage("You can not act right now.");
