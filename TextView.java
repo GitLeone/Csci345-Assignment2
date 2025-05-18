@@ -92,7 +92,12 @@ public class TextView implements View{
             }
             
         } else {
-            System.out.println("Your acting was unsuccessful");
+            if(player.getRole().getStarring()){
+                System.out.println("Your acting was unsuccessful");
+            }
+            else{
+                System.out.println("Your acting was unsuccessful, you got 1 dollar");
+            }
         }
     }
 

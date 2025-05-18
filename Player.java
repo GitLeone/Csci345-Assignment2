@@ -140,6 +140,7 @@ public class Player {
                 else{
                     //player gets 1 dollar
                     setDollars(getDollars() + 1);
+                    return false;
                 }
             }
         }

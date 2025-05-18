@@ -236,16 +236,12 @@ public class GameController {
                 }
                 if(currentPlayer.act(dice, currentPlayerLocation, currentScene)){
                     actResult = true;
-                    view.displayActResult(currentPlayer, actResult);
                     if(currentPlayerLocation.getShotsRemaining() == 0){
                         wrapScene(currentPlayerLocation);
                     }
-                    endTurn();
                 }
-                else{
-                    view.displayMessage("You can not act right now.");
-                    return false;
-                }
+                view.displayActResult(currentPlayer, actResult);
+                endTurn();
                 break;
 
             case "end":
