@@ -47,8 +47,14 @@ public class TextView implements View{
 
     @Override
     public void promptPlayerCount(){
-        System.out.print("How many players? > ");
-        int numPlayers = Integer.parseInt(scanner.nextLine());
+        int numPlayers = 0;
+        while(numPlayers < 2 || numPlayers > 8){
+            System.out.print("How many players? > ");
+            numPlayers = Integer.parseInt(scanner.nextLine());
+            if(numPlayers < 2 || numPlayers > 8){
+                System.out.println("Deadwood only supports 2-8 players");
+            }
+        }
         moderator.initializePlayers(numPlayers);
         System.out.println(numPlayers + " players");
     }

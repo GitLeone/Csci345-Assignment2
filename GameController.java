@@ -275,9 +275,14 @@ public class GameController {
        int budgetRolls;
        Player curPlayer;
        SceneCard scene = set.getSceneCard();
-       System.out.println("Before sort " + scene.getActingPlayers());
+       for(int i = 0; i < scene.getActingPlayers().size(); i++){
+            System.out.println("Before sort " + scene.getActingPlayers().get(i).getRank());
+       }
+       
        scene.sortActingPlayers();
-       System.out.println("After sort "+ scene.getActingPlayers());
+       for(int i = 0; i < scene.getActingPlayers().size(); i++){
+            System.out.println("After sort " + scene.getActingPlayers().get(i).getRank());
+       }
 
        List<Player> onCardActors = scene.getActingPlayers();
        List<Integer> diceRolls = new ArrayList<>();
