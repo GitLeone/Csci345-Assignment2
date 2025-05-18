@@ -100,17 +100,35 @@ public class GameController {
     public boolean isDayOver(){
         return this.dayOver;
     }
+
     public void setDayOver(boolean dayOver){
         this.dayOver = dayOver;
     }
-    public void endDay(){
-        if(currentDay > maxDays){
-            endGame();
+
+    public void endDay() {
+        // Return all players to trailer and reset their stats
+        for (Player player : players) {
+            player.setLocation("trailer");
+            player.setWorking(false);  // Clear any active roles
+            player.setRole(null);
+            player.setPracticeChips(0); // Reset rehearsal chips
+            locationManager.updatePlayerLocation(player, locationManager.getSet("trailer"));
         }
-        setDayOver(true);
+
         currentDay++;
-        dealSceneCards(); //Deals new scene cards
+    
+        if (currentDay > maxDays) {
+            endGame();
+            return;
+        }
+
+        setDayOver(true);
+        dealSceneCards();  // Refresh scenes for new day
+        currentPlayerIndex = 0;  // Reset turn order
+        view.displayMessage("\n=== DAY " + currentDay + " STARTED ===");
+        view.displayCurrentPlayer(getActivePlayer());
     }
+
     public void setView(View view){
         this.view = view;
     }
