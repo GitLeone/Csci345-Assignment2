@@ -69,7 +69,7 @@ public class SceneCard{
         for (int i=0; i < players.size(); i++){
             int minIndex = i;
             for (int j=i+1; j < players.size(); j++){
-                if(players.get(j).getRank() < players.get(minIndex).getRank()){
+                if(players.get(j).getRole().getRankRequired() < players.get(minIndex).getRole().getRankRequired()){
                     minIndex = j;
                 }
             }

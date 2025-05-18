@@ -209,9 +209,13 @@ public class GameController {
                     view.displayMessage("You must be on a set to take a role");
                     return false;
                 }
+                if(currentPlayer.getWorking()){
+                    view.displayMessage("You are already working, you must finish your current scene");
+                    return false;
+                }
                 Role chosenRole = view.chooseFromAvailableRoles(currentPlayer);
                 if (chosenRole == null) {
-                    view.displayMessage("Invalid role selection (use numbers)");
+                    view.displayMessage("Invalid role selection");
                 return false;
                 }
                 if (!currentPlayer.takeRole(chosenRole, currentPlayerLocation)) {
@@ -277,15 +281,10 @@ public class GameController {
     public void wrapScene(Set set){
        Player curPlayer;
        SceneCard scene = set.getSceneCard();
-       view.displayMessage("Thats a wrap!");
-       for(int i = 0; i < scene.getActingPlayers().size(); i++){
-            System.out.println("Before sort " + scene.getActingPlayers().get(i).getRank());
-       }
-       
        scene.sortActingPlayers();
-       for(int i = 0; i < scene.getActingPlayers().size(); i++){
-            System.out.println("After sort " + scene.getActingPlayers().get(i).getRank());
-       }
+       Collections.reverse(scene.getActingPlayers());
+
+       view.displayMessage("Thats a wrap!");
 
        List<Player> onCardActors = scene.getActingPlayers();
        List<Integer> diceRolls = new ArrayList<>();
@@ -296,10 +295,10 @@ public class GameController {
        Collections.sort(diceRolls, Collections.reverseOrder());
        if(!onCardActors.isEmpty()){
             //Payout for onCard roles
-            for(int i=0; i < diceRolls.size(); i++){
+            for(int i=0; i < diceRolls.size() ; i++){
                 curPlayer = onCardActors.get(i % onCardActors.size());
                 curPlayer.setDollars(curPlayer.getDollars() + diceRolls.get(i));
-                view.displayMessage("Player " + curPlayer.getName() + " got $" + diceRolls.get(i) + " from a dice roll!");
+                view.displayMessage("Player " + curPlayer.getName() + " got $" + diceRolls.get(i) + " from a dice roll! Rank ->" + curPlayer.getRole().getRankRequired());
                 curPlayer.setWorking(false);
                 curPlayer.setRole(null);
             }
@@ -311,7 +310,7 @@ public class GameController {
             if(!onCardActors.isEmpty()){
                 Role playerRole = curPlayer.getRole();
                 curPlayer.setDollars(curPlayer.getDollars() + playerRole.getRankRequired());
-                view.displayMessage("Player " + curPlayer.getName() + "got $" + playerRole.getRankRequired() + "from their off card role!");
+                view.displayMessage("Player " + curPlayer.getName() + " got $" + playerRole.getRankRequired() + " from their off card role!");
             }
             curPlayer.setWorking(false);
             curPlayer.setRole(null);
