@@ -230,9 +230,13 @@ public class GameController {
 
             case "act":
                 boolean actResult = false;
+                boolean onCard = false;
                 if (currentPlayer.getRole() == null) {
                     view.displayMessage("You must take a role before acting.");
                     return false;
+                }
+                if(currentPlayer.getRole().getStarring()){
+                    onCard = true;
                 }
                 if(currentPlayer.act(dice, currentPlayerLocation, currentScene)){
                     actResult = true;
@@ -240,7 +244,7 @@ public class GameController {
                         wrapScene(currentPlayerLocation);
                     }
                 }
-                view.displayActResult(currentPlayer, actResult);
+                view.displayActResult(currentPlayer, actResult, onCard);
                 endTurn();
                 break;
 
