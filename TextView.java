@@ -64,15 +64,20 @@ public class TextView implements View{
         String playerLocationName = player.getLocation();
         Set playerLocation = lm.getSet(playerLocationName);
         if(playerLocation.isSet()){
-            if(playerLocation.getSceneCard().getFlipped()){
-                System.out.printf("in %s shooting %s scene %d%n", 
-                playerLocationName,
-                playerLocation.getSceneCard().getName(),
-                playerLocation.getSceneCard().getSceneNumber()
-                );
+            if(playerLocation.hasSceneCard()){
+                if(playerLocation.getSceneCard().getFlipped()){
+                    System.out.printf("in %s shooting %s scene %d%n", 
+                    playerLocationName,
+                    playerLocation.getSceneCard().getName(),
+                    playerLocation.getSceneCard().getSceneNumber()
+                    );
+                }
+                else{
+                    System.out.printf("in %s wrapped%n", playerLocationName);
+                }                
             }
             else{
-                System.out.printf("in %s wrapped%n", playerLocationName);
+                System.out.printf("in %s%n", playerLocationName);
             }
         }
         else{
