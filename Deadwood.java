@@ -10,14 +10,11 @@ public class Deadwood {
         Player player = moderator.getActivePlayer();
         view.displayStartingStats(player);
         //Main game loop
+        view.displayCurrentPlayer(player);
         while(!moderator.getGameOver()){
             moderator.setDayOver(false);
             while(!moderator.isDayOver()){
                 player = moderator.getActivePlayer();
-                if(!player.isActive()){ //if players first turn
-                    view.displayCurrentPlayer(player);
-                }
-                player.setActive(true);
                 view.promptAction();
             }
             moderator.endDay();

@@ -213,17 +213,15 @@ public class GameController {
                     view.displayMessage("Invalid role selection (use numbers or exact names)");
                 return false;
                 }
-                if (!currentPlayer.takeRole(chosenRole)) {
+                if (!currentPlayer.takeRole(chosenRole, currentPlayerLocation)) {
                     view.displayMessage("Cannot take role. Required rank: " + chosenRole.getRankRequired() + ", Your rank: " + currentPlayer.getRank());
                     return false;
                 }
                 // Register player with role
                 if (chosenRole.getStarring()) {
-                    currentPlayerLocation.getSceneCard().addActingPlayer(currentPlayer);
                     view.displayMessage("You're now starring as: " + chosenRole.getName());
                     endTurn();
                 } else {
-                    currentPlayerLocation.addActingPlayer(currentPlayer);
                     view.displayMessage("You're now an extra as: " + chosenRole.getName());
                     endTurn();
                 }
@@ -312,6 +310,7 @@ public class GameController {
 
     public void endTurn(){
         currentPlayerIndex = (currentPlayerIndex + 1) % players.size();
+        view.displayCurrentPlayer(players.get(currentPlayerIndex));
     }
 
     public void endGame() {
