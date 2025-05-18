@@ -9,4 +9,5 @@ public interface View {
     void displayHelp();
     void displayMessage(String message);
     Role chooseFromAvailableRoles(Player player);
+    void displayCurrentPlayer(Player player);
 }

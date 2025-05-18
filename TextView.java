@@ -91,12 +91,16 @@ public class TextView implements View{
         }
         else{
             System.out.printf(
-                "player %s ($%d, %dcr)%n",
+                "Player %s ($%d, %dcr)%n",
                 player.getName(),
                 player.getDollars(),
                 player.getCredits()
             );
         }
+    }
+
+    public void displayCurrentPlayer(Player player){
+        System.out.println("Player " + player.getName() + "'s turn!");
     }
 
     @Override

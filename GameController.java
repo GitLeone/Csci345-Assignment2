@@ -84,7 +84,7 @@ public class GameController {
         
         for (int i = 0; i < numPlayers; i++) {
             Player player = new Player(
-                "Player " + (i+1),
+                String.valueOf(i+1),
                 startingRank,             // starting rank
                 startingCredits,
                 startingDollars,

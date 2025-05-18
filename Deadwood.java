@@ -13,7 +13,7 @@ public class Deadwood {
             while(!moderator.isDayOver()){
                 Player player = moderator.getActivePlayer();
                 if(!player.isActive()){ //if players first turn
-                    view.displayMessage(player.getName() + "'s turn!");
+                    view.displayCurrentPlayer(player);
                 }
                 player.setActive(true);
                 view.promptAction();
