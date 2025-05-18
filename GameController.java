@@ -218,7 +218,7 @@ public class GameController {
                     view.displayMessage("Cannot take role. Required rank: " + chosenRole.getRankRequired() + ", Your rank: " + currentPlayer.getRank());
                     return false;
                 }
-                // Register player with role
+                // Assigns the role to player
                 if (chosenRole.getStarring()) {
                     view.displayMessage("You're now starring as: " + chosenRole.getName());
                     endTurn();

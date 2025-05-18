@@ -1,4 +1,5 @@
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class LocationManager{
@@ -39,8 +40,29 @@ public class LocationManager{
         return playerLocations.getOrDefault(player, setList.get("trailer")); // Default to trailers
     }
 
-    public Map<Player, Set> getAllPlayerLocations(){
-        return this.playerLocations;
+    public void displayAllPlayerLocations(List<Player> players, Player activePlayer) {
+        System.out.println("\n=== PLAYER LOCATIONS ===");
+    
+        for (Player player : players) {
+            Set location = getPlayerLocation(player);
+            String locationInfo = location.getName();
+        
+            if (location.isSet() && location.getSceneCard() != null) {
+                locationInfo += " (" + location.getSceneCard().getName() + ")";
+                if (player.getWorking()) {
+                    locationInfo += " [Working as " + player.getRole().getName() + "]";
+                }
+            }
+        
+            // Gives us the active player
+            if (player.equals(activePlayer)) {
+                System.out.print("ACTIVE PLAYER --> ");
+            } else {
+                System.out.print("                  ");
+            }
+        
+            System.out.println(player.getName() + ": " + locationInfo);
+        }
     }
 
     public Map<String, Set> getSetList(){

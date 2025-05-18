@@ -128,10 +128,12 @@ public class TextView implements View{
         }
         else{
             System.out.printf(
-                "Player %s ($%d, %dcr)%n",
+                "Player %s (Rank %d, $%d, %dcr, %d chips)%n",
                 player.getName(),
+                player.getRank(),
                 player.getDollars(),
-                player.getCredits()
+                player.getCredits(),
+                player.getPracticeChips()
             );
         }
     }
@@ -187,6 +189,7 @@ public class TextView implements View{
         System.out.println("where            - Show current location");
         System.out.println("who              - Show player status");
         System.out.println("neighbors        - Show neighboring locations");
+        System.out.println("locations        - Show active player and all player locations");
         System.out.println("end              - Finish your turn");
         System.out.println("endgame          - End the game and proceed to scoring");
         System.out.println("help             - Show this message");

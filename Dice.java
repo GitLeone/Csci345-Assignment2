@@ -10,7 +10,7 @@ public class Dice {
 
     public Dice(int sides) {
         this.sides = sides;
-        long seed = System.nanoTime(); // Seed using current time
+        long seed = System.nanoTime(); // Seed using current time to make a random for us
         this.random = new Random(seed);
     }
 
