@@ -166,25 +166,36 @@ public class GameController {
                 break;
 
             case "upgrade":
+                // 1. Input validation
                 if (lineSplit.length < 2) {
                     view.displayMessage("Usage: upgrade <rank> <currency>");
                     return false;
                 }
+    
                 String[] upgradeArgs = lineSplit[1].split(" ");
                 if (upgradeArgs.length < 2) {
-                    view.displayMessage("Usage: upgrade <rank> <currency>");
+                    view.displayMessage("Usage: upgrade <rank> <currency>\nExample: upgrade 3 dollar");
                     return false;
                 }
+
                 try {
                     int newRank = Integer.parseInt(upgradeArgs[0]);
-                    String currency = upgradeArgs[1];
-                    if(currentPlayer.upgrade(newRank, currency, bank, locationManager)){
-                        view.displayMessage("Upgrade failed");
+                    String currency = upgradeArgs[1].toLowerCase();
+                    if (!currency.equals("dollar") && !currency.equals("credit")) {
+                    view.displayMessage("Currency must be 'dollar' or 'credit'");
+                    return false;
+                    }
+
+                    if (!currentPlayer.upgrade(newRank, currency, bank, locationManager)) {
+                        view.displayMessage("Upgrade failed. Check:\n" + "- Are you in the Casting Office?\n"
+                        + "- Is the rank higher than your current rank?\n"
+                        + "- Do you have enough " + currency + "s?");
                         return false;
                     }
+                    view.displayMessage("★ Upgraded to rank " + newRank + "!");
                 } 
                 catch (NumberFormatException e) {
-                    view.displayMessage("Rank must be a number.");
+                    view.displayMessage("Rank must be a number (2-6)");
                     return false;
                 }
                 break;
