@@ -71,34 +71,39 @@ public class Player {
  
     //actions
     public boolean move(String location, LocationManager locationManager) {
-    String actualLocationName = null;
-    for (String validLocation : locationManager.getSetList().keySet()) {
-        if (validLocation.equalsIgnoreCase(location)) {
-            actualLocationName = validLocation;
-            break;
+        if (this.working) {
+            System.err.println("You cannot move while working on '" + this.role.getName() + "'");
+            return false;
         }
-    }
-    
-    // Fail if location doesn't exist
-    if (actualLocationName == null) {
-        System.err.println("Invalid location: " + location);
-        return false;
-    }
 
-    // Validate move with properly-cased name
-    if (!locationManager.validateMove(this, actualLocationName)) {
-        return false;
-    }
+        String actualLocationName = null;
+        for (String validLocation : locationManager.getSetList().keySet()) {
+            if (validLocation.equalsIgnoreCase(location)) {
+                actualLocationName = validLocation;
+                break;
+            }
+        }
+    
+        // Fail if location doesn't exist
+        if (actualLocationName == null) {
+            System.err.println("Invalid location: " + location);
+            return false;
+        }
 
-    setLocation(actualLocationName);
-    Set targetSet = locationManager.getSet(actualLocationName);
+        // Validate move with properly-cased name
+        if (!locationManager.validateMove(this, actualLocationName)) {
+            return false;
+        }
+
+        setLocation(actualLocationName);
+        Set targetSet = locationManager.getSet(actualLocationName);
     
-    if (targetSet.isSet() && targetSet.getSceneCard() != null) {
-        targetSet.getSceneCard().setFlipped(true);
+        if (targetSet.isSet() && targetSet.getSceneCard() != null) {
+            targetSet.getSceneCard().setFlipped(true);
+        }
+    
+        return true;
     }
-    
-    return true;
-}
 
     public boolean rehearse(Set set, SceneCard scene, Dice dice) {
         if (!getWorking()) {
