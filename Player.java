@@ -79,18 +79,17 @@ public class Player {
         }
     }
     
-    // Step 2: Fail if location doesn't exist
+    // Fail if location doesn't exist
     if (actualLocationName == null) {
         System.err.println("Invalid location: " + location);
         return false;
     }
 
-    // Step 3: Validate move with properly-cased name
+    // Validate move with properly-cased name
     if (!locationManager.validateMove(this, actualLocationName)) {
         return false;
     }
 
-    // Step 4: Execute move
     setLocation(actualLocationName);
     Set targetSet = locationManager.getSet(actualLocationName);
     
@@ -169,19 +168,37 @@ public class Player {
         }
     }
 
-    public boolean upgrade(int rank, String currencyType, Bank bank, LocationManager lm){
-        if(bank.validateUpgrade(this, rank, currencyType) & lm.validateUpgrade(this)){
-            if(currencyType.equals("Dollars")){
-                setDollars(getDollars() - bank.getRankDollarCost(rank));
-            }
-            else{
-                setCredits(getCredits() - bank.getRankCreditCost(rank));
-            }  
-            setRank(rank);
-        }
-        else{
+    public boolean upgrade(int newRank, String currency, Bank bank, LocationManager lm) {
+        // Make sure the location is appropriate
+        if (!lm.validateUpgrade(this)) {
+            System.out.println("You must be in the Casting Office!");
             return false;
         }
+
+        // Verify that new rank is higher than old rank
+        if (newRank <= this.rank) {
+            System.out.println("New rank must be higher than current rank " + this.rank);
+            return false;
+        }
+
+        if (currency.equalsIgnoreCase("dollar")) {
+            int cost = bank.getRankDollarCost(newRank);
+            if (this.dollars < cost) {
+                System.out.println("Need $" + cost + " (have $" + this.dollars + ")");
+                return false;
+            }
+            this.dollars -= cost;
+            } else {
+            int cost = bank.getRankCreditCost(newRank);
+            if (this.credits < cost) {
+                System.out.println("Need " + cost + " credits (have " + this.credits + ")");
+                return false;
+            }
+            this.credits -= cost;
+        }
+
+        this.rank = newRank;
+        System.out.println("★ Upgraded to rank " + newRank + "!");
         return true;
     }
- }
+}
