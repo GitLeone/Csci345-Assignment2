@@ -64,15 +64,20 @@ public class TextView implements View{
         String playerLocationName = player.getLocation();
         Set playerLocation = lm.getSet(playerLocationName);
         if(playerLocation.isSet()){
-            if(playerLocation.getSceneCard().getFlipped()){
-                System.out.printf("in %s shooting %s scene %d%n", 
-                playerLocationName,
-                playerLocation.getSceneCard().getName(),
-                playerLocation.getSceneCard().getSceneNumber()
-                );
+            if(playerLocation.hasSceneCard()){
+                if(playerLocation.getSceneCard().getFlipped()){
+                    System.out.printf("in %s shooting %s scene %d%n", 
+                    playerLocationName,
+                    playerLocation.getSceneCard().getName(),
+                    playerLocation.getSceneCard().getSceneNumber()
+                    );
+                }
+                else{
+                    System.out.printf("in %s wrapped%n", playerLocationName);
+                }                
             }
             else{
-                System.out.printf("in %s wrapped%n", playerLocationName);
+                System.out.printf("in %s%n", playerLocationName);
             }
         }
         else{
@@ -82,17 +87,22 @@ public class TextView implements View{
     
     //Informs player of acting result
     @Override
-    public void displayActResult(Player player, boolean success) {
+    public void displayActResult(Player player, boolean success, boolean onCard) {
         if (success) {
-            if(player.getRole().getStarring()){
-                System.out.printf("success! You got 2 credits!");
+            if(onCard){
+                System.out.println("Success! You got 2 credits!");
             }
             else{
-                System.out.printf("success! You got 1 credit and 1 dollar!");
+                System.out.println("Success! You got 1 credit and 1 dollar!");
             }
-            
+            System.out.println("Shot removed! Shots remaining: " + lm.getSet(player.getLocation()).getShotsRemaining());
         } else {
-            System.out.println("Your acting was unsuccessful");
+            if(onCard){
+                System.out.println("Your acting was unsuccessful");
+            }
+            else{
+                System.out.println("Your acting was unsuccessful, you got 1 dollar");
+            }
         }
     }
 

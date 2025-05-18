@@ -1,7 +1,7 @@
 public interface View {
     void displayPlayerInfo(Player player);
     void displayPlayerLocation(Player player);
-    void displayActResult(Player player, boolean success);
+    void displayActResult(Player player, boolean success, boolean onCard);
     void promptPlayerCount();
     void startGameMessage();
     void endGameMessage();

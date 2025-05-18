@@ -34,6 +34,10 @@ public class Set {
     public SceneCard getSceneCard() {
         return this.sceneCard;
     }
+
+    public boolean hasSceneCard(){
+        return this.sceneCard != null;
+    }
     //For seperating office and trailer from sets
     public boolean isSet(){
         return this.isSet;
@@ -42,7 +46,6 @@ public class Set {
     public void removeShot() {
         if (this.shotsRemaining > 0) {
             this.shotsRemaining--;
-            System.out.println("Shot removed! Shots remaining: " + this.shotsRemaining);
         }
     }
 
