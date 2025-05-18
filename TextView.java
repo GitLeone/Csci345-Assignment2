@@ -85,10 +85,10 @@ public class TextView implements View{
     public void displayActResult(Player player, boolean success) {
         if (success) {
             if(player.getRole().getStarring()){
-                System.out.printf("success! You got 2 credits!");
+                System.out.println("Success! You got 2 credits!");
             }
             else{
-                System.out.printf("success! You got 1 credit and 1 dollar!");
+                System.out.println("Success! You got 1 credit and 1 dollar!");
             }
             
         } else {
