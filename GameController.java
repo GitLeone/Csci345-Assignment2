@@ -123,8 +123,6 @@ public class GameController {
         String action;
         String[] lineSplit = input.split(" ", 2);
 
-        System.out.println(currentPlayer.getName() + " please perform a valid action.");
-
         if(input.equals("take role")){
             action = input;
         }
@@ -305,6 +303,7 @@ public class GameController {
         view.displayMessage("Winner: " + winner.getName() + " with " + highestScore + " points!");
         }
         setGameOver(true);
+        System.exit(0);
     }
 
     public boolean getGameOver(){

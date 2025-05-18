@@ -70,23 +70,37 @@ public class Player {
     }
  
     //actions
-    public boolean move(String location, LocationManager locationManager){
-        if(locationManager.validateMove(this, location)){
-            setLocation(location);
-            Set locationValue = locationManager.getSet(location);
-            //if the players new location is a set, check if the scenecard in the set has been flipped, if not, flip it
-            if(locationValue.isSet()){
-                if(!locationValue.getSceneCard().getFlipped()){
-                    locationValue.getSceneCard().setFlipped(true);
-                }
-            }
-            return true;
+    public boolean move(String location, LocationManager locationManager) {
+    String actualLocationName = null;
+    for (String validLocation : locationManager.getSetList().keySet()) {
+        if (validLocation.equalsIgnoreCase(location)) {
+            actualLocationName = validLocation;
+            break;
         }
-        else{
-            return false;
-        }
-
     }
+    
+    // Step 2: Fail if location doesn't exist
+    if (actualLocationName == null) {
+        System.err.println("Invalid location: " + location);
+        return false;
+    }
+
+    // Step 3: Validate move with properly-cased name
+    if (!locationManager.validateMove(this, actualLocationName)) {
+        return false;
+    }
+
+    // Step 4: Execute move
+    setLocation(actualLocationName);
+    Set targetSet = locationManager.getSet(actualLocationName);
+    
+    if (targetSet.isSet() && targetSet.getSceneCard() != null) {
+        targetSet.getSceneCard().setFlipped(true);
+    }
+    
+    return true;
+}
+
     public boolean rehearse(Set set, SceneCard scene, Dice dice) {
         if (!getWorking()) {
             return false;
