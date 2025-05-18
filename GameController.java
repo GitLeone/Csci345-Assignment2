@@ -169,7 +169,7 @@ public class GameController {
                     //Explains failure
                     if (currentPlayer.getPracticeChips() >= 
                         currentPlayerLocation.getSceneCard().getBudget() - 1) {
-                        view.displayMessage("Max rehearsals reached for this scene!");
+                        view.displayMessage("Max rehearsals reached for this scene, you must act!");
                     } else {
                         view.displayMessage("Cannot rehearse right now.");
                     }
