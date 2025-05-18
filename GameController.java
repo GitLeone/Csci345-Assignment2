@@ -211,7 +211,7 @@ public class GameController {
                 }
                 Role chosenRole = view.chooseFromAvailableRoles(currentPlayer);
                 if (chosenRole == null) {
-                    view.displayMessage("Invalid role selection (use numbers or exact names)");
+                    view.displayMessage("Invalid role selection (use numbers)");
                 return false;
                 }
                 if (!currentPlayer.takeRole(chosenRole, currentPlayerLocation)) {
@@ -240,11 +240,11 @@ public class GameController {
                 }
                 if(currentPlayer.act(dice, currentPlayerLocation, currentScene)){
                     actResult = true;
-                    if(currentPlayerLocation.getShotsRemaining() == 0){
-                        wrapScene(currentPlayerLocation);
-                    }
                 }
                 view.displayActResult(currentPlayer, actResult, onCard);
+                if(currentPlayerLocation.getShotsRemaining() == 0){
+                    wrapScene(currentPlayerLocation);
+                }
                 endTurn();
                 break;
 
@@ -299,7 +299,7 @@ public class GameController {
             for(int i=0; i < diceRolls.size(); i++){
                 curPlayer = onCardActors.get(i % onCardActors.size());
                 curPlayer.setDollars(curPlayer.getDollars() + diceRolls.get(i));
-                view.displayMessage("Player " + curPlayer.getName() + "got " + diceRolls.get(i) + "from a dice roll!");
+                view.displayMessage("Player " + curPlayer.getName() + " got $" + diceRolls.get(i) + " from a dice roll!");
                 curPlayer.setWorking(false);
                 curPlayer.setRole(null);
             }
@@ -311,7 +311,7 @@ public class GameController {
             if(!onCardActors.isEmpty()){
                 Role playerRole = curPlayer.getRole();
                 curPlayer.setDollars(curPlayer.getDollars() + playerRole.getRankRequired());
-                view.displayMessage("Player " + curPlayer.getName() + "got " + playerRole.getRankRequired() + "from their off card role!");
+                view.displayMessage("Player " + curPlayer.getName() + "got $" + playerRole.getRankRequired() + "from their off card role!");
             }
             curPlayer.setWorking(false);
             curPlayer.setRole(null);

@@ -50,9 +50,14 @@ public class TextView implements View{
         int numPlayers = 0;
         while(numPlayers < 2 || numPlayers > 8){
             System.out.print("How many players? > ");
-            numPlayers = Integer.parseInt(scanner.nextLine());
-            if(numPlayers < 2 || numPlayers > 8){
-                System.out.println("Deadwood only supports 2-8 players");
+            try{
+                numPlayers = Integer.parseInt(scanner.nextLine());
+                if(numPlayers < 2 || numPlayers > 8){
+                    System.out.println("Deadwood only supports 2-8 players");
+                }
+            }
+            catch (NumberFormatException e){
+                System.out.println("Invalid input, try again");
             }
         }
         moderator.initializePlayers(numPlayers);
