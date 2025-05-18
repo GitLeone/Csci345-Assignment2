@@ -82,9 +82,15 @@ public class TextView implements View{
     
     //Informs player of acting result
     @Override
-    public void displayActResult(boolean success, int reward, String rewardType) {
+    public void displayActResult(Player player, boolean success) {
         if (success) {
-            System.out.printf("success! You got %d %s%n", reward, rewardType);
+            if(player.getRole().getStarring()){
+                System.out.printf("success! You got 2 credits!");
+            }
+            else{
+                System.out.printf("success! You got 1 credit and 1 dollar!");
+            }
+            
         } else {
             System.out.println("Your acting was unsuccessful");
         }

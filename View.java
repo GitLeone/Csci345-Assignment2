@@ -1,7 +1,7 @@
 public interface View {
     void displayPlayerInfo(Player player);
     void displayPlayerLocation(Player player);
-    void displayActResult(boolean success, int reward, String rewardType);
+    void displayActResult(Player player, boolean success);
     void promptPlayerCount();
     void startGameMessage();
     void endGameMessage();

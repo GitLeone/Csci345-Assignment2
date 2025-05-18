@@ -229,15 +229,17 @@ public class GameController {
                 break;
 
             case "act":
+                boolean actResult = false;
                 if (currentPlayer.getRole() == null) {
                     view.displayMessage("You must take a role before acting.");
                     return false;
-                }   
+                }
                 if(currentPlayer.act(dice, currentPlayerLocation, currentScene)){
+                    actResult = true;
+                    view.displayActResult(currentPlayer, actResult);
                     if(currentPlayerLocation.getShotsRemaining() == 0){
                         wrapScene(currentPlayerLocation);
                     }
-                    view.displayMessage("Act successful.");
                     endTurn();
                 }
                 else{
