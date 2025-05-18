@@ -35,11 +35,11 @@ public class TextView implements View{
     }
 
     @Override
-    public int promptPlayerCount(){
+    public void promptPlayerCount(){
         System.out.print("How many players? > ");
         int numPlayers = Integer.parseInt(scanner.nextLine());
         moderator.initializePlayers(numPlayers);
-        return numPlayers;
+        System.out.println(numPlayers + " players");
     }
     
     @Override

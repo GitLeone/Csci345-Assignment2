@@ -7,6 +7,7 @@ public class Player {
     private boolean working;
     private String location;
     private Role role;
+    private boolean activePlayer;
 
     //constructor
     public Player(String name, int rank, int credits, int dollars, int practiceChips, boolean working, String location){
@@ -17,6 +18,7 @@ public class Player {
         this.practiceChips = practiceChips;
         this.working = working;
         this.location = location;
+        this.activePlayer = false;
     }
 
     //getters & setters
@@ -67,6 +69,12 @@ public class Player {
     }
     public void setRole(Role role){
         this.role = role;
+    }
+    public void setActive(boolean active){
+        this.activePlayer = active;
+    }
+    public boolean isActive(){
+        return this.activePlayer;
     }
  
     //actions

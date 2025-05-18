@@ -104,11 +104,12 @@ public class GameController {
         this.dayOver = dayOver;
     }
     public void endDay(){
-        setDayOver(true);
-        currentDay++;
         if(currentDay > maxDays){
             endGame();
         }
+        setDayOver(true);
+        currentDay++;
+        dealSceneCards(); //Deals new scene cards
     }
     public void setView(View view){
         this.view = view;
