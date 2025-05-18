@@ -198,7 +198,7 @@ public class Player {
         }
 
         this.rank = newRank;
-        System.out.println("★ Upgraded to rank " + newRank + "!");
+        System.out.println("Upgraded to rank " + newRank + "!");
         return true;
     }
 }
