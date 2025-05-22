@@ -350,14 +350,16 @@ public class GameController {
         scene.setWrapped(true);    
     }
 
+    // Ends the player's turn on their command
     public void endTurn(){
         currentPlayerIndex = (currentPlayerIndex + 1) % players.size();
         view.displayCurrentPlayer(players.get(currentPlayerIndex));
     }
 
+    // Ends the entire game and calculates score and winner
     public void endGame() {
         view.displayMessage("Game Over! Final Scores:");
-        int highestScore = -1;
+        int highestScore = -1; // Initialize high
         Player winner = null;
         // Calculate and display final scores
         for (Player player : players) {
@@ -365,13 +367,13 @@ public class GameController {
             view.displayMessage(player.getName() + " - $" + player.getDollars() + ", " + player.getCredits() + " credits, rank " + player.getRank() + " => Total Score: " + score);
 
             if (score > highestScore) {
-            highestScore = score;
-            winner = player;
+                highestScore = score;
+                winner = player;
             }
         }
 
         if (winner != null) {
-        view.displayMessage("Winner: " + winner.getName() + " with " + highestScore + " points!");
+            view.displayMessage("Winner: " + winner.getName() + " with " + highestScore + " points!");
         }
         setGameOver(true);
         System.exit(0);
@@ -380,9 +382,11 @@ public class GameController {
     public boolean getGameOver(){
         return this.gameOver;
     }
+
     public void setGameOver(boolean gameOver){
         this.gameOver = gameOver;
     }
+    
     public void setMaxDays(int maxDays){
         this.maxDays = maxDays;
     }
