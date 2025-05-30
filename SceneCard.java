@@ -12,14 +12,16 @@ public class SceneCard{
     private Map<String, Role> roleList;
     private List<Player> actingPlayers;
     private boolean isWrapped;
-   
-    public SceneCard(String name, int budget, boolean flipped){
+    private String img;
+
+    public SceneCard(String name, int budget, boolean flipped, String img){
         this.name = name;
         this.budget = budget;
         this.flipped = flipped;
         this.roleList = new HashMap<>();
         this.actingPlayers = new ArrayList<>();
         this.isWrapped = false;
+        this.img = img;
     }
     //Gets the name of scene
     public String getName(){

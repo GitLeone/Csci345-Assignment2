@@ -39,8 +39,9 @@ public class ParseXML{
         for (int i=0; i < cards.getLength(); i++){
             Node card = cards.item(i);
             String cardName = card.getAttributes().getNamedItem("name").getNodeValue();
+            String img = card.getAttributes().getNamedItem("img").getNodeValue();
             int cardBudget = Integer.parseInt(card.getAttributes().getNamedItem("budget").getNodeValue());
-            SceneCard newSceneCard = new SceneCard(cardName, cardBudget, false);
+            SceneCard newSceneCard = new SceneCard(cardName, cardBudget, false, img);
             sceneDeck.put(cardName, newSceneCard);
             //Nodes Children
             NodeList children = card.getChildNodes();
@@ -65,6 +66,14 @@ public class ParseXML{
                         if("line".equals(partSub.getNodeName())){
                             String partLine = partSub.getTextContent().trim();
                             newPart.setLine(partLine);                           
+                        }
+                        else if("area".equals(partSub.getNodeName())){
+                            int x, y, h, w;
+                            x = Integer.parseInt(partSub.getAttributes().getNamedItem("x").getNodeValue());
+                            y = Integer.parseInt(partSub.getAttributes().getNamedItem("y").getNodeValue());
+                            h = Integer.parseInt(partSub.getAttributes().getNamedItem("h").getNodeValue());
+                            w = Integer.parseInt(partSub.getAttributes().getNamedItem("w").getNodeValue());
+                            newPart.setBoardDetails(x, y, h, w);
                         }
                     }
                 }
@@ -105,9 +114,22 @@ public class ParseXML{
                     for (int k = 0; k < takesChildren.getLength(); k++){
                         Node takesSub = takesChildren.item(k);
                         if("take".equals(takesSub.getNodeName())){
-                           int numTakes = Integer.parseInt(takesSub.getAttributes().getNamedItem("number").getNodeValue());
-                            if (numTakes > maxTakes){
-                                maxTakes = numTakes;
+                            int x, y, h, w, number;
+                            number = Integer.parseInt(takesSub.getAttributes().getNamedItem("number").getNodeValue());
+                            NodeList takeChildren = takesSub.getChildNodes();
+                            for (int l = 0; l < takeChildren.getLength(); l++){
+                                Node takeSub = takeChildren.item(l);
+                                if("area".equals(takeSub.getNodeName())){
+                                    x = Integer.parseInt(takeSub.getAttributes().getNamedItem("x").getNodeValue());
+                                    y = Integer.parseInt(takeSub.getAttributes().getNamedItem("y").getNodeValue());
+                                    h = Integer.parseInt(takeSub.getAttributes().getNamedItem("h").getNodeValue());
+                                    w = Integer.parseInt(takeSub.getAttributes().getNamedItem("w").getNodeValue());
+                                    Take newTake = new Take(x, y, h, w, number);
+                                    newSet.addTake(newTake);
+                                }
+                            }
+                            if (number > maxTakes){
+                                maxTakes = number;
                             }
                         }
                     }
@@ -135,19 +157,22 @@ public class ParseXML{
                                     newRole.setLine(partLine);
                                 }
                                 else if("area".equals(partSub.getNodeName())){
-                                    Element areaElement = (Element) partSub;
-                                    int x = Integer.parseInt(areaElement.getAttribute("x"));
-                                    int y = Integer.parseInt(areaElement.getAttribute("y"));
-                                    int w = Integer.parseInt(areaElement.getAttribute("w"));
-                                    int h = Integer.parseInt(areaElement.getAttribute("h"));
-                                    newRole.setCords(x, y, h, w);
+                                    int x = Integer.parseInt(partSub.getAttributes().getNamedItem("x").getNodeValue());
+                                    int y = Integer.parseInt(partSub.getAttributes().getNamedItem("y").getNodeValue());
+                                    int w = Integer.parseInt(partSub.getAttributes().getNamedItem("w").getNodeValue());
+                                    int h = Integer.parseInt(partSub.getAttributes().getNamedItem("h").getNodeValue());
+                                    newRole.setBoardDetails(x, y, h, w);
                                 }
                             }
                         }
                     }
                 }
                 else if("area".equals(sub.getNodeName())){
-                    
+                    int x = Integer.parseInt(sub.getAttributes().getNamedItem("x").getNodeValue());
+                    int y = Integer.parseInt(sub.getAttributes().getNamedItem("y").getNodeValue());
+                    int h = Integer.parseInt(sub.getAttributes().getNamedItem("h").getNodeValue());
+                    int w = Integer.parseInt(sub.getAttributes().getNamedItem("w").getNodeValue());
+                    newSet.setBoardDetails(x, y, h, w);
                 }
             }
         }

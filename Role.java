@@ -8,6 +8,7 @@ public class Role {
     private boolean isStarring;
     private Player occupiedBy;
     private int x, y, h, w;
+    private String img;
 
     public Role(String name, boolean isStarring, int rankRequired) {
         this.name = name;
@@ -47,6 +48,14 @@ public class Role {
         return this.rankRequired;
     }
 
+    public String getImg(){
+        return this.img;
+    }
+
+    public void setImg(String img){
+        this.img = img;
+    }
+
     public int getXCord(){
         return this.x;
     }
@@ -55,15 +64,15 @@ public class Role {
         return this.y;
     }
 
-    public int getH(){
+    public int getHeight(){
         return this.h;
     }
 
-    public int getW(){
+    public int getWidth(){
         return this.w;
     }
 
-    public void setCords(int x, int y, int h, int w){
+    public void setBoardDetails(int x, int y, int h, int w){
         this.x = x;
         this.y = y;
         this.h = h;
