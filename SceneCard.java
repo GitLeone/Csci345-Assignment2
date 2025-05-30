@@ -96,4 +96,8 @@ public class SceneCard{
         }
         return roleNameList;
     }
+
+    public String getImg(){
+        return this.img;
+    }
  }
