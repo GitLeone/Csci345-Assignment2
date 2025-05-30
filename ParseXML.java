@@ -110,10 +110,11 @@ public class ParseXML{
                 }
                 else if("takes".equals(sub.getNodeName())){
                     NodeList takesChildren = sub.getChildNodes();
-                    int maxTakes = 0;
+                    int maxShots = 0;
                     for (int k = 0; k < takesChildren.getLength(); k++){
                         Node takesSub = takesChildren.item(k);
                         if("take".equals(takesSub.getNodeName())){
+                            maxShots++;
                             int x, y, h, w, number;
                             number = Integer.parseInt(takesSub.getAttributes().getNamedItem("number").getNodeValue());
                             NodeList takeChildren = takesSub.getChildNodes();
@@ -128,14 +129,9 @@ public class ParseXML{
                                     newSet.addTake(newTake);
                                 }
                             }
-                            if (number > maxTakes){
-                                maxTakes = number;
-                            }
                         }
                     }
-                    //sets Set objects shots remaining
-                    //Using a max method so I can more easily make chanegs when we need the positions of multiple shots in Assignment 3
-                    newSet.setShotsRemaining(maxTakes);
+                    newSet.setShotsRemaining(maxShots);
                 }
                 else if("parts".equals(sub.getNodeName())){
                     NodeList partsChildren = sub.getChildNodes();
@@ -194,6 +190,13 @@ public class ParseXML{
                     }
                 }
             }
+            else if("area".equals(sub.getNodeName())){
+                int x = Integer.parseInt(sub.getAttributes().getNamedItem("x").getNodeValue());
+                int y = Integer.parseInt(sub.getAttributes().getNamedItem("y").getNodeValue());
+                int h = Integer.parseInt(sub.getAttributes().getNamedItem("h").getNodeValue());
+                int w = Integer.parseInt(sub.getAttributes().getNamedItem("w").getNodeValue());
+                trailerSet.setBoardDetails(x, y, h, w);
+            }
         }
         Node office = root.getElementsByTagName("office").item(0);
         Set officeSet = new Set("office", 0, false);
@@ -229,6 +232,13 @@ public class ParseXML{
                         }
                     }
                 }
+            }
+            else if("area".equals(sub.getNodeName())){
+                int x = Integer.parseInt(sub.getAttributes().getNamedItem("x").getNodeValue());
+                int y = Integer.parseInt(sub.getAttributes().getNamedItem("y").getNodeValue());
+                int h = Integer.parseInt(sub.getAttributes().getNamedItem("h").getNodeValue());
+                int w = Integer.parseInt(sub.getAttributes().getNamedItem("w").getNodeValue());
+                officeSet.setBoardDetails(x, y, h, w);
             }
         }
     }
