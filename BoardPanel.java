@@ -2,9 +2,9 @@ import java.awt.*;
 import javax.swing.*;
 
 public class BoardPanel extends JPanel {
-    private final GameController model;
+    private final GUIController model;
 
-    public BoardPanel(GameController model) {
+    public BoardPanel(GUIController model) {
         this.model = model;
         setPreferredSize(new Dimension(800, 600));
     }

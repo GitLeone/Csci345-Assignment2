@@ -134,9 +134,20 @@ public class ParseXML{
                                     //Sets the line of all off card roles for the set
                                     newRole.setLine(partLine);
                                 }
+                                else if("area".equals(partSub.getNodeName())){
+                                    Element areaElement = (Element) partSub;
+                                    int x = Integer.parseInt(areaElement.getAttribute("x"));
+                                    int y = Integer.parseInt(areaElement.getAttribute("y"));
+                                    int w = Integer.parseInt(areaElement.getAttribute("w"));
+                                    int h = Integer.parseInt(areaElement.getAttribute("h"));
+                                    newRole.setCords(x, y, h, w);
+                                }
                             }
                         }
                     }
+                }
+                else if("area".equals(sub.getNodeName())){
+                    
                 }
             }
         }

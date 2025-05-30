@@ -7,6 +7,7 @@ public class Role {
     private int rankRequired;
     private boolean isStarring;
     private Player occupiedBy;
+    private int x, y, h, w;
 
     public Role(String name, boolean isStarring, int rankRequired) {
         this.name = name;
@@ -44,5 +45,28 @@ public class Role {
 
     public int getRankRequired() {
         return this.rankRequired;
+    }
+
+    public int getXCord(){
+        return this.x;
+    }
+
+    public int getYCord(){
+        return this.y;
+    }
+
+    public int getH(){
+        return this.h;
+    }
+
+    public int getW(){
+        return this.w;
+    }
+
+    public void setCords(int x, int y, int h, int w){
+        this.x = x;
+        this.y = y;
+        this.h = h;
+        this.w = w;
     }
 }

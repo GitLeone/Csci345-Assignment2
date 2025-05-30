@@ -14,6 +14,7 @@ public class Set {
                                         //If the Set object from this list is needed, use locationManager.getSet()
     private List<Player> players; //Players currently in this location
     private List<Player> actingPlayers;
+    private int x, y, h, w;
 
     public Set(String name, int maxShots, boolean isSet) {
         this.name = name;
@@ -110,5 +111,37 @@ public class Set {
 
     public int getMaxShots(){
         return this.maxShots;
+    }
+    
+    public int getXCord(){
+        return this.x;
+    }
+
+    public void setXCord(int x){
+        this.x = x;
+    }
+
+    public int getYCord(){
+        return this.y;
+    }
+
+    public void setYCord(int y){
+        this.y = y;
+    }
+
+    public int getH(){
+        return this.h;
+    }
+
+    public void setH(int h){
+        this.h = h;
+    }
+
+    public int getW(){
+        return this.w;
+    }
+
+    public void setW(int w){
+        this.w = w;
     }
 }

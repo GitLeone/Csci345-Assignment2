@@ -1,11 +1,11 @@
 import javax.swing.*;
 
 public class DeadwoodFrame extends JFrame {
-    private final GameController model;
+    private final GUIController model;
     private BoardPanel boardPanel;
     private PlayerPanel playerPanel;
 
-    public DeadwoodFrame(GameController model) {
+    public DeadwoodFrame(GUIController model) {
         this.model = model;
         setTitle("Deadwood (Swing)");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
