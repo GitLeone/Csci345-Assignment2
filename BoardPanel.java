@@ -16,7 +16,7 @@ public class BoardPanel extends JPanel {
     }
 
     private void loadBoardImage() {
-        ImageIcon icon = new ImageIcon("board.jpg");
+        ImageIcon icon = new ImageIcon("images/board.jpg");
         boardImage = icon.getImage();
     }
 
