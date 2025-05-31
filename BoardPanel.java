@@ -25,7 +25,7 @@ public class BoardPanel extends JPanel {
     }
 
     private void loadFaceDownCards() {
-        ImageIcon icon = new ImageIcon("images/Card/01.png");
+        ImageIcon icon = new ImageIcon("images/cardBack.png");
         cardBackImage = icon.getImage();
     }
 
