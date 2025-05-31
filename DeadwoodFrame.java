@@ -1,17 +1,17 @@
 import javax.swing.*;
 
 public class DeadwoodFrame extends JFrame {
-    private final GUIController model;
+    private final GameController moderator;
     private BoardPanel boardPanel;
     private PlayerPanel playerPanel;
 
-    public DeadwoodFrame(GUIController model) {
-        this.model = model;
+    public DeadwoodFrame(GameController moderator) {
+        this.moderator = moderator;
         setTitle("Deadwood (Swing)");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        boardPanel = new BoardPanel(model);
-        playerPanel = new PlayerPanel(model);
+        boardPanel = new BoardPanel(moderator);
+        playerPanel = new PlayerPanel(moderator);
 
         // Main layout
         JSplitPane splitPane = new JSplitPane(

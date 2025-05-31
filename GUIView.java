@@ -5,15 +5,15 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class GUIView implements View{
-    private GUIController guiMod;
+    private GameController moderator;
     private LocationManager lm;
     private DeadwoodFrame frame;
 
-    public GUIView(GUIController guiMod, LocationManager lm){
+    public GUIView(GameController moderator, LocationManager lm){
         this.lm = lm;
-        this.guiMod = guiMod;
+        this.moderator = moderator;
         javax.swing.SwingUtilities.invokeLater(() -> {
-            new DeadwoodFrame(guiMod); // Shows the GUI frame
+            new DeadwoodFrame(moderator); // Shows the GUI frame
         });
     }
 

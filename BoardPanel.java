@@ -2,11 +2,11 @@ import java.awt.*;
 import javax.swing.*;
 
 public class BoardPanel extends JPanel {
-    private final GUIController model;
+    private final GameController moderator;
     private JLabel boardLabel;
     
-    public BoardPanel(GUIController model) {
-        this.model = model;
+    public BoardPanel(GameController moderator) {
+        this.moderator = moderator;
         setLayout(null);
         ImageIcon board = new ImageIcon("images/board.jpg");
         boardLabel = new JLabel(board);

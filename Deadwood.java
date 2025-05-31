@@ -1,11 +1,10 @@
 public class Deadwood {
     public static void main(String[] args) {
         GameController moderator = new GameController();
-        GUIController guiMod = new GUIController();
         LocationManager locationManager = moderator.getLocationManager();
 
         View view = new TextView(moderator, locationManager);
-        View guiView = new GUIView(guiMod, locationManager);
+        View guiView = new GUIView(moderator, locationManager);
         moderator.setView(view);
 
         view.startGameMessage();

@@ -3,7 +3,7 @@ import javax.swing.*;
 public class PlayerPanel extends JPanel {
     private JLabel dollarsLabel, creditsLabel, rankLabel;
 
-    public PlayerPanel(GUIController model) {
+    public PlayerPanel(GameController moderator) {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         
         dollarsLabel = new JLabel("$0");

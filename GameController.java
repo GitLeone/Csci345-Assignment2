@@ -282,7 +282,7 @@ public class GameController {
             case "locations":
                 locationManager.displayAllPlayerLocations(players, getActivePlayer());
                 break;
-                
+
             case "end":
                 endTurn();
                 break;
