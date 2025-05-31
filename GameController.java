@@ -390,4 +390,66 @@ public class GameController {
     public void setMaxDays(int maxDays){
         this.maxDays = maxDays;
     }
+
+    public View getView() {
+    return view;
+}
+
+public List<Player> getPlayers() {
+    return players;
+}
+
+public void handleActButton() {
+    Player player = getActivePlayer();
+    Set location = locationManager.getSet(player.getLocation());
+    
+    if (player.getRole() == null) {
+        view.displayMessage("You need a role to act!");
+        return;
+    }
+    
+    boolean success = player.act(dice, location, location.getSceneCard());
+    view.displayActResult(player, success, player.getRole().getStarring());
+    
+    if (location.getShotsRemaining() == 0) {
+        wrapScene(location);
+    }
+    
+    endTurn();
+}
+
+    public void handleRehearseButton() {
+        Player player = getActivePlayer();
+        Set location = locationManager.getSet(player.getLocation());
+    
+        if (player.getRole() == null) {
+            view.displayMessage("You need a role to rehearse!");
+            return;
+        }
+    
+        if (player.rehearse(location, location.getSceneCard())) {
+            view.displayMessage("Rehearsed! Chips: " + player.getPracticeChips());
+            endTurn();
+        } else {
+            view.displayMessage("Can't rehearse right now");
+        }
+    }
+
+    public void initiateTakeRole() {
+    Player player = getActivePlayer();
+    Set location = locationManager.getSet(player.getLocation());
+    
+    if (!location.isSet()) {
+        view.displayMessage("You must be on a set to take a role!");
+        return;
+    }
+    
+    if (player.getWorking()) {
+        view.displayMessage("You are already working on a role!");
+        return;
+    }
+    
+    view.chooseFromAvailableRoles(player);
+}
+
 }
