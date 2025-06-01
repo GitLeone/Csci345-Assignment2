@@ -2,6 +2,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.HashMap;
+import java.util.Arrays;
 
 import javax.xml.parsers.ParserConfigurationException;
 import org.w3c.dom.Document;
@@ -67,8 +69,8 @@ public class GameController {
         }
     }
 
-    public void initializePlayers(int numPlayers, List<String> colorChoices) {
-        Map<String, List<String>> colorMapping = new HashMap<>();
+    public void initializePlayers(int numPlayers) {
+        Map<Integer, List<String>> colorMapping = new HashMap<>();
         List<String> blueDie   = Arrays.asList("b1.png", "b2.png", "b3.png", "b4.png", "b5.png", "b6.png");
         List<String> cyanDie   = Arrays.asList("c1.png", "c2.png", "c3.png", "c4.png", "c5.png", "c6.png");
         List<String> greenDie  = Arrays.asList("g1.png", "g2.png", "g3.png", "g4.png", "g5.png", "g6.png");
@@ -76,17 +78,15 @@ public class GameController {
         List<String> pinkDie   = Arrays.asList("p1.png", "p2.png", "p3.png", "p4.png", "p5.png", "p6.png");
         List<String> redDie    = Arrays.asList("r1.png", "r2.png", "r3.png", "r4.png", "r5.png", "r6.png");
         List<String> violetDie = Arrays.asList("v1.png", "v2.png", "v3.png", "v4.png", "v5.png", "v6.png");
-        List<String> whiteDie  = Arrays.asList("w1.png", "w2.png", "w3.png", "w4.png", "w5.png", "w6.png");
         List<String> yellowDie = Arrays.asList("y1.png", "y2.png", "y3.png", "y4.png", "y5.png", "y6.png");
-        colorMapping.put("blue", blueDie);
-        colorMapping.put("cyan", cyanDie);
-        colorMapping.put("green", greenDie);
-        colorMapping.put("orange", orangeDie);
-        colorMapping.put("pink", pinkDie);
-        colorMapping.put("red", redDie);
-        colorMapping.put("violet", violetDie);
-        colorMapping.put("white", whiteDie);
-        colorMapping.put("yellow", yellowDie);
+        colorMapping.put(0, blueDie);
+        colorMapping.put(1, cyanDie);
+        colorMapping.put(2, greenDie);
+        colorMapping.put(3, orangeDie);
+        colorMapping.put(4, pinkDie);
+        colorMapping.put(5, redDie);
+        colorMapping.put(6, violetDie);
+        colorMapping.put(7, yellowDie);
 
         int startingCredits = 0;
         int startingDollars = 0;
@@ -113,7 +113,7 @@ public class GameController {
                 0,            
                 false,
                 "trailer",
-                colorMapping.get(colorChoices.get(i))
+                colorMapping.get(i)
                 );
                 players.add(player);
                 locationManager.updatePlayerLocation(player, locationManager.getSet("trailer"));

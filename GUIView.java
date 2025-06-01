@@ -72,7 +72,7 @@ public class GUIView implements View {
             null,
             options,
             options[0]);
-        
+        //Here we can prompt each player to choose their color and 
         if (choice != null) {
             gameController.initializePlayers(choice);
             startGameMessage();
