@@ -79,7 +79,7 @@ public class Player {
         this.playerDie = playerDie;
     }
     public String getDieImage(){
-        return this.playerDie.get(getRank());
+        return this.playerDie.get(getRank()-1);
     }
  
     //actions
