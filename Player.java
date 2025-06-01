@@ -78,6 +78,9 @@ public class Player {
     public void setPlayerDie(List<String> playerDie){
         this.playerDie = playerDie;
     }
+    public String getDieImage(){
+        return this.playerDie.get(getRank());
+    }
  
     //actions
     public boolean move(String location, LocationManager locationManager) {
