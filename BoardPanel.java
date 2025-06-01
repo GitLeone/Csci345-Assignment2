@@ -20,6 +20,7 @@ public class BoardPanel extends JPanel {
     }
 
     private void loadBoardImage() {
+        setLayout(null);
         ImageIcon icon = new ImageIcon("images/board.jpg");
         boardImage = icon.getImage();
     }

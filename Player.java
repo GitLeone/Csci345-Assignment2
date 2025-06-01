@@ -7,9 +7,10 @@ public class Player {
     private boolean working;
     private String location;
     private Role role;
+    private List<String> playerDie;
 
     //constructor
-    public Player(String name, int rank, int credits, int dollars, int practiceChips, boolean working, String location){
+    public Player(String name, int rank, int credits, int dollars, int practiceChips, boolean working, String location, List<String> playerDie){
         this.name = name;
         this.rank = rank;
         this.credits = credits;
@@ -17,6 +18,7 @@ public class Player {
         this.practiceChips = practiceChips;
         this.working = working;
         this.location = location;
+        this.playerDie = playerDie;
     }
 
     //getters & setters
@@ -67,6 +69,12 @@ public class Player {
     }
     public void setRole(Role role){
         this.role = role;
+    }
+    public List<String> getPlayerDie(){
+        return this.playerDie;
+    }
+    public void setPlayerDie(List<String> playerDie){
+        this.playerDie = playerDie;
     }
  
     //actions
