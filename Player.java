@@ -10,6 +10,7 @@ public class Player {
     private String location;
     private Role role;
     private List<String> playerDie;
+    private int x, y;
 
     //constructor
     public Player(String name, int rank, int credits, int dollars, int practiceChips, boolean working, String location, List<String> playerDie){
@@ -80,6 +81,16 @@ public class Player {
     }
     public String getDieImage(){
         return this.playerDie.get(getRank()-1);
+    }
+    public void setCoordinates(int x, int y){
+        this.x = x;
+        this.y = y;
+    }
+    public int getXCord(){
+        return this.x;
+    }
+    public int getYCord(){
+        return this.y;
     }
  
     //actions

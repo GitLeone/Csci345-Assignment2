@@ -55,17 +55,15 @@ public class BoardPanel extends JPanel {
         
         // Draw players
         for (Player player : gameController.getPlayers()) {
-            Point pos = locationCoordinates.get(player.getLocation());
-            if (pos != null) {
-                g.setColor(Color.RED);
-                g.fillOval(pos.x, pos.y, 20, 20);
-                g.setColor(Color.BLACK);
-                g.drawString(player.getName(), pos.x, pos.y - 5);
-            }
+            String img = player.getDieImage();
+            ImageIcon icon = new ImageIcon("images/" + img);
+            Image playerImage = icon.getImage().getScaledInstance(46, 46, Image.SCALE_SMOOTH);
+            g.drawImage(playerImage, player.getXCord(), player.getYCord(), this);
         }
     }
 
     public void highlightPlayer(Player player) {
         repaint();
     }
+
 }

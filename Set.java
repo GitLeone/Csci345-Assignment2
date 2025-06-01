@@ -1,3 +1,4 @@
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -16,6 +17,7 @@ public class Set {
     private List<Player> actingPlayers;
     private List<Take> takes;
     private int x, y, h, w;
+    private List<Point> basePoints;
 
     public Set(String name, int maxShots, boolean isSet) {
         this.name = name;
