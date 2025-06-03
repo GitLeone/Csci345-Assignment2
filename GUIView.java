@@ -75,6 +75,7 @@ public class GUIView implements View {
         //Here we can prompt each player to choose their color and 
         if (choice != null) {
             gameController.initializePlayers(choice);
+            frame.getBoardPanel().repaint();
             startGameMessage();
         } else {
             promptPlayerCount();

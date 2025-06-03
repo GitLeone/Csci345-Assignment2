@@ -29,6 +29,7 @@ public class Set {
         this.isSet = isSet;
         this.actingPlayers = new ArrayList<>();
         this.takes = new ArrayList<>();
+        this.basePoints = new ArrayList<>();
     }
 
     //How we manage the scenes

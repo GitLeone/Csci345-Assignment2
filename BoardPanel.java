@@ -58,12 +58,12 @@ public class BoardPanel extends JPanel {
             String img = player.getDieImage();
             ImageIcon icon = new ImageIcon("images/" + img);
             Image playerImage = icon.getImage().getScaledInstance(46, 46, Image.SCALE_SMOOTH);
-            g.drawImage(playerImage, player.getXCord(), player.getYCord(), this);
+            g.drawImage(playerImage, 1031, 290, this);
+            //g.drawImage(playerImage, player.getXCord(), player.getYCord(), this);
         }
     }
 
     public void highlightPlayer(Player player) {
         repaint();
     }
-
 }

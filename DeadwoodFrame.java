@@ -55,7 +55,7 @@ public class DeadwoodFrame extends JFrame {
         buttonPanel.add(actButton);
         buttonPanel.add(rehearseButton);
         buttonPanel.add(moveButton);
-         buttonPanel.add(takeRoleButton);
+        buttonPanel.add(takeRoleButton);
         buttonPanel.add(endButton);
         buttonPanel.add(helpButton);
         
