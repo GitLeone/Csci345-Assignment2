@@ -1,6 +1,7 @@
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.awt.Point;
 
 public class LocationManager{
    private Map<Player, Set> playerLocations; //Tracks where players are
@@ -9,11 +10,16 @@ public class LocationManager{
    public LocationManager(Map<String, Set> setList){
         this.playerLocations = new HashMap<>();
         this.setList = new HashMap<>(setList);
+        initializeSetBasePoints();
    }
 
    public void updatePlayerLocation(Player player, Set location){
         playerLocations.remove(player);
         playerLocations.put(player, location);
+        Point newPoint = location.getPlayerBasePoint(player);
+        int newX = newPoint.x;
+        int newY = newPoint.y;
+        player.setCoordinates(newX, newY);
    }
 
    public boolean validateMove(Player player, String location){
@@ -70,5 +76,22 @@ public class LocationManager{
     }
     public Set getSet(String location){
         return setList.get(location);
+    }
+    public void initializeSetBasePoints(){
+        for (Set set : setList.values()){
+            String name = set.getName();
+            if(name.equals("trailer")){
+                Point point1 = new Point(1020, 290);
+                Point point2 = new Point(1020, 330);
+                set.addBasePoint(point1);
+                set.addBasePoint(point2);
+            }
+            else if(name.equals("Main Street")){
+                Point point1 = new Point(915, 170);
+                Point point2 = new Point(955, 170);
+                set.addBasePoint(point1);
+                set.addBasePoint(point2);
+            }
+        }
     }
 }

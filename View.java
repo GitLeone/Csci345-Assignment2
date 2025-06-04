@@ -12,4 +12,5 @@ public interface View {
     void displayCurrentPlayer(Player player);
     void displayNeighbors(Set set);
     void displayStartingStats(Player player);
+    default void updateBoard(){}
 }

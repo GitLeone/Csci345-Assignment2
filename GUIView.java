@@ -164,4 +164,9 @@ public class GUIView implements View {
         set.getAdjacentSets().forEach(neighbor -> neighbors.append("- ").append(neighbor).append("\n"));
         displayMessage(neighbors.toString());
     }
+
+    @Override
+    public void updateBoard(){
+        frame.getBoardPanel().repaint();
+    }
 }

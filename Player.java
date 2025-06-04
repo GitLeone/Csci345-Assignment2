@@ -3,6 +3,7 @@ import java.util.List;
 
 public class Player {
     private String name;
+    private int playerNum;
     private int rank;
     private int credits;
     private int dollars;
@@ -14,7 +15,7 @@ public class Player {
     private int x, y;
 
     //constructor
-    public Player(String name, int rank, int credits, int dollars, int practiceChips, boolean working, String location, List<String> playerDie){
+    public Player(String name, int rank, int credits, int dollars, int practiceChips, boolean working, String location, List<String> playerDie, int playerNum){
         this.name = name;
         this.rank = rank;
         this.credits = credits;
@@ -23,6 +24,7 @@ public class Player {
         this.working = working;
         this.location = location;
         this.playerDie = playerDie;
+        this.playerNum = playerNum;
     }
 
     //getters & setters
@@ -92,6 +94,9 @@ public class Player {
     }
     public int getYCord(){
         return this.y;
+    }
+    public int getPlayerNum(){
+        return this.playerNum;
     }
  
     //actions

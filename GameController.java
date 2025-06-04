@@ -112,11 +112,13 @@ public class GameController {
                 0,            
                 false,
                 "trailer",
-                colorMapping.get(i)
+                colorMapping.get(i),
+                i+1
                 );
                 players.add(player);
                 locationManager.updatePlayerLocation(player, locationManager.getSet("trailer"));
             }
+        view.updateBoard();
     }
 
     public boolean isDayOver(){
@@ -182,6 +184,7 @@ public class GameController {
                     return false;
                 }
                 view.displayMessage("Successful move to " + currentPlayer.getLocation());
+                view.updateBoard();
                 endTurn();
                 break;
 
