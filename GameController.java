@@ -1,10 +1,9 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.HashMap;
-import java.util.Arrays;
-
 import javax.xml.parsers.ParserConfigurationException;
 import org.w3c.dom.Document;
 
@@ -459,20 +458,22 @@ public void handleActButton() {
     }
 
     public void initiateTakeRole() {
-    Player player = getActivePlayer();
-    Set location = locationManager.getSet(player.getLocation());
+        Player player = getActivePlayer();
+        Set location = locationManager.getSet(player.getLocation());
     
-    if (!location.isSet()) {
-        view.displayMessage("You must be on a set to take a role!");
-        return;
+        if (!location.isSet()) {
+            view.displayMessage("You must be on a set to take a role!");
+            return;
+        }
+    
+        if (player.getWorking()) {
+            view.displayMessage("You are already working on a role!");
+            return;
+        }
+    
+        view.chooseFromAvailableRoles(player);
     }
+
     
-    if (player.getWorking()) {
-        view.displayMessage("You are already working on a role!");
-        return;
-    }
-    
-    view.chooseFromAvailableRoles(player);
-}
 
 }

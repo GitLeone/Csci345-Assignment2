@@ -1,3 +1,4 @@
+import java.awt.Point;
 import java.util.List;
 
 public class Player {
@@ -232,5 +233,13 @@ public class Player {
         this.rank = newRank;
         System.out.println("Upgraded to rank " + newRank + "!");
         return true;
+    }
+
+    public Point getCoordinates(LocationManager locationManager) {
+        Set currentSet = locationManager.getSet(this.location);
+        if (currentSet != null) {
+            return new Point(currentSet.getXCord(), currentSet.getYCord());
+        }
+        return new Point(0, 0); // Default if location not found
     }
 }

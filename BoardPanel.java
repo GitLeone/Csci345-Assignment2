@@ -52,18 +52,51 @@ public class BoardPanel extends JPanel {
                 }
             }
         }
-        
-        // Draw players
-        for (Player player : gameController.getPlayers()) {
-            String img = player.getDieImage();
-            ImageIcon icon = new ImageIcon("images/" + img);
-            Image playerImage = icon.getImage().getScaledInstance(46, 46, Image.SCALE_SMOOTH);
-            g.drawImage(playerImage, 1031, 290, this);
-            //g.drawImage(playerImage, player.getXCord(), player.getYCord(), this);
+        drawPlayers(g);
+    }
+
+    private void drawPlayers(Graphics g) {
+        int diceSize = 40;  // size of the dice images
+        int offsetStep = 45; // offset so players don't overlap exactly
+
+        java.util.List<Player> players = gameController.getPlayers();
+
+        Map<String, Integer> playerCountAtLocation = new HashMap<>();
+
+
+        for (Player player : players) {
+            String location = player.getLocation();
+            Point basePos = locationCoordinates.get(location);
+
+            if (basePos != null) {
+                // Count how many players already drawn at this location to offset dice
+                int count = playerCountAtLocation.getOrDefault(location, 0);
+
+                // Calculate position offset for each player
+                int x = basePos.x + count * offsetStep;
+                int y = basePos.y;
+
+                // Load the dice image for player's current face (for example, first face)
+                // Assuming player.getDieImages() returns List<String> with filenames like "b1.png"
+                String imageName = player.getDieImage(); // or player's current face index
+
+                ImageIcon icon = new ImageIcon("images/" + imageName);
+                Image diceImage = icon.getImage().getScaledInstance(diceSize, diceSize, Image.SCALE_SMOOTH);
+
+                g.drawImage(diceImage, x, y, this);
+
+                // Update count for this location
+                playerCountAtLocation.put(location, count + 1);
+            }
         }
     }
+    
+
+
 
     public void highlightPlayer(Player player) {
         repaint();
     }
+
+    
 }
