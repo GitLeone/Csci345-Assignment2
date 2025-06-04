@@ -142,10 +142,39 @@ public class GUIView implements View {
     }
 
     private void addRoleButton(JPanel panel, Role role) {
-        JButton button = new JButton(String.format("%s (Rank %d)", role.getName(), role.getRankRequired()));
+        JButton button = new JButton();
+        button.setLayout(new BorderLayout());
+    
+        // Main role info
+        JLabel roleLabel = new JLabel(
+            String.format("<html><b>%s</b><br>Rank: %d<br>Line: %s</html>",
+                role.getName(),
+                role.getRankRequired(),
+                role.getLine()));
+        roleLabel.setHorizontalAlignment(SwingConstants.LEFT);
+    
+        // Highlight if player qualifies
+        if (gameController.getActivePlayer().getRank() >= role.getRankRequired()) {
+            button.setBackground(new Color(220, 255, 220)); // Light green
+        } else {
+            button.setBackground(new Color(255, 220, 220)); // Light red
+            roleLabel.setText(roleLabel.getText() + "<br><font color=red>Rank too low!</font>");
+        }
+    
+        button.add(roleLabel, BorderLayout.CENTER);
         button.addActionListener(e -> {
+            if (gameController.getActivePlayer().getRank() >= role.getRankRequired()) {
             gameController.processAction("take role " + role.getName());
-            ((Window)SwingUtilities.getRoot(button)).dispose();
+            Window window = SwingUtilities.getWindowAncestor(button);
+            if (window != null) {
+                window.dispose();
+            }
+            } else {
+            JOptionPane.showMessageDialog(button, 
+                "You need rank " + role.getRankRequired() + " for this role!", 
+                "Rank Too Low", 
+                JOptionPane.WARNING_MESSAGE);
+            }
         });
         panel.add(button);
     }

@@ -119,4 +119,7 @@ public class DeadwoodFrame extends JFrame {
     public JTextArea getMessageArea() {
         return messageArea;
     }
+
+    
+    
 }
