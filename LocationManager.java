@@ -79,18 +79,36 @@ public class LocationManager{
     }
     public void initializeSetBasePoints(){
         for (Set set : setList.values()){
-            String name = set.getName();
+            String name = set.getName().toLowerCase();
             if(name.equals("trailer")){
-                Point point1 = new Point(1020, 290);
-                Point point2 = new Point(1020, 330);
-                set.addBasePoint(point1);
-                set.addBasePoint(point2);
+                set.addBasePoint(new Point(995, 266));
+                set.addBasePoint(new Point(995, 304));
+                set.addBasePoint(new Point(995, 344));
+                set.addBasePoint(new Point(995, 384));  
+                set.addBasePoint(new Point(1147, 266));
+                set.addBasePoint(new Point(1147, 304));
+                set.addBasePoint(new Point(1147, 344));
+                set.addBasePoint(new Point(1147, 384));  
             }
-            else if(name.equals("Main Street")){
-                Point point1 = new Point(915, 170);
-                Point point2 = new Point(955, 170);
-                set.addBasePoint(point1);
-                set.addBasePoint(point2);
+            else if(name.equals("main street")){
+                set.addBasePoint(new Point(776, 72));
+                set.addBasePoint(new Point(816, 72));
+                set.addBasePoint(new Point(856, 72));
+                set.addBasePoint(new Point(896, 72));  
+                set.addBasePoint(new Point(776, 112));
+                set.addBasePoint(new Point(816, 112));
+                set.addBasePoint(new Point(856, 112));
+                set.addBasePoint(new Point(896, 112));  
+            }
+            else if(name.equals("saloon")){
+                set.addBasePoint(new Point(724, 236));
+                set.addBasePoint(new Point(764, 236));
+                set.addBasePoint(new Point(804, 236));
+                set.addBasePoint(new Point(844, 236)); 
+                set.addBasePoint(new Point(610, 401));
+                set.addBasePoint(new Point(650, 401));
+                set.addBasePoint(new Point(782, 401));
+                set.addBasePoint(new Point(822, 401));  
             }
         }
     }
