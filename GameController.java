@@ -184,7 +184,8 @@ public class GameController {
                     return false;
                 }
                 view.displayMessage("Successful move to " + currentPlayer.getLocation());
-                endTurn();
+                view.updateBoard();
+                processAction("take role");
                 break;
 
             case "where":
