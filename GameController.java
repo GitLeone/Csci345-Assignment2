@@ -378,7 +378,9 @@ public class GameController {
     // Ends the player's turn on their command
     public void endTurn(){
         currentPlayerIndex = (currentPlayerIndex + 1) % players.size();
-        view.displayCurrentPlayer(players.get(currentPlayerIndex));
+        Player curPlayer = players.get(currentPlayerIndex);
+        view.displayCurrentPlayer(curPlayer);
+        view.updatePlayerPanel(curPlayer);
     }
 
     // Ends the entire game and calculates score and winner

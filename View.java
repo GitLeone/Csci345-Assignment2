@@ -13,4 +13,5 @@ public interface View {
     void displayNeighbors(Set set);
     void displayStartingStats(Player player);
     default void updateBoard(){}
+    default void updatePlayerPanel(Player player){}
 }

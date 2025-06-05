@@ -76,6 +76,8 @@ public class GUIView implements View {
         //Here we can prompt each player to choose their color and 
         if (choice != null) {
             gameController.initializePlayers(choice);
+            Player firstPlayer = gameController.getActivePlayer();
+            updatePlayerPanel(firstPlayer);
             frame.getBoardPanel().repaint();
             startGameMessage();
         } else {
@@ -185,6 +187,7 @@ public class GUIView implements View {
         SwingUtilities.invokeLater(() -> {
             frame.getPlayerPanel().setCurrentPlayer(player.getName());
             displayMessage("\n=== " + player.getName() + "'s turn ===");
+
         });
     }
 
@@ -198,5 +201,10 @@ public class GUIView implements View {
     @Override
     public void updateBoard(){
         frame.getBoardPanel().repaint();
+    }
+
+    @Override
+    public void updatePlayerPanel(Player player){
+        frame.getPlayerPanel().updatePlayerInfo(player);
     }
 }
