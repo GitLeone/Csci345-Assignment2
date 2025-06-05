@@ -28,14 +28,6 @@ public class DeadwoodFrame extends JFrame {
         // Create button panel with basic styling
         JPanel buttonPanel = new JPanel(new GridLayout(0, 1, 5, 5));
         buttonPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        
-        String[] buttonLabels = {"Act", "Rehearse", "Move", "Take Role", "End Turn", "Help", "endgame"};
-        for (String label : buttonLabels) {
-            JButton button = new JButton(label);
-            button.setFont(new Font("Arial", Font.BOLD, 12));
-            button.addActionListener(e -> handleButtonClick(label));
-            buttonPanel.add(button);
-        }
 
         JButton upgradeButton = new JButton("Upgrade");
         upgradeButton.addActionListener(e -> {
@@ -60,7 +52,14 @@ public class DeadwoodFrame extends JFrame {
         });
 
         buttonPanel.add(upgradeButton);
-
+        
+        String[] buttonLabels = {"Act", "Rehearse", "Move", "Take Role", "End Turn", "Help", "endgame"};
+        for (String label : buttonLabels) {
+            JButton button = new JButton(label);
+            button.setFont(new Font("Arial", Font.BOLD, 12));
+            button.addActionListener(e -> handleButtonClick(label));
+            buttonPanel.add(button);
+        }
 
         // Main layout
         add(new JScrollPane(boardPanel), BorderLayout.CENTER);
