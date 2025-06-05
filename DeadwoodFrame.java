@@ -45,7 +45,24 @@ public class DeadwoodFrame extends JFrame {
         takeRoleButton.addActionListener(e -> controller.processAction("take role"));
 
         JButton upgradeButton = new JButton("Upgrade");
-        upgradeButton.addActionListener(e -> controller.processAction("upgrade"));
+        upgradeButton.addActionListener(e -> {
+    String rankStr = JOptionPane.showInputDialog("Enter new rank (2-6):");
+    if (rankStr == null) return;
+
+    String[] options = {"dollar", "credit"};
+    String currency = (String) JOptionPane.showInputDialog(
+        null,
+        "Select currency:",
+        "Currency Type",
+        JOptionPane.PLAIN_MESSAGE,
+        null,
+        options,
+        options[0]
+    );
+    if (currency == null) return;
+
+    controller.processAction("upgrade " + rankStr + " " + currency);
+});
 
         JButton endButton = new JButton("End Turn");
         endButton.addActionListener(e -> gameController.processAction("end"));
@@ -58,6 +75,7 @@ public class DeadwoodFrame extends JFrame {
         buttonPanel.add(rehearseButton);
         buttonPanel.add(moveButton);
         buttonPanel.add(takeRoleButton);
+        buttonPanel.add(upgradeButton);
         buttonPanel.add(endButton);
         buttonPanel.add(helpButton);
 
