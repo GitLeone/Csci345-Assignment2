@@ -130,9 +130,7 @@ public class Player {
     
         if (targetSet.isSet() && targetSet.getSceneCard() != null) {
             targetSet.flipSceneCard();
-
         }
-    
         return true;
     }
 
@@ -198,7 +196,8 @@ public class Player {
                     set.getSceneCard().addActingPlayer(this);
                 } else {
                     set.addActingPlayer(this);
-                }        
+                }
+                setCoordinates(role.getXCord(), role.getYCord());
                 return true;
             }
         }

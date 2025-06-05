@@ -55,6 +55,7 @@ public class Set {
         if (this.shotsRemaining > 0) {
             this.shotsRemaining--;
         }
+        this.takes.remove(0);
     }
 
     // Player movement

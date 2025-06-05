@@ -33,19 +33,19 @@ public class DeadwoodFrame extends JFrame {
         buttonPanel.setLayout(new GridLayout(0, 1, 5, 5)); // vertical spacing
 
         JButton actButton = new JButton("Act");
-        actButton.addActionListener(e -> gameController.handleActButton());
+        actButton.addActionListener(e -> gameController.processAction("act"));
 
         JButton rehearseButton = new JButton("Rehearse");
-        rehearseButton.addActionListener(e -> gameController.handleRehearseButton());
+        rehearseButton.addActionListener(e -> gameController.processAction("rehearse"));
 
         JButton moveButton = new JButton("Move");
         moveButton.addActionListener(e -> showMoveDialog());
 
         JButton takeRoleButton = new JButton("Take Role");
-        takeRoleButton.addActionListener(e -> controller.handleTakeRoleButton());
+        takeRoleButton.addActionListener(e -> controller.processAction("take role"));
 
         JButton upgradeButton = new JButton("Upgrade");
-        upgradeButton.addActionListener(e -> controller.handleUpgradeButton());
+        upgradeButton.addActionListener(e -> controller.processAction("upgrade"));
 
         JButton endButton = new JButton("End Turn");
         endButton.addActionListener(e -> gameController.processAction("end"));

@@ -59,21 +59,13 @@ public class BoardPanel extends JPanel {
     }
 
     private void drawPlayers(Graphics g) {
-        int diceSize = 40;  // size of the dice images
-        int offsetStep = 45; // offset so players don't overlap exactly
-
         List<Player> players = gameController.getPlayers();
-
-        Map<String, Integer> playerCountAtLocation = new HashMap<>();
-
-
         for (Player player : players) {
             // String location = player.getLocation();
             // Point basePos = locationCoordinates.get(location);
             String imageName = player.getDieImage(); // or player's current face index
 
             ImageIcon icon = new ImageIcon("images/Dice/" + imageName);
-            Image diceImage = icon.getImage().getScaledInstance(diceSize, diceSize, Image.SCALE_SMOOTH);
             g.drawImage(icon.getImage(), player.getXCord(), player.getYCord(), this);
         }
     }

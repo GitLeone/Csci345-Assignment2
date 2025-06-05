@@ -184,7 +184,6 @@ public class GameController {
                     return false;
                 }
                 view.displayMessage("Successful move to " + currentPlayer.getLocation());
-                view.updateBoard();
                 endTurn();
                 break;
 
@@ -327,6 +326,7 @@ public class GameController {
                 view.displayMessage("That is not a valid command, try again");
                 break;
         }
+        view.updateBoard();
         return true;
     }
 
@@ -426,104 +426,104 @@ public List<Player> getPlayers() {
     return players;
 }
 
-public void handleActButton() {
-    Player player = getActivePlayer();
-    Set location = locationManager.getSet(player.getLocation());
+// public void handleActButton() {
+//     Player player = getActivePlayer();
+//     Set location = locationManager.getSet(player.getLocation());
     
-    if (player.getRole() == null) {
-        view.displayMessage("You need a role to act!");
-        return;
-    }
+//     if (player.getRole() == null) {
+//         view.displayMessage("You need a role to act!");
+//         return;
+//     }
     
-    boolean success = player.act(dice, location, location.getSceneCard());
-    view.displayActResult(player, success, player.getRole().getStarring());
+//     boolean success = player.act(dice, location, location.getSceneCard());
+//     view.displayActResult(player, success, player.getRole().getStarring());
     
-    if (location.getShotsRemaining() == 0) {
-        wrapScene(location);
-    }
+//     if (location.getShotsRemaining() == 0) {
+//         wrapScene(location);
+//     }
     
-    endTurn();
-}
+//     endTurn();
+// }
 
-    public void handleRehearseButton() {
-        Player player = getActivePlayer();
-        Set location = locationManager.getSet(player.getLocation());
+//     public void handleRehearseButton() {
+//         Player player = getActivePlayer();
+//         Set location = locationManager.getSet(player.getLocation());
     
-        if (player.getRole() == null) {
-            view.displayMessage("You need a role to rehearse!");
-            return;
-        }
+//         if (player.getRole() == null) {
+//             view.displayMessage("You need a role to rehearse!");
+//             return;
+//         }
     
-        if (player.rehearse(location, location.getSceneCard())) {
-            view.displayMessage("Rehearsed! Chips: " + player.getPracticeChips());
-            endTurn();
-        } else {
-            view.displayMessage("Can't rehearse right now");
-        }
-    }
+//         if (player.rehearse(location, location.getSceneCard())) {
+//             view.displayMessage("Rehearsed! Chips: " + player.getPracticeChips());
+//             endTurn();
+//         } else {
+//             view.displayMessage("Can't rehearse right now");
+//         }
+//     }
 
-    public void initiateTakeRole() {
-        Player player = getActivePlayer();
-        Set location = locationManager.getSet(player.getLocation());
+//     // public void initiateTakeRole() {
+//     //     Player player = getActivePlayer();
+//     //     Set location = locationManager.getSet(player.getLocation());
     
-        if (!location.isSet()) {
-            view.displayMessage("You must be on a set to take a role!");
-            return;
-        }
+//     //     if (!location.isSet()) {
+//     //         view.displayMessage("You must be on a set to take a role!");
+//     //         return;
+//     //     }
     
-        if (player.getWorking()) {
-            view.displayMessage("You are already working on a role!");
-            return;
-        }
+//     //     if (player.getWorking()) {
+//     //         view.displayMessage("You are already working on a role!");
+//     //         return;
+//     //     }
     
-        view.chooseFromAvailableRoles(player);
-    }
+//     //     view.chooseFromAvailableRoles(player);
+//     // }
 
-    public void handleTakeRoleButton() {
-    Player player = getActivePlayer();
-    Set location = locationManager.getSet(player.getLocation());
+//     public void handleTakeRoleButton() {
+//     Player player = getActivePlayer();
+//     Set location = locationManager.getSet(player.getLocation());
 
-    if (!location.isSet()) {
-        view.displayMessage("You must be on a set to take a role!");
-        return;
-    }
+//     if (!location.isSet()) {
+//         view.displayMessage("You must be on a set to take a role!");
+//         return;
+//     }
 
-    if (player.getWorking()) {
-        view.displayMessage("You are already working on a role!");
-        return;
-    }
+//     if (player.getWorking()) {
+//         view.displayMessage("You are already working on a role!");
+//         return;
+//     }
 
-    Role chosenRole = view.chooseFromAvailableRoles(player);
-    if (chosenRole == null) {
-        view.displayMessage("No role selected or available.");
-        return;
-    }
+//     Role chosenRole = view.chooseFromAvailableRoles(player);
+//     if (chosenRole == null) {
+//         view.displayMessage("No role selected or available.");
+//         return;
+//     }
 
-    if (!player.takeRole(chosenRole, location)) {
-        view.displayMessage("Cannot take role. Required rank: " + chosenRole.getRankRequired() +
-                ", Your rank: " + player.getRank());
-        return;
-    }
+//     if (!player.takeRole(chosenRole, location)) {
+//         view.displayMessage("Cannot take role. Required rank: " + chosenRole.getRankRequired() +
+//                 ", Your rank: " + player.getRank());
+//         return;
+//     }
 
-    if (chosenRole.getStarring()) {
-        view.displayMessage("You're now starring as: " + chosenRole.getName());
-    } else {
-        view.displayMessage("You're now an extra as: " + chosenRole.getName());
-    }
+//     if (chosenRole.getStarring()) {
+//         view.displayMessage("You're now starring as: " + chosenRole.getName());
+//     } else {
+//         view.displayMessage("You're now an extra as: " + chosenRole.getName());
+//     }
 
-    endTurn();
-    }
+//     endTurn();
+//     }
 
-    public void handleUpgradeButton() {
-    Player player = getActivePlayer();
-    Set location = locationManager.getSet(player.getLocation());
+//     public void handleUpgradeButton() {
+//     Player player = getActivePlayer();
+//     Set location = locationManager.getSet(player.getLocation());
     
-    if (!location.getName().equalsIgnoreCase("office")) {
-        view.displayMessage("You must be in the Casting Office to upgrade!");
-        return;
-    }
+//     if (!location.getName().equalsIgnoreCase("office")) {
+//         view.displayMessage("You must be in the Casting Office to upgrade!");
+//         return;
+//     }
     
-    //view.promptUpgrade();
-}
+//     //view.promptUpgrade();
+// }
 
 }
