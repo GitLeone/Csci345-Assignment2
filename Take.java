@@ -2,7 +2,7 @@ public class Take{
     private int number;
     private int x, y, h, w;
 
-    public Take(int number, int x, int y, int h, int w){
+    public Take(int x, int y, int h, int w, int number){
         this.number = number;
         this.x = x;
         this.y = y;

@@ -10,13 +10,13 @@ public class BoardPanel extends JPanel {
     private Image boardImage;
     private Image cardBackImage;
     private Image sceneImage;
+    private Image shotImage;
     private Map<String, Point> locationCoordinates;
 
     public BoardPanel(GameController controller) {
         this.gameController = controller;
         this.locationManager = controller.getLocationManager();
         loadBoardImage();
-        //loadFaceDownCards();
         initializeSceneCardCoordinates();
         setPreferredSize(new Dimension(boardImage.getWidth(this), boardImage.getHeight(this)));
     }
@@ -48,6 +48,10 @@ public class BoardPanel extends JPanel {
                     loadSceneCard(set);
                     g.drawImage(sceneImage, pos.x, pos.y, this);
                 }
+                loadShotImg();
+                for (Take take : set.getTakes()){
+                    g.drawImage(shotImage, take.getXCord(), take.getYCord(), this);
+                } 
             }
         }
 
@@ -85,6 +89,11 @@ public class BoardPanel extends JPanel {
             icon = new ImageIcon("images/cardBack.png");
             sceneImage = icon.getImage();
         }
+    }
+
+    public void loadShotImg(){
+        ImageIcon icon = new ImageIcon("images/shot.png");
+        shotImage = icon.getImage();
     }
 
     public void highlightPlayer(Player player) {
