@@ -15,20 +15,20 @@ public class PlayerPanel extends JPanel {
         setLayout(new BorderLayout(0, 0));
         setOpaque(false);
         
-        // Main content panel
+        //Main content panel
         JPanel contentPanel = new JPanel();
         contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
         contentPanel.setBorder(new EmptyBorder(12, 16, 12, 16));
         contentPanel.setBackground(PANEL_BG);
         
-        // Title label
+        //Title label
         JLabel titleLabel = new JLabel("PLAYER DETAILS");
         titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 13));
         titleLabel.setForeground(new Color(100, 100, 100));
         titleLabel.setBorder(new EmptyBorder(0, 0, 10, 0));
         titleLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
         
-        // Info panel
+        //Info panel
         JPanel infoPanel = new JPanel();
         infoPanel.setLayout(new GridLayout(0, 1, 4, 4));
         infoPanel.setOpaque(false);
@@ -66,7 +66,7 @@ public class PlayerPanel extends JPanel {
         Graphics2D g2 = (Graphics2D) g.create();
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         
-        // Paint rounded background
+        //Paint rounded background
         int arc = 12;
         RoundRectangle2D rounded = new RoundRectangle2D.Float(
             0, 0, getWidth(), getHeight(), arc, arc);
@@ -74,7 +74,7 @@ public class PlayerPanel extends JPanel {
         g2.setColor(getBackground());
         g2.fill(rounded);
         
-        // Paint border
+        //Paint border
         g2.setColor(BORDER_COLOR);
         g2.setStroke(new BasicStroke(1.2f));
         g2.draw(rounded);

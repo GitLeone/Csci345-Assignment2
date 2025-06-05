@@ -77,6 +77,7 @@ public class LocationManager{
     public Set getSet(String location){
         return setList.get(location);
     }
+    //Creates the locations where each player will be if on a set but not working
     public void initializeSetBasePoints(){
         for (Set set : setList.values()){
             String name = set.getName().toLowerCase();

@@ -66,6 +66,7 @@ public class SceneCard{
     public void addActingPlayer(Player player){
         actingPlayers.add(player);
     }
+    //sorts players based on the rank required for their role using selection sort
     public void sortActingPlayers(){
         List<Player> players = getActingPlayers();
         for (int i=0; i < players.size(); i++){

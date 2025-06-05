@@ -30,8 +30,6 @@ public class Set {
         this.actingPlayers = new ArrayList<>();
         this.takes = new ArrayList<>();
         this.basePoints = new ArrayList<>();
-        //These 2 point are for testing the drawing.
-        //We will need to find a way to give every set unique points where players can exist without covering anything
     }
 
     //How we manage the scenes

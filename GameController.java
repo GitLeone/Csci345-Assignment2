@@ -78,6 +78,7 @@ public class GameController {
 
     public void initializePlayers(int numPlayers) {
         Map<Integer, List<String>> colorMapping = new HashMap<>();
+        //This sets all players die as a list so when an upgrade occurs, their list index is incremented by 1
         List<String> blueDie   = Arrays.asList("b1.png", "b2.png", "b3.png", "b4.png", "b5.png", "b6.png");
         List<String> cyanDie   = Arrays.asList("c1.png", "c2.png", "c3.png", "c4.png", "c5.png", "c6.png");
         List<String> greenDie  = Arrays.asList("g1.png", "g2.png", "g3.png", "g4.png", "g5.png", "g6.png");
@@ -111,17 +112,18 @@ public class GameController {
         }
         setMaxDays((numPlayers == 2 || numPlayers == 3) ? 3 : 4);
         
+        //player creation
         for (int i = 0; i < numPlayers; i++) {
             Player player = new Player(
                 String.valueOf(i+1),
-                startingRank,             // starting rank
+                startingRank,
                 startingCredits,
                 startingDollars,
                 0,            
                 false,
                 "trailer",
                 colorMapping.get(i),
-                i+1
+                i+1 //player number
                 );
                 players.add(player);
                 locationManager.updatePlayerLocation(player, locationManager.getSet("trailer"));
@@ -141,9 +143,9 @@ public class GameController {
         // Return all players to trailer and reset their stats
         for (Player player : players) {
             player.setLocation("trailer");
-            player.setWorking(false);  // Clear any active roles
+            player.setWorking(false);  //Clear any active roles
             player.setRole(null);
-            player.setPracticeChips(0); // Reset rehearsal chips
+            player.setPracticeChips(0); //Reset rehearsal chips
             locationManager.updatePlayerLocation(player, locationManager.getSet("trailer"));
         }
 
@@ -155,8 +157,8 @@ public class GameController {
         }
 
         setDayOver(true);
-        dealSceneCards();  // Refresh scenes for new day
-        currentPlayerIndex = 0;  // Reset turn order
+        dealSceneCards();  //Refresh scenes for new day
+        currentPlayerIndex = 0;  //Reset turn order
         view.displayMessage("\n=== DAY " + currentDay + " STARTED ===");
         view.displayCurrentPlayer(getActivePlayer());
     }
@@ -167,7 +169,6 @@ public class GameController {
 
     //This processAction will have switch statements for all player actions
     public boolean processAction(String input){
-        //Right now input is case sensitive
         Player currentPlayer = getActivePlayer();
         Set currentPlayerLocation = locationManager.getSet(currentPlayer.getLocation());
         SceneCard currentScene = currentPlayerLocation.getSceneCard();
@@ -193,6 +194,7 @@ public class GameController {
                 }
                 view.displayMessage("Successful move to " + currentPlayer.getLocation());
                 view.updateBoard();
+                //allows player to take a role after a move and ends turn regardless of decision
                 processAction("take role");
                 if(!currentPlayer.getWorking()){
                     endTurn();
@@ -403,7 +405,8 @@ public class GameController {
     endGameDialog.setModal(true);
     endGameDialog.setLayout(new BorderLayout());
     endGameDialog.setSize(400, 300);
-    endGameDialog.setLocationRelativeTo(null); // Center on screen
+    //Center on screen
+    endGameDialog.setLocationRelativeTo(null);
 
     // Header panel
     JPanel headerPanel = new JPanel();
@@ -418,7 +421,7 @@ public class GameController {
     int highestScore = -1;
     Player winner = null;
     
-    // Calculate scores and build results
+    //Calculate scores and build results
     for (Player player : players) {
         int score = player.getDollars() + player.getCredits() + (player.getRank() * 5);
         
@@ -489,105 +492,4 @@ public class GameController {
 public List<Player> getPlayers() {
     return players;
 }
-
-// public void handleActButton() {
-//     Player player = getActivePlayer();
-//     Set location = locationManager.getSet(player.getLocation());
-    
-//     if (player.getRole() == null) {
-//         view.displayMessage("You need a role to act!");
-//         return;
-//     }
-    
-//     boolean success = player.act(dice, location, location.getSceneCard());
-//     view.displayActResult(player, success, player.getRole().getStarring());
-    
-//     if (location.getShotsRemaining() == 0) {
-//         wrapScene(location);
-//     }
-    
-//     endTurn();
-// }
-
-//     public void handleRehearseButton() {
-//         Player player = getActivePlayer();
-//         Set location = locationManager.getSet(player.getLocation());
-    
-//         if (player.getRole() == null) {
-//             view.displayMessage("You need a role to rehearse!");
-//             return;
-//         }
-    
-//         if (player.rehearse(location, location.getSceneCard())) {
-//             view.displayMessage("Rehearsed! Chips: " + player.getPracticeChips());
-//             endTurn();
-//         } else {
-//             view.displayMessage("Can't rehearse right now");
-//         }
-//     }
-
-//     // public void initiateTakeRole() {
-//     //     Player player = getActivePlayer();
-//     //     Set location = locationManager.getSet(player.getLocation());
-    
-//     //     if (!location.isSet()) {
-//     //         view.displayMessage("You must be on a set to take a role!");
-//     //         return;
-//     //     }
-    
-//     //     if (player.getWorking()) {
-//     //         view.displayMessage("You are already working on a role!");
-//     //         return;
-//     //     }
-    
-//     //     view.chooseFromAvailableRoles(player);
-//     // }
-
-//     public void handleTakeRoleButton() {
-//     Player player = getActivePlayer();
-//     Set location = locationManager.getSet(player.getLocation());
-
-//     if (!location.isSet()) {
-//         view.displayMessage("You must be on a set to take a role!");
-//         return;
-//     }
-
-//     if (player.getWorking()) {
-//         view.displayMessage("You are already working on a role!");
-//         return;
-//     }
-
-//     Role chosenRole = view.chooseFromAvailableRoles(player);
-//     if (chosenRole == null) {
-//         view.displayMessage("No role selected or available.");
-//         return;
-//     }
-
-//     if (!player.takeRole(chosenRole, location)) {
-//         view.displayMessage("Cannot take role. Required rank: " + chosenRole.getRankRequired() +
-//                 ", Your rank: " + player.getRank());
-//         return;
-//     }
-
-//     if (chosenRole.getStarring()) {
-//         view.displayMessage("You're now starring as: " + chosenRole.getName());
-//     } else {
-//         view.displayMessage("You're now an extra as: " + chosenRole.getName());
-//     }
-
-//     endTurn();
-//     }
-
-//     public void handleUpgradeButton() {
-//     Player player = getActivePlayer();
-//     Set location = locationManager.getSet(player.getLocation());
-    
-//     if (!location.getName().equalsIgnoreCase("office")) {
-//         view.displayMessage("You must be in the Casting Office to upgrade!");
-//         return;
-//     }
-    
-//     //view.promptUpgrade();
-// }
-
 }

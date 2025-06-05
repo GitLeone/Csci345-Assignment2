@@ -14,45 +14,44 @@ public class DeadwoodFrame extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
         
-        // Initialize components with basic styling
+        //Initialize components
         boardPanel = new BoardPanel(gameController);
         playerPanel = new PlayerPanel();
         messageArea = new JTextArea(10, 40);
         messageArea.setEditable(false);
         messageArea.setFont(new Font("Courier New", Font.PLAIN, 14));
         
-        // Simple border for message area
+        //Simple border
         messageScrollPane = new JScrollPane(messageArea);
         messageScrollPane.setBorder(BorderFactory.createTitledBorder("Game Log"));
         
-        // Create button panel with basic styling
+        //Creates button panel
         JPanel buttonPanel = new JPanel(new GridLayout(0, 1, 5, 5));
         buttonPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
         JButton upgradeButton = new JButton("Upgrade");
         upgradeButton.addActionListener(e -> {
-        String rankStr = JOptionPane.showInputDialog("Enter new rank (2-6):");
-        if (rankStr == null) return;
+            String rankStr = JOptionPane.showInputDialog("Enter new rank (2-6):");
+            if (rankStr == null) return;
 
 
-        String[] options = {"dollar", "credit"};
-        String currency = (String) JOptionPane.showInputDialog(
-        null,
-        "Select currency:",
-        "Currency Type",
-        JOptionPane.PLAIN_MESSAGE,
-        null,
-        options,
-        options[0]
-        );
-        if (currency == null) return;
-
-
-        controller.processAction("upgrade " + rankStr + " " + currency);
+            String[] options = {"dollar", "credit"};
+            String currency = (String) JOptionPane.showInputDialog(
+                null,
+                "Select currency:",
+                "Currency Type",
+                JOptionPane.PLAIN_MESSAGE,
+                null,
+                options,
+                options[0]
+            );
+            
+            if (currency == null) return;
+            controller.processAction("upgrade " + rankStr + " " + currency);
         });
 
         buttonPanel.add(upgradeButton);
-        
+        //Adds the button labels
         String[] buttonLabels = {"Act", "Rehearse", "Move", "Take Role", "End Turn", "Help", "endgame"};
         for (String label : buttonLabels) {
             JButton button = new JButton(label);

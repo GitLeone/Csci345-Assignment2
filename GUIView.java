@@ -73,7 +73,7 @@ public class GUIView implements View {
             null,
             options,
             options[0]);
-        //Here we can prompt each player to choose their color and 
+
         if (choice != null) {
             gameController.initializePlayers(choice);
             Player firstPlayer = gameController.getActivePlayer();
@@ -124,21 +124,22 @@ public class GUIView implements View {
     @Override
     public Role chooseFromAvailableRoles(Player player) {
         Set location = locationManager.getSet(player.getLocation());
-        final Role[] selectedRole = {null}; // Array to hold the selected role (workaround for final requirement)
+        // Array to hold the selected role (workaround for final requirement)
+        final Role[] selectedRole = {null};
     
-        // Create a dialog with role selection options
+        //Creates a dialog with role selection options
         JDialog roleDialog = new JDialog(frame, "Choose a Role", true);
         roleDialog.setLayout(new BorderLayout());
     
         JPanel rolePanel = new JPanel(new GridLayout(0, 1));
         rolePanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
     
-    // Add off-card roles
+        //Adds off-card roles
         location.getOffRoles().values().stream()
             .filter(Role::isAvailable)
             .forEach(role -> addRoleButton(rolePanel, role, selectedRole, roleDialog));
     
-    // Add on-card roles if scene exists and isn't wrapped
+        //Adds on-card roles if scene exists and isn't wrapped
         if (location.getSceneCard() != null && !location.getSceneCard().getFlipped()) {
             location.getSceneCard().getRoleList().values().stream()
                 .filter(Role::isAvailable)
@@ -148,7 +149,7 @@ public class GUIView implements View {
         JScrollPane scrollPane = new JScrollPane(rolePanel);
         scrollPane.setPreferredSize(new Dimension(350, 250));
     
-    // Add cancel button
+        //Adds cancel button
         JButton cancelButton = new JButton("Cancel");
         cancelButton.addActionListener(e -> roleDialog.dispose());
     
@@ -176,19 +177,20 @@ public class GUIView implements View {
                 role.getLine()));
         roleLabel.setHorizontalAlignment(SwingConstants.LEFT);
     
-    // Highlight if player qualifies
+        //Highlight if player qualifies
         if (gameController.getActivePlayer().getRank() >= role.getRankRequired()) {
-            button.setBackground(new Color(220, 255, 220)); // Light green
+            button.setBackground(new Color(220, 255, 220));
         } else {
-            button.setBackground(new Color(255, 220, 220)); // Light red
+            button.setBackground(new Color(255, 220, 220));
             roleLabel.setText(roleLabel.getText() + "<br><font color=red>Rank too low!</font>");
         }
-    
         button.add(roleLabel, BorderLayout.CENTER);
         button.addActionListener(e -> {
         if (gameController.getActivePlayer().getRank() >= role.getRankRequired()) {
-            selectedRole[0] = role; // Store the selected role
-            dialog.dispose(); // Close the dialog
+            //Stores the selected role
+            selectedRole[0] = role;
+            //Closes the dialog
+            dialog.dispose();
         } else {
             JOptionPane.showMessageDialog(dialog, 
                 "You need rank " + role.getRankRequired() + " for this role!", 

@@ -25,10 +25,11 @@ public class BoardPanel extends JPanel {
         ImageIcon icon = new ImageIcon("images/board.jpg");
         boardImage = icon.getImage();
     }
-
+    
+    //
     private void initializeSceneCardCoordinates() {
         locationCoordinates = new HashMap<>();
-        // Initialize with coordinates from your XML or hardcoded
+        // Initialize with coordinates from the XML parse
         for(Set value : locationManager.getSetList().values()){
             locationCoordinates.put(value.getName(), new Point(value.getXCord(), value.getYCord()));
         }
@@ -58,7 +59,7 @@ public class BoardPanel extends JPanel {
 
         drawPlayers(g);
     }
-
+    //Draws every player at their current location
     private void drawPlayers(Graphics g) {
         List<Player> players = gameController.getPlayers();
         for (Player player : players) {
@@ -71,6 +72,8 @@ public class BoardPanel extends JPanel {
         }
     }
 
+    //loads the scenecards on every set
+    //If the scenecard has not been flipped, it displays the back of the card
     public void loadSceneCard(Set set){
         SceneCard card = set.getSceneCard();
         ImageIcon icon;
@@ -84,6 +87,7 @@ public class BoardPanel extends JPanel {
         }
     }
 
+    //loads the png of the takes
     public void loadShotImg(){
         ImageIcon icon = new ImageIcon("images/shot.png");
         shotImage = icon.getImage();
