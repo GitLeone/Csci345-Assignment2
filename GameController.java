@@ -512,7 +512,18 @@ public void handleActButton() {
     }
 
     endTurn();
-}
+    }
 
+    public void handleUpgradeButton() {
+    Player player = getActivePlayer();
+    Set location = locationManager.getSet(player.getLocation());
+    
+    if (!location.getName().equalsIgnoreCase("office")) {
+        view.displayMessage("You must be in the Casting Office to upgrade!");
+        return;
+    }
+    
+    //view.promptUpgrade();
+}
 
 }
