@@ -477,6 +477,40 @@ public void handleActButton() {
         view.chooseFromAvailableRoles(player);
     }
 
-    
+    public void handleTakeRoleButton() {
+    Player player = getActivePlayer();
+    Set location = locationManager.getSet(player.getLocation());
+
+    if (!location.isSet()) {
+        view.displayMessage("You must be on a set to take a role!");
+        return;
+    }
+
+    if (player.getWorking()) {
+        view.displayMessage("You are already working on a role!");
+        return;
+    }
+
+    Role chosenRole = view.chooseFromAvailableRoles(player);
+    if (chosenRole == null) {
+        view.displayMessage("No role selected or available.");
+        return;
+    }
+
+    if (!player.takeRole(chosenRole, location)) {
+        view.displayMessage("Cannot take role. Required rank: " + chosenRole.getRankRequired() +
+                ", Your rank: " + player.getRank());
+        return;
+    }
+
+    if (chosenRole.getStarring()) {
+        view.displayMessage("You're now starring as: " + chosenRole.getName());
+    } else {
+        view.displayMessage("You're now an extra as: " + chosenRole.getName());
+    }
+
+    endTurn();
+}
+
 
 }

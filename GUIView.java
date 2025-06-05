@@ -5,6 +5,7 @@ public class GUIView implements View {
     private GameController gameController;
     private LocationManager locationManager;
     private DeadwoodFrame frame;
+    private Role selectedRole;
 
     public GUIView(GameController moderator, LocationManager lm) {
         this.gameController = moderator;

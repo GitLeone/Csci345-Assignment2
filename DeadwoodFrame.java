@@ -42,7 +42,7 @@ public class DeadwoodFrame extends JFrame {
         moveButton.addActionListener(e -> showMoveDialog());
 
         JButton takeRoleButton = new JButton("Take Role");
-        takeRoleButton.addActionListener(e -> gameController.initiateTakeRole());
+        takeRoleButton.addActionListener(e -> controller.handleTakeRoleButton());
 
         JButton endButton = new JButton("End Turn");
         endButton.addActionListener(e -> gameController.processAction("end"));
