@@ -6,51 +6,45 @@ public class DeadwoodFrame extends JFrame {
     private BoardPanel boardPanel;
     private PlayerPanel playerPanel;
     private JTextArea messageArea;
+    private JScrollPane messageScrollPane;
 
     public DeadwoodFrame(GameController controller) {
         this.gameController = controller;
         setTitle("Deadwood");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
-
-        // Initialize components
+        
+        // Initialize components with basic styling
         boardPanel = new BoardPanel(gameController);
         playerPanel = new PlayerPanel();
         messageArea = new JTextArea(10, 40);
         messageArea.setEditable(false);
-
-        // Wrap boardPanel in scroll pane if large
-        JScrollPane boardScrollPane = new JScrollPane(boardPanel);
-        boardScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        boardScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-
-        // Combine player panel and buttons in side panel
-        JPanel sidePanel = new JPanel();
-        sidePanel.setLayout(new BorderLayout());
-
-        // Buttons Panel
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new GridLayout(0, 1, 5, 5)); // vertical spacing
-
-        JButton actButton = new JButton("Act");
-        actButton.addActionListener(e -> gameController.processAction("act"));
-
-        JButton rehearseButton = new JButton("Rehearse");
-        rehearseButton.addActionListener(e -> gameController.processAction("rehearse"));
-
-        JButton moveButton = new JButton("Move");
-        moveButton.addActionListener(e -> showMoveDialog());
-
-        JButton takeRoleButton = new JButton("Take Role");
-        takeRoleButton.addActionListener(e -> controller.processAction("take role"));
+        messageArea.setFont(new Font("Courier New", Font.PLAIN, 14));
+        
+        // Simple border for message area
+        messageScrollPane = new JScrollPane(messageArea);
+        messageScrollPane.setBorder(BorderFactory.createTitledBorder("Game Log"));
+        
+        // Create button panel with basic styling
+        JPanel buttonPanel = new JPanel(new GridLayout(0, 1, 5, 5));
+        buttonPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        
+        String[] buttonLabels = {"Act", "Rehearse", "Move", "Take Role", "End Turn", "Help"};
+        for (String label : buttonLabels) {
+            JButton button = new JButton(label);
+            button.setFont(new Font("Arial", Font.BOLD, 12));
+            button.addActionListener(e -> handleButtonClick(label));
+            buttonPanel.add(button);
+        }
 
         JButton upgradeButton = new JButton("Upgrade");
         upgradeButton.addActionListener(e -> {
-    String rankStr = JOptionPane.showInputDialog("Enter new rank (2-6):");
-    if (rankStr == null) return;
+        String rankStr = JOptionPane.showInputDialog("Enter new rank (2-6):");
+        if (rankStr == null) return;
 
-    String[] options = {"dollar", "credit"};
-    String currency = (String) JOptionPane.showInputDialog(
+
+        String[] options = {"dollar", "credit"};
+        String currency = (String) JOptionPane.showInputDialog(
         null,
         "Select currency:",
         "Currency Type",
@@ -58,75 +52,92 @@ public class DeadwoodFrame extends JFrame {
         null,
         options,
         options[0]
-    );
-    if (currency == null) return;
+        );
+        if (currency == null) return;
 
-    controller.processAction("upgrade " + rankStr + " " + currency);
-});
 
-        JButton endButton = new JButton("End Turn");
-        endButton.addActionListener(e -> gameController.processAction("end"));
+        controller.processAction("upgrade " + rankStr + " " + currency);
+        });
 
-        JButton helpButton = new JButton("Help");
-        helpButton.addActionListener(e -> gameController.getView().displayHelp());
-
-        // Add buttons
-        buttonPanel.add(actButton);
-        buttonPanel.add(rehearseButton);
-        buttonPanel.add(moveButton);
-        buttonPanel.add(takeRoleButton);
         buttonPanel.add(upgradeButton);
-        buttonPanel.add(endButton);
-        buttonPanel.add(helpButton);
 
-        // Nest player info and buttons vertically
-        JPanel eastPanel = new JPanel();
-        eastPanel.setLayout(new BoxLayout(eastPanel, BoxLayout.Y_AXIS));
-        eastPanel.add(playerPanel);
-        eastPanel.add(Box.createVerticalStrut(10));
-        eastPanel.add(buttonPanel);
 
-        // Message area at bottom
-        JScrollPane messageScrollPane = new JScrollPane(messageArea);
-        messageScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-
-        // Add everything to the frame
-        add(boardScrollPane, BorderLayout.CENTER);
-        playerPanel.setPreferredSize(new Dimension(250, boardPanel.getHeight()));
+        // Main layout
+        add(new JScrollPane(boardPanel), BorderLayout.CENTER);
         add(playerPanel, BorderLayout.WEST);
-        add(eastPanel, BorderLayout.EAST);
-        messageScrollPane.setPreferredSize(new Dimension(400, 100));
+        add(buttonPanel, BorderLayout.EAST);
         add(messageScrollPane, BorderLayout.SOUTH);
-
-        pack(); // Resize window to fit contents
-        setExtendedState(JFrame.MAXIMIZED_BOTH); // Optional: maximize window
+        
+        pack();
+        setLocationRelativeTo(null);
         setVisible(true);
     }
 
-    private void showMoveDialog() {
+    private void handleButtonClick(String action) {
+        switch (action) {
+            case "Act":
+                gameController.processAction("act");
+                break;
+            case "Rehearse":
+                gameController.processAction("rehearse");
+                break;
+            case "Move":
+                showSimpleMoveDialog();
+                break;
+            case "Take Role":
+                gameController.processAction("take role");
+                break;
+            case "Upgrade":
+                showSimpleUpgradeDialog();
+                break;
+            case "End Turn":
+                gameController.processAction("end");
+                break;
+            case "Help":
+                gameController.getView().displayHelp();
+                break;
+        }
+    }
+
+    private void showSimpleMoveDialog() {
         Player player = gameController.getActivePlayer();
         Set currentSet = gameController.getLocationManager().getSet(player.getLocation());
-
-        JPanel panel = new JPanel(new GridLayout(0, 1));
-        for (String neighbor : currentSet.getAdjacentSets()) {
-            JButton locationButton = new JButton(neighbor);
-            locationButton.addActionListener(e -> {
-                gameController.processAction("move " + neighbor);
-                ((Window) SwingUtilities.getRoot(locationButton)).dispose();
-            });
-            panel.add(locationButton);
-        }
-
-        JOptionPane.showOptionDialog(
-                this,
-                panel,
-                "Select Move Destination",
-                JOptionPane.DEFAULT_OPTION,
-                JOptionPane.PLAIN_MESSAGE,
-                null,
-                new Object[]{},
-                null
+        
+        String[] options = currentSet.getAdjacentSets().toArray(new String[0]);
+        String destination = (String) JOptionPane.showInputDialog(
+            this,
+            "Where would you like to move?",
+            "Move",
+            JOptionPane.PLAIN_MESSAGE,
+            null,
+            options,
+            options[0]
         );
+        
+        if (destination != null) {
+            gameController.processAction("move " + destination);
+        }
+    }
+
+    private void showSimpleUpgradeDialog() {
+        Player player = gameController.getActivePlayer();
+        String rank = JOptionPane.showInputDialog(this, "Enter desired rank (2-6):");
+        if (rank == null) return;
+        
+        String[] options = {"dollar", "credit"};
+        String currency = (String) JOptionPane.showInputDialog(
+            this,
+            "Select currency type:",
+            "Upgrade",
+            JOptionPane.PLAIN_MESSAGE,
+            null,
+            options,
+            options[0]
+        );
+        
+        if (currency != null) {
+            gameController.processAction("upgrade " + rank + " " + currency);
+        }
     }
 
     public PlayerPanel getPlayerPanel() {
@@ -140,7 +151,4 @@ public class DeadwoodFrame extends JFrame {
     public JTextArea getMessageArea() {
         return messageArea;
     }
-
-    
-    
 }
