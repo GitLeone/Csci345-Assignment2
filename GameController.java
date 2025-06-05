@@ -1,9 +1,17 @@
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.xml.parsers.ParserConfigurationException;
 import org.w3c.dom.Document;
 
@@ -386,27 +394,79 @@ public class GameController {
 
     // Ends the entire game and calculates score and winner
     public void endGame() {
-        view.displayMessage("Game Over! Final Scores:");
-        int highestScore = -1; // Initialize high
-        Player winner = null;
-        // Calculate and display final scores
-        for (Player player : players) {
-            int score = player.getDollars() + player.getCredits() + (player.getRank() * 5);
-            view.displayMessage(player.getName() + " - $" + player.getDollars() + ", " + player.getCredits() + " credits, rank " + player.getRank() + " => Total Score: " + score);
+    // Create the popup dialog
+    JDialog endGameDialog = new JDialog();
+    endGameDialog.setTitle("Game Over!");
+    endGameDialog.setModal(true);
+    endGameDialog.setLayout(new BorderLayout());
+    endGameDialog.setSize(400, 300);
+    endGameDialog.setLocationRelativeTo(null); // Center on screen
 
-            if (score > highestScore) {
-                highestScore = score;
-                winner = player;
-            }
+    // Header panel
+    JPanel headerPanel = new JPanel();
+    JLabel headerLabel = new JLabel("Final Scores", JLabel.CENTER);
+    headerLabel.setFont(new Font("Arial", Font.BOLD, 20));
+    headerPanel.add(headerLabel);
+    
+    // Scores panel
+    JPanel scoresPanel = new JPanel();
+    scoresPanel.setLayout(new BoxLayout(scoresPanel, BoxLayout.Y_AXIS));
+    
+    int highestScore = -1;
+    Player winner = null;
+    
+    // Calculate scores and build results
+    for (Player player : players) {
+        int score = player.getDollars() + player.getCredits() + (player.getRank() * 5);
+        
+        JPanel playerPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        playerPanel.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
+        
+        JLabel playerLabel = new JLabel(
+            "<html><b>" + player.getName() + ":</b> $" + player.getDollars() + 
+            ", " + player.getCredits() + " credits, rank " + player.getRank() + 
+            " <i>(Score: " + score + ")</i></html>"
+        );
+        playerPanel.add(playerLabel);
+        scoresPanel.add(playerPanel);
+        
+        if (score > highestScore) {
+            highestScore = score;
+            winner = player;
         }
-
-        if (winner != null) {
-            view.displayMessage("Winner: " + winner.getName() + " with " + highestScore + " points!");
-        }
-        setGameOver(true);
-        System.exit(0);
     }
-
+    
+    // Winner announcement
+    JPanel winnerPanel = new JPanel();
+    if (winner != null) {
+        JLabel winnerLabel = new JLabel(
+            "<html><div style='text-align: center;'><br><b>WINNER: " + winner.getName() + 
+            "</b><br>with " + highestScore + " points!</div></html>",
+            JLabel.CENTER
+        );
+        winnerLabel.setFont(new Font("Arial", Font.BOLD, 16));
+        winnerLabel.setForeground(new Color(0, 100, 0)); // Dark green
+        winnerPanel.add(winnerLabel);
+    }
+    
+    // Close button
+    JButton closeButton = new JButton("Close Game");
+    closeButton.addActionListener(e -> {
+        endGameDialog.dispose();
+        System.exit(0); // Or return to main menu if you have one
+    });
+    
+    // Layout components
+    JScrollPane scrollPane = new JScrollPane(scoresPanel);
+    endGameDialog.add(headerPanel, BorderLayout.NORTH);
+    endGameDialog.add(scrollPane, BorderLayout.CENTER);
+    endGameDialog.add(winnerPanel, BorderLayout.SOUTH);
+    endGameDialog.add(closeButton, BorderLayout.PAGE_END);
+    
+    // Show the dialog
+    endGameDialog.setVisible(true);
+    setGameOver(true);
+}
     public boolean getGameOver(){
         return this.gameOver;
     }

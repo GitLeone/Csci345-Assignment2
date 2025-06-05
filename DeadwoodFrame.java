@@ -29,7 +29,7 @@ public class DeadwoodFrame extends JFrame {
         JPanel buttonPanel = new JPanel(new GridLayout(0, 1, 5, 5));
         buttonPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         
-        String[] buttonLabels = {"Act", "Rehearse", "Move", "Take Role", "End Turn", "Help"};
+        String[] buttonLabels = {"Act", "Rehearse", "Move", "Take Role", "End Turn", "Help", "endgame"};
         for (String label : buttonLabels) {
             JButton button = new JButton(label);
             button.setFont(new Font("Arial", Font.BOLD, 12));
@@ -96,6 +96,8 @@ public class DeadwoodFrame extends JFrame {
             case "Help":
                 gameController.getView().displayHelp();
                 break;
+            case "endgame":
+                gameController.processAction("endgame");
         }
     }
 
