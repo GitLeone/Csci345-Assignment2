@@ -8,7 +8,6 @@ public class BoardPanel extends JPanel {
     private GameController gameController;
     private LocationManager locationManager;
     private Image boardImage;
-    private Image cardBackImage;
     private Image sceneImage;
     private Image shotImage;
     private Map<String, Point> locationCoordinates;
@@ -45,8 +44,10 @@ public class BoardPanel extends JPanel {
             if (set.isSet()) {
                 Point pos = locationCoordinates.get(set.getName());
                 if (pos != null) {
-                    loadSceneCard(set);
-                    g.drawImage(sceneImage, pos.x, pos.y, this);
+                    if(set.getSceneCard() != null){
+                        loadSceneCard(set);
+                        g.drawImage(sceneImage, pos.x, pos.y, this);                        
+                    }
                 }
                 loadShotImg();
                 for (Take take : set.getTakes()){
