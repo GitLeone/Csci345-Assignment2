@@ -9,13 +9,14 @@ public class BoardPanel extends JPanel {
     private LocationManager locationManager;
     private Image boardImage;
     private Image cardBackImage;
+    private Image sceneImage;
     private Map<String, Point> locationCoordinates;
 
     public BoardPanel(GameController controller) {
         this.gameController = controller;
         this.locationManager = controller.getLocationManager();
         loadBoardImage();
-        loadFaceDownCards();
+        //loadFaceDownCards();
         initializeSceneCardCoordinates();
         setPreferredSize(new Dimension(boardImage.getWidth(this), boardImage.getHeight(this)));
     }
@@ -24,11 +25,6 @@ public class BoardPanel extends JPanel {
         setLayout(null);
         ImageIcon icon = new ImageIcon("images/board.jpg");
         boardImage = icon.getImage();
-    }
-
-    private void loadFaceDownCards() {
-        ImageIcon icon = new ImageIcon("images/cardBack.png");
-        cardBackImage = icon.getImage();
     }
 
     private void initializeSceneCardCoordinates() {
@@ -49,10 +45,12 @@ public class BoardPanel extends JPanel {
             if (set.isSet()) {
                 Point pos = locationCoordinates.get(set.getName());
                 if (pos != null) {
-                    g.drawImage(cardBackImage, pos.x, pos.y, this);
+                    loadSceneCard(set);
+                    g.drawImage(sceneImage, pos.x, pos.y, this);
                 }
             }
         }
+
         drawPlayers(g);
     }
 
@@ -73,30 +71,24 @@ public class BoardPanel extends JPanel {
             ImageIcon icon = new ImageIcon("images/Dice/" + imageName);
             Image diceImage = icon.getImage().getScaledInstance(diceSize, diceSize, Image.SCALE_SMOOTH);
             g.drawImage(icon.getImage(), player.getXCord(), player.getYCord(), this);
-
-            //if (basePos != null) {
-                // Count how many players already drawn at this location to offset dice
-                //int count = playerCountAtLocation.getOrDefault(location, 0);
-
-                // Calculate position offset for each player
-                //int x = basePos.x + count * offsetStep;
-                //int y = basePos.y;
-
-                // Load the dice image for player's current face (for example, first face)
-                // Assuming player.getDieImages() returns List<String> with filenames like "b1.png"
-
-                // Update count for this location
-                //playerCountAtLocation.put(location, count + 1);
-            //}
         }
     }
-    
 
-
+    public void loadSceneCard(Set set){
+        SceneCard card = set.getSceneCard();
+        ImageIcon icon;
+        if (card.getFlipped()){
+            icon = new ImageIcon("images/Card/" + card.getImg());
+            sceneImage = icon.getImage();
+        }
+        else{
+            icon = new ImageIcon("images/cardBack.png");
+            sceneImage = icon.getImage();
+        }
+    }
 
     public void highlightPlayer(Player player) {
         repaint();
     }
-
     
 }

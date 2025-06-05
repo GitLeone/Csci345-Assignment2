@@ -158,4 +158,8 @@ public class Set {
     public Point getPlayerBasePoint(Player player){
         return basePoints.get(player.getPlayerNum()-1);
     }
+    
+    public void flipSceneCard(){
+        getSceneCard().setFlipped(true);
+    }
 }

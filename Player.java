@@ -129,7 +129,8 @@ public class Player {
         Set targetSet = locationManager.getSet(actualLocationName);
     
         if (targetSet.isSet() && targetSet.getSceneCard() != null) {
-            targetSet.getSceneCard().setFlipped(true);
+            targetSet.flipSceneCard();
+
         }
     
         return true;
