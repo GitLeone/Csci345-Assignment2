@@ -194,6 +194,9 @@ public class GameController {
                 view.displayMessage("Successful move to " + currentPlayer.getLocation());
                 view.updateBoard();
                 processAction("take role");
+                if(!currentPlayer.getWorking()){
+                    endTurn();
+                }
                 break;
 
             case "where":
